@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../common/widgets/appbar/appbar.dart';
-import '../../../../../common/widgets/products_cart/cart_menu_icon.dart';
+import '../../../../../common/widgets/products/cart/cart_menu_icon.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/text_strings.dart';
 
@@ -20,8 +20,8 @@ class EHomeAppBar extends StatelessWidget {
           Text(ETexts.homeAppbarSubTitle, style: Theme.of(context).textTheme.headlineSmall!.apply(color: EColors.white)),
         ],
       ),
-      actions: [
-        ECartCounterIcon(onPressed: () { },iconColor: EColors.white,)
+      actions: const [
+        ECartCounterIcon(iconColor: EColors.white,)
       ],
     );
   }

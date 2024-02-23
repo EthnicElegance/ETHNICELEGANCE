@@ -3,7 +3,6 @@ import 'package:ethnic_elegance/common/widgets/custom_shapes/containers/rounded_
 import 'package:ethnic_elegance/common/widgets/custom_shapes/containers/search_container.dart';
 import 'package:ethnic_elegance/common/widgets/images/circular_image.dart';
 import 'package:ethnic_elegance/common/widgets/layouts/grid_layout.dart';
-import 'package:ethnic_elegance/common/widgets/products_cart/cart_menu_icon.dart';
 import 'package:ethnic_elegance/common/widgets/texts/section_heading.dart';
 import 'package:ethnic_elegance/features/shop/screens/store/widgets/category_tab.dart';
 import 'package:ethnic_elegance/utils/constants/colors.dart';
@@ -16,6 +15,7 @@ import 'package:flutter/material.dart';
 import '../../../../common/widgets/appbar/tabbar.dart';
 
 import '../../../../common/widgets/icons/brand_title_text_with_verified_iconn.dart';
+import '../../../../common/widgets/products/cart/cart_menu_icon.dart';
 
 
 class StoreScreen extends StatelessWidget {
@@ -30,8 +30,8 @@ class StoreScreen extends StatelessWidget {
         appBar: EAppBar(
           title:
               Text('Category', style: Theme.of(context).textTheme.headlineMedium),
-          actions: [
-            ECartCounterIcon(onPressed: () {}, iconColor: Colors.black),
+          actions: const [
+            ECartCounterIcon(iconColor: Colors.black),
           ],
         ),
         body: NestedScrollView(
@@ -142,7 +142,7 @@ class StoreScreen extends StatelessWidget {
                 ),
               ];
             },
-            body: TabBarView(
+            body: const TabBarView(
               children: [
                 ECategoryTab(),
                 ECategoryTab(),

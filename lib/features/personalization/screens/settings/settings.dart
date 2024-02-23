@@ -1,9 +1,9 @@
 import 'package:ethnic_elegance/common/widgets/appbar/appbar.dart';
 import 'package:ethnic_elegance/common/widgets/custom_shapes/containers/primary_header_container.dart';
-// import 'package:ethnic_elegance/common/widgets/images/rounded_image.dart';
+
 import 'package:ethnic_elegance/common/widgets/layouts/list_tiles/settings_menu_tile.dart';
 import 'package:ethnic_elegance/common/widgets/texts/section_heading.dart';
-// import 'package:ethnic_elegance/utils/constants/image_strings.dart';
+
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -24,11 +24,14 @@ class SettingsScreen extends StatelessWidget {
               child: Column(
                 children: [
                   EAppBar(
-                      title: Text('Account',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .apply(color: EColors.white))),
+                    title: Text(
+                      'Account',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium!
+                          .apply(color: EColors.white),
+                    ),
+                  ),
                   const EUerProfileTitle(),
                   const SizedBox(height: ESizes.spaceBtwSections),
                 ],

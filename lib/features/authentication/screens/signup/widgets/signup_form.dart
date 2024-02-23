@@ -66,7 +66,7 @@ class ESignupFormState extends State<ESignupForm> {
               groupValue: selectedRadio,
               title: const Text("Business Customer"),
               onChanged: (val){
-                print("you selected $val");
+                // print("you selected $val");
                 setSelectedRadio(val!);
               },
               activeColor: EColors.primary,
@@ -78,7 +78,7 @@ class ESignupFormState extends State<ESignupForm> {
               groupValue: selectedRadio,
               title: const Text("Retail Customer"),
               onChanged: (val){
-                print("you selected $val");
+                // print("you selected $val");
                 setSelectedRadio(val!);
               },
               activeColor: EColors.primary,
