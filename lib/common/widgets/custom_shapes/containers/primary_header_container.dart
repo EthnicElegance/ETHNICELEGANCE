@@ -36,7 +36,6 @@ class EPrimaryHeaderContainer extends StatelessWidget {
                 ),
               ),
               child,
-
             ],
           ),
         ),
