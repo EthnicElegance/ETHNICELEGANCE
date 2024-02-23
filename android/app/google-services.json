@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "882752566173",
+    "firebase_url": "https://ethnicelegance-71357-default-rtdb.firebaseio.com",
+    "project_id": "ethnicelegance-71357",
+    "storage_bucket": "ethnicelegance-71357.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:882752566173:android:781183a84bcfc99ddd3574",
+        "android_client_info": {
+          "package_name": "com.example.ethnic_elegance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "882752566173-nutd50170fi8re2ue1g7iehsf7f33fej.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ethnic_elegance",
+            "certificate_hash": "ff6927b9540c7745ffee3c4053d58f949037041a"
+          }
+        },
+        {
+          "client_id": "882752566173-srqic5dd7q1u98gsefoh1r8mm9gul18j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNA2WDmfz1n2lGc-GAYZyckbow32urtn4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "882752566173-srqic5dd7q1u98gsefoh1r8mm9gul18j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "882752566173-29s4bggbqrb0c3lmo4mvl96isdid5rfe.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ethnicElegance"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:882752566173:android:991bb8bfb7898c6add3574",
+        "android_client_info": {
+          "package_name": "com.example.ethnicelegance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "882752566173-srqic5dd7q1u98gsefoh1r8mm9gul18j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNA2WDmfz1n2lGc-GAYZyckbow32urtn4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "882752566173-srqic5dd7q1u98gsefoh1r8mm9gul18j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "882752566173-29s4bggbqrb0c3lmo4mvl96isdid5rfe.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ethnicElegance"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
