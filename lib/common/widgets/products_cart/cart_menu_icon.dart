@@ -1,23 +1,21 @@
-import 'package:ethnic_elegance/features/shop/screens/cart/cart.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../utils/constants/colors.dart';
+import '../../../utils/constants/colors.dart';
 
 class ECartCounterIcon extends StatelessWidget {
   const ECartCounterIcon({
-    super.key, required this.iconColor,
+    super.key, required this.onPressed, required this.iconColor,
   });
 
-  // final VoidCallback onPressed;
+  final VoidCallback onPressed;
   final Color iconColor;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        IconButton(onPressed: () => Get.to(() => const CartScreen()), icon: Icon(Iconsax.shopping_bag, color: iconColor,)),
+        IconButton(onPressed: onPressed, icon: Icon(Iconsax.shopping_bag, color: iconColor,)),
         Positioned(
           right: 0,
           child: Container(

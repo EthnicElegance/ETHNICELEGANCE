@@ -1,7 +1,6 @@
 import 'package:ethnic_elegance/common/widgets/layouts/grid_layout.dart';
 import 'package:ethnic_elegance/common/widgets/products_cart/product_card_vertical.dart';
 import 'package:ethnic_elegance/common/widgets/texts/section_heading.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../common/widgets/brands/brand_show_case.dart';
@@ -30,7 +29,7 @@ class ECategoryTab extends StatelessWidget{
               ESectionHeading(title: 'You might like ' , onPressed: () {}),
               const SizedBox(height: ESizes.spaceBtwItems),
 
-              EGridLayout(itemCount: 4, itemBuilder: (_, index) => EProductCardVertical()),
+              EGridLayout(itemCount: 4, itemBuilder: (_, index) => const EProductCardVertical()),
               const SizedBox(height: ESizes.spaceBtwItems),
             ],
           ),
