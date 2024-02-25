@@ -4,6 +4,7 @@ import 'package:ethnic_elegance/common/widgets/custom_shapes/containers/primary_
 import 'package:ethnic_elegance/common/widgets/layouts/list_tiles/settings_menu_tile.dart';
 import 'package:ethnic_elegance/common/widgets/texts/section_heading.dart';
 import 'package:ethnic_elegance/features/authentication/screens/login/login.dart';
+import 'package:ethnic_elegance/features/shop/screens/cart/cart.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -56,7 +57,7 @@ class SettingsScreen extends StatelessWidget {
                     icon: Iconsax.shopping_cart,
                     title: 'My Cart',
                     subtitle: 'add,remove products and move to checkout',
-                    onTap: () {},
+                    onTap: () => Get.to(() => const CartScreen()),
                   ),
                   ESettingsMenuTile(
                     icon: Iconsax.bag_tick,
