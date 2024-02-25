@@ -1,13 +1,14 @@
-
 import 'package:ethnic_elegance/common/widgets/texts/section_heading.dart';
 import 'package:ethnic_elegance/features/shop/screens/product_details/widgets/bottom_add_to_cart_widget.dart';
 import 'package:ethnic_elegance/features/shop/screens/product_details/widgets/product_attributes.dart';
 import 'package:ethnic_elegance/features/shop/screens/product_details/widgets/product_detail_image_slider.dart';
 import 'package:ethnic_elegance/features/shop/screens/product_details/widgets/product_meta_data.dart';
 import 'package:ethnic_elegance/features/shop/screens/product_details/widgets/rating_share_widget.dart';
+import 'package:ethnic_elegance/features/shop/screens/product_reviews/product_reviews.dart';
 
 // import 'package:ethnic_elegance/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:readmore/readmore.dart';
 import '../../../../utils/constants/sizes.dart';
@@ -65,7 +66,7 @@ class ProductDetailScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const ESectionHeading(title: 'Reviews(199)',showActionButton: false),
-                      IconButton(icon: const Icon(Iconsax.arrow_right_3,size: 18),onPressed: () {},)
+                      IconButton(icon: const Icon(Iconsax.arrow_right_3,size: 18),onPressed: () => Get.to(() => const ProductReviewsScreen())),
                     ],
                   ),
                   const SizedBox(height: ESizes.spaceBtwSections),

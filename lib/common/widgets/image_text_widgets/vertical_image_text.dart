@@ -34,9 +34,9 @@ class EVerticalImageText extends StatelessWidget {
               ),
               child: Center(
                 child: Image(
-                  image: AssetImage(image),
-                  fit: BoxFit.cover,
-                  color: EColors.black,
+                  image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/CategoryImage%2F$image?alt=media"),
+                  fit: BoxFit.contain,
+                  // color: EColors.black,
                 ),
               ),
             ),

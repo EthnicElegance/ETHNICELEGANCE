@@ -21,7 +21,7 @@ class ECategoryTab extends StatelessWidget{
           child: Column(
             children: [
               /// Brands
-              const EBrandShoeCase(images: [EImages.sportIcon,EImages.clothIcon,EImages.shoeIcon]),
+              //const EBrandShoeCase(images: [EImages.sportIcon,EImages.clothIcon,EImages.shoeIcon]),
               const EBrandShoeCase(images: [EImages.sportIcon,EImages.clothIcon,EImages.shoeIcon]),
               const SizedBox(height: ESizes.spaceBtwItems),
 

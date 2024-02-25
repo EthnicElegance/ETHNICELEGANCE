@@ -62,12 +62,14 @@ class EProductCardVertical extends StatelessWidget {
                               .apply(color: EColors.black)),
                     ),
                   ),
-                  ///Heart Icon
+
+                  /// Favourite Icon Button
                   const Positioned(
                       top: 0,
                       right: 0,
                       child: ECircularIcon(
-                          icon: Iconsax.heart5, color: Colors.red)),
+                          icon: Iconsax.heart5, color: Colors.red),
+                  ),
                 ],
               ),
             ),
@@ -112,6 +114,8 @@ class EProductCardVertical extends StatelessWidget {
                   padding: EdgeInsets.only(left: ESizes.sm),
                   child: EProductPriceText(price: '35.0'),
                 ),
+
+                ///Add To Cart
                 Container(
                   decoration: const BoxDecoration(
                       color: EColors.dark,
@@ -119,7 +123,8 @@ class EProductCardVertical extends StatelessWidget {
                         topLeft: Radius.circular(ESizes.cardRadiusMd),
                         bottomRight:
                         Radius.circular(ESizes.productImageRadius),
-                      )),
+                      ),
+                  ),
                   child: const SizedBox(
                       width: ESizes.iconLg * 1.2,
                       height: ESizes.iconLg * 1.2,
@@ -128,7 +133,8 @@ class EProductCardVertical extends StatelessWidget {
                           Iconsax.add,
                           color: EColors.white,
                         ),
-                      )),
+                      ),
+                  ),
                 ),
               ],
             ),

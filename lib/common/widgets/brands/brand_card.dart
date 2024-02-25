@@ -34,7 +34,7 @@ class EBrandCard extends StatelessWidget{
             Flexible(
                 child: ECircularImage(
                 isNetworkImage: false,
-                  image: EImages.sportIcon,
+                  image: EImages.clothIcon,
                   backgroundColor: Colors.transparent,
                   overlayColor: isDark ? EColors.white : EColors.black,
             )

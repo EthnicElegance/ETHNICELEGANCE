@@ -1,34 +1,21 @@
 import 'dart:core';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class CategoryModel {
-  late String id;
-  late String name;
-  late String photo;
-  late String gender;
+  late String key;
+  late String cname;
+  late String cphoto;
+  late String gen;
 
-  CategoryModel({required this.id,required this.name, required this.photo, required this.gender});
-
-  static CategoryModel empty() => CategoryModel(id: '', name: '', photo: '', gender: '');
-
-  Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
-        'name': name,
-        'photo': photo,
-        'gender': gender,
-      };
-
-  factory CategoryModel.fromSnapshot(
-      DocumentSnapshot<Map<String, dynamic>> document) {
-    if (document.data() != null) {
-      return CategoryModel(
-          id : document.id,
-          name : document["name"] ?? '',
-          photo : document["photo"] ?? '',
-          gender : document["gender"] ?? ''
+  CategoryModel(
+      this.key,
+      this.cname,
+      this.cphoto,
+      this.gen,
       );
-    } else {
-      return CategoryModel.empty();
-    }
+
+  factory CategoryModel.fromJson(Map<String, dynamic> document) {
+    return CategoryModel(
+        document["key"], document["cname"], document["cphoto"],document["gen"]
+    );
   }
 }

@@ -1,8 +1,11 @@
 import 'package:ethnic_elegance/utils/constants/sizes.dart';
 import 'package:ethnic_elegance/utils/device/device_utility.dart';
+import 'package:ethnic_elegance/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+
+import '../../../utils/constants/colors.dart';
 
 class EAppBar extends StatelessWidget implements PreferredSizeWidget {
   const EAppBar({
@@ -22,6 +25,7 @@ class EAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dark = EHelperFunctions.isDarkMode(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: ESizes.md),
       child: AppBar(
@@ -29,7 +33,7 @@ class EAppBar extends StatelessWidget implements PreferredSizeWidget {
         leading: showBackArrow
             ? IconButton(
                 onPressed: () => Get.back(),
-                icon: const Icon(Iconsax.arrow_left))
+                icon: Icon(Iconsax.arrow_left,color: dark ? EColors.white : EColors.dark))
             : leadingIcon != null ? IconButton(
                 onPressed: leadingOnPressed,
                 icon: Icon(leadingIcon)) : null,
