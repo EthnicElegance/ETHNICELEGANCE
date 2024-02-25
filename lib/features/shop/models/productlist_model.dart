@@ -40,7 +40,14 @@ class EProductList extends StatelessWidget {
                         dynamic.toString(),
                         v["product_name"],
                         v["photo1"],
+                        v["photo2"],
+                        v["photo3"],
                         v["retailer_price"],
+                        v["size"],
+                        v["qty"],
+                        v["product_colour"],
+                        v["fabric"],
+                        v["detail"],
                         v["availability"])));
                 return GridView.builder(
                   itemCount: limitedProduct ? productCount : prodlist.length,
@@ -55,7 +62,7 @@ class EProductList extends StatelessWidget {
                   ),
                   itemBuilder: (BuildContext context,int index) {
                     return GestureDetector(
-                      onTap: () => Get.to(() => const ProductDetailScreen()),
+                      onTap: () => Get.to(() => ProductDetailScreen(id: prodlist[index].key,)),
                       child: Container(
                         width: 180,
                         padding: const EdgeInsets.all(1),
@@ -85,7 +92,7 @@ class EProductList extends StatelessWidget {
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(ESizes.md),
                                         child: Image(
-                                            image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/ProductImage%2F${prodlist[index].pphoto}?alt=media"),
+                                            image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/ProductImage%2F${prodlist[index].pphoto1}?alt=media"),
                                             fit: BoxFit.contain),
                                       ),
                                     ),

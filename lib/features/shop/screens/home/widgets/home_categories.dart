@@ -1,4 +1,4 @@
-import 'package:ethnic_elegance/features/shop/screens/sub_category/sub_categories.dart';
+import 'package:ethnic_elegance/features/shop/screens/sub_category/subcategory.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -46,7 +46,7 @@ class EHomeCategories extends StatelessWidget {
                     return EVerticalImageText(
                       image: catlist[index].cphoto,
                       title: catlist[index].cname,
-                      onTap: () => Get.to(() => const SubCategoriesScreen()),);
+                      onTap: () => Get.to(() => subCategoryScreen(id: catlist[index].key)),);
                   },
                 );
               }

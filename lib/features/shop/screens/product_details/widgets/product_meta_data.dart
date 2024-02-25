@@ -13,8 +13,9 @@ import '../../../../../utils/helpers/helper_functions.dart';
 
 class EProductMetaData extends StatelessWidget{
   const EProductMetaData({
-    super.key,
+    super.key, required this.price, required this.details, required this.name, required this.photo1, required this.photo2, required this.photo3, required this.availability, required this.colour, required this.fabric, required this.size,
 });
+  final String price,details,name,photo1,photo2,photo3,availability,size,colour,fabric;
 
   @override
   Widget build(BuildContext context) {
@@ -37,15 +38,15 @@ class EProductMetaData extends StatelessWidget{
             const SizedBox(width: ESizes.spaceBtwItems),
 
             ///Price
-            Text('\$250', style: Theme.of(context).textTheme.titleSmall!.apply(decoration: TextDecoration.lineThrough)),
+            // Text('\₹250', style: Theme.of(context).textTheme.titleSmall!.apply(decoration: TextDecoration.lineThrough)),
             const SizedBox(width: ESizes.spaceBtwItems),
-            const EProductPriceText(price: '175', isLarge: true),
+            EProductPriceText(price: price, isLarge: true),
           ],
         ),
         const SizedBox(width: ESizes.spaceBtwItems / 1.5),
 
         ///Title
-        const EProductTitleText(title: 'Green Nike Sports Shirt'),
+        EProductTitleText(title: name),
         const SizedBox(width: ESizes.spaceBtwItems / 1.5),
 
         ///Stack Status
@@ -53,7 +54,7 @@ class EProductMetaData extends StatelessWidget{
           children: [
             const EProductTitleText(title: 'Status'),
             const SizedBox(width: ESizes.spaceBtwItems),
-            Text('In Stock', style: Theme.of(context).textTheme.titleMedium),
+            Text(availability, style: Theme.of(context).textTheme.titleMedium),
           ],
         ),
         const SizedBox(width: ESizes.spaceBtwItems / 1.5),
@@ -67,7 +68,7 @@ class EProductMetaData extends StatelessWidget{
               height: 32,
               overlayColor: darkMode ? EColors.white : EColors.black,
             ),
-            const EBrandTitleWithVerifiedIcon(title: 'Nike', brandTextSize: TextSizes.medium),
+            EBrandTitleWithVerifiedIcon(title: name, brandTextSize: TextSizes.medium),
           ],
         ),
       ],

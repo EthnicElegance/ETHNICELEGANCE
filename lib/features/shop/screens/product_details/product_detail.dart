@@ -5,6 +5,8 @@ import 'package:ethnic_elegance/features/shop/screens/product_details/widgets/pr
 import 'package:ethnic_elegance/features/shop/screens/product_details/widgets/product_meta_data.dart';
 import 'package:ethnic_elegance/features/shop/screens/product_details/widgets/rating_share_widget.dart';
 import 'package:ethnic_elegance/features/shop/screens/product_reviews/product_reviews.dart';
+// import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 // import 'package:ethnic_elegance/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
@@ -12,69 +14,110 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:readmore/readmore.dart';
 import '../../../../utils/constants/sizes.dart';
+// import '../../models/product_model.dart';
 
 class ProductDetailScreen extends StatelessWidget {
-  const ProductDetailScreen({super.key});
-
+  const ProductDetailScreen({super.key, required this.id});
+  final String id;
   @override
   Widget build(BuildContext context) {
     // final dark = EHelperFunctions.isDarkMode(context);
     return  Scaffold(
       bottomNavigationBar: const EBottomAddToCart(),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            /// 1-Product Image Slider
-            const EProductImageSlider(),
-
-            /// 2- Product Details
-            Padding(
-              padding: const EdgeInsets.only(right: ESizes.defaultSpace, left: ESizes.defaultSpace, bottom: ESizes.defaultSpace),
-              child: Column(
+        child: StreamBuilder(
+          stream: FirebaseDatabase.instance.ref().child("Project/product/$id").onValue,
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.hasData) {
+              // Map<dynamic, dynamic> map = snapshot.data.snapshot
+              //     .value;
+              // List<ProductModel> prodlist = [];
+              //
+              final data = snapshot.data!.snapshot.value as Map<dynamic, dynamic>;
+              return Column(
                 children: [
-                  /// Rating & Share Button
-                  const ERatingAndShare(),
 
-                  /// Price, Title, Stock & Brand
-                  const EProductMetaData(),
+                  /// 1-Product Image Slider
+                  EProductImageSlider(image1: data['photo1'],image2: data['photo2'],image3: data['photo3'],),
 
-                  /// Attributes
-                  const EProductAttributes(),
-                  const SizedBox(height: ESizes.spaceBtwSections),
+                  /// 2- Product Details
+                  Padding(
+                    padding: const EdgeInsets.only(right: ESizes.defaultSpace,
+                        left: ESizes.defaultSpace,
+                        bottom: ESizes.defaultSpace),
+                    child: Column(
+                      children: [
 
-                  /// Checkout Button
-                  SizedBox(width: double.infinity,child: ElevatedButton(onPressed: () {}, child: const Text('Checkout'))),
-                  const SizedBox(height: ESizes.spaceBtwSections),
+                        /// Rating & Share Button
+                        const ERatingAndShare(),
 
-                  /// Description
-                  const ESectionHeading(title: 'Description', showActionButton: false,),
-                  const SizedBox(height: ESizes.spaceBtwItems),
-                  const ReadMoreText(
-                    'Flutter is Google’s mobile UI open source framework to build high-quality native (super fast) interfaces for iOS and Android apps with the unified codebase.',
-                    trimLines: 2,
-                    trimMode: TrimMode.Line,
-                    trimCollapsedText: 'Show more',
-                    trimExpandedText: 'Show less',
-                    moreStyle:  TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
-                    lessStyle:  TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                        /// Price, Title, Stock & Brand
+                        EProductMetaData(
+                          price: data['retailer_price'],
+                          details: data['detail'],
+                          name: data['product_name'],
+                          photo1: data['photo1'],
+                          photo2: data['photo2'],
+                          photo3: data['photo3'],
+                          availability: data['availability'],
+                          colour: data['product_colour'],
+                          size: data['size'],
+                          fabric: data['fabric'],),
+
+                        /// Attributes
+                        EProductAttributes(colour: data['product_colour'],price:data['customer_price'],details: data['detail'],fabric: data['fabric'],),
+                        const SizedBox(height: ESizes.spaceBtwSections),
+
+                        /// Checkout Button
+                        SizedBox(width: double.infinity, child: ElevatedButton(
+                            onPressed: () {}, child: const Text('Checkout'))),
+                        const SizedBox(height: ESizes.spaceBtwSections),
+
+                        /// Description
+                        const ESectionHeading(
+                          title: 'Description', showActionButton: false,),
+                        const SizedBox(height: ESizes.spaceBtwItems),
+                        const ReadMoreText(
+                          'Flutter is Google’s mobile UI open source framework to build high-quality native (super fast) interfaces for iOS and Android apps with the unified codebase.',
+                          trimLines: 2,
+                          trimMode: TrimMode.Line,
+                          trimCollapsedText: 'Show more',
+                          trimExpandedText: 'Show less',
+                          moreStyle: TextStyle(fontSize: 14,
+                              fontWeight: FontWeight.w800),
+                          lessStyle: TextStyle(fontSize: 14,
+                              fontWeight: FontWeight.w800),
+                        ),
+
+                        /// Reviews
+                        const Divider(),
+                        const SizedBox(height: ESizes.spaceBtwItems),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const ESectionHeading(
+                                title: 'Reviews(199)', showActionButton: false),
+                            IconButton(icon: const Icon(
+                                Iconsax.arrow_right_3, size: 18),
+                                onPressed: () =>
+                                    Get.to(() => const ProductReviewsScreen())),
+                          ],
+                        ),
+                        const SizedBox(height: ESizes.spaceBtwSections),
+
+                      ],
+                    ),
                   ),
-
-                  /// Reviews
-                  const Divider(),
-                  const SizedBox(height: ESizes.spaceBtwItems),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const ESectionHeading(title: 'Reviews(199)',showActionButton: false),
-                      IconButton(icon: const Icon(Iconsax.arrow_right_3,size: 18),onPressed: () => Get.to(() => const ProductReviewsScreen())),
-                    ],
-                  ),
-                  const SizedBox(height: ESizes.spaceBtwSections),
-
                 ],
-              ),
-            ),
-          ],
+              );
+            }
+            else {
+              return const CircularProgressIndicator(
+                  backgroundColor: Colors.grey,
+                  valueColor: AlwaysStoppedAnimation(Colors.black),
+                  strokeWidth: 1.5);
+            }
+          }
         ),
       ),
     );
