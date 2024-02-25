@@ -1,11 +1,12 @@
+import 'package:ethnic_elegance/features/authentication/controllers/signin/signin_controller.dart';
 import 'package:ethnic_elegance/features/authentication/screens/password_configuration/forget_password.dart';
 import 'package:ethnic_elegance/features/authentication/screens/signup/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../../navigation_menu.dart';
 import '../../../../../utils/constants/sizes.dart';
+import '../../../../../utils/validators/validation.dart';
 
 class ELoginForm extends StatelessWidget {
   const ELoginForm({
@@ -14,11 +15,16 @@ class ELoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(child: Padding(
+    final controller = Get.put(SigninController());
+    return Form(
+      key: controller.signinFormKey,
+      child: Padding(
       padding: const EdgeInsets.symmetric(vertical: ESizes.spaceBtwSections),
       child: Column(
         children: [
           TextFormField(
+            controller: controller.email,
+            validator: (value) => EValidator.validateEmail(value),
             decoration: const InputDecoration(
               prefixIcon: Icon(Iconsax.direct_right),
               labelText: "E-Mail",
@@ -27,12 +33,20 @@ class ELoginForm extends StatelessWidget {
           const SizedBox(height: ESizes.spaceBtwInputFields),
 
           //password
-          TextFormField(
-            decoration: const InputDecoration(
-              prefixIcon: Icon(Iconsax.password_check),
-              labelText: "Password",
-              suffixIcon: Icon(Iconsax.eye_slash),
-            ) ,
+          Obx(
+                () => TextFormField(
+              validator: (value) => EValidator.validatePassword(value),
+              controller: controller.password,
+              obscureText: controller.hidePassword.value,
+              decoration: InputDecoration(
+                labelText: "Password",
+                prefixIcon: const Icon(Iconsax.password_check),
+                suffixIcon: IconButton(
+                  onPressed: () => controller.hidePassword.value = !controller.hidePassword.value,
+                  icon:Icon(controller.hidePassword.value? Iconsax.eye_slash : Iconsax.eye),
+                ),
+              ),
+            ),
           ),
 
           const SizedBox(height: ESizes.spaceBtwInputFields / 2),
@@ -58,7 +72,7 @@ class ELoginForm extends StatelessWidget {
 
           //sign In button
 
-          SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => Get.to(() => const NavigationMenu()) , child: const Text("Sign In"))),
+          SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => controller.signin() , child: const Text("Sign In"))),
           const SizedBox(height: ESizes.spaceBtwItems,),
 
           //create account button
