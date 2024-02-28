@@ -9,6 +9,7 @@ class EImages{
 
   // -- Animations
   static String successfullyRegisterAnimation = "assets/images/animations/72462-check-register.json";
+  static String successfullyLoginAnimation = "assets/images/animations/104368-thank-you.json";
 
 
   // -- Category Icons

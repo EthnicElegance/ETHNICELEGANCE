@@ -1,4 +1,3 @@
-// import 'package:ethnic_elegance/features/shop/models/product_model.dart';
 import 'package:ethnic_elegance/features/shop/screens/all_product/all_products.dart';
 import 'package:ethnic_elegance/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:ethnic_elegance/features/shop/screens/home/widgets/home_categories.dart';
@@ -6,28 +5,19 @@ import 'package:ethnic_elegance/features/shop/screens/home/widgets/promo_slider.
 import 'package:ethnic_elegance/utils/constants/colors.dart';
 import 'package:ethnic_elegance/utils/constants/image_strings.dart';
 import 'package:ethnic_elegance/utils/constants/sizes.dart';
-// import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:iconsax/iconsax.dart';
-// import '../../../../common/styles/shadows.dart';
 import '../../../../common/widgets/custom_shapes/containers/primary_header_container.dart';
-// import '../../../../common/widgets/custom_shapes/containers/rounded_container.dart';
 import '../../../../common/widgets/custom_shapes/containers/search_container.dart';
-// import '../../../../common/widgets/icons/circular_icon.dart';
-// import '../../../../common/widgets/texts/product_price_text.dart';
-// import '../../../../common/widgets/texts/product_title_text.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
-// import '../../../../utils/helpers/helper_functions.dart';
 import '../../models/productlist_model.dart';
-// import '../product_details/product_detail.dart';
+
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // final dark = EHelperFunctions.isDarkMode(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -108,9 +98,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
-//
-// EGridLayout(
-// itemCount: 4,
-// itemBuilder: (_, index) => const EProductCardVertical(),
-// );

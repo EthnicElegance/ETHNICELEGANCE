@@ -1,21 +1,16 @@
-import 'package:ethnic_elegance/common/widgets/layouts/grid_layout.dart';
-import 'package:ethnic_elegance/common/widgets/products_cart/product_card_vertical.dart';
-// import 'package:ethnic_elegance/common/widgets/texts/section_heading.dart';
+import 'package:ethnic_elegance/features/shop/models/subcat_productlist_model.dart';
 import 'package:flutter/material.dart';
-
-// import '../../../../../common/widgets/brands/brand_show_case.dart';
-// import '../../../../../utils/constants/image_strings.dart';
 import '../../../../../utils/constants/sizes.dart';
 
 class ECategoryTab extends StatelessWidget{
-  const ECategoryTab({super.key});
-
+  const ECategoryTab({super.key, required this.data});
+  final String data;
   @override
   Widget build(BuildContext context) {
     return  ListView(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      children:[
+      children: [
         Padding(
           padding:const EdgeInsets.all(ESizes.defaultSpace),
           child: Column(
@@ -28,8 +23,9 @@ class ECategoryTab extends StatelessWidget{
               ///Products
               // ESectionHeading(title: 'You might like ' , onPressed: () {}),
               // const SizedBox(height: ESizes.spaceBtwItems),
+              ESubCatProductList(productSubCat: data,),
 
-              EGridLayout(itemCount: 4, itemBuilder: (_, index) => const EProductCardVertical()),
+              // EGridLayout(itemCount: 4, itemBuilder: (_, index) => const EProductCardVertical()),
               const SizedBox(height: ESizes.spaceBtwItems),
             ],
           ),

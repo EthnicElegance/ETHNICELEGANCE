@@ -46,15 +46,17 @@ class EHomeCategories extends StatelessWidget {
                     return EVerticalImageText(
                       image: catlist[index].cphoto,
                       title: catlist[index].cname,
-                      onTap: () => Get.to(() => subCategoryScreen(id: catlist[index].key)),);
+                      onTap: () => Get.to(() => ESubCategoryScreen(id: catlist[index].key)),);
                   },
                 );
               }
               else{
-                return const CircularProgressIndicator(
-                    backgroundColor: Colors.grey,
-                    valueColor: AlwaysStoppedAnimation(Colors.black),
-                    strokeWidth: 1.5);
+                return const Center(
+                  child: CircularProgressIndicator(
+                      backgroundColor: Colors.grey,
+                      valueColor: AlwaysStoppedAnimation(Colors.black),
+                      strokeWidth: 1.5),
+                );
               }
             }
         ),

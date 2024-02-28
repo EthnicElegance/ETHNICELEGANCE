@@ -68,7 +68,7 @@ class StoreScreen extends StatelessWidget {
                         const SizedBox(height: ESizes.spaceBtwItems / 1.5),
 
                         ///Brand Grid
-                        const ECategoryList(limitedCategory: true,categoryCount: 6,),
+                        const ECategoryList(limitedCategory: true,categoryCount: 8,),
                       ],
                     ),
                   ),

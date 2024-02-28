@@ -77,15 +77,15 @@ class ProductDetailScreen extends StatelessWidget {
                         const ESectionHeading(
                           title: 'Description', showActionButton: false,),
                         const SizedBox(height: ESizes.spaceBtwItems),
-                        const ReadMoreText(
-                          'Flutter is Google’s mobile UI open source framework to build high-quality native (super fast) interfaces for iOS and Android apps with the unified codebase.',
+                        ReadMoreText(
+                          data["detail"],
                           trimLines: 2,
                           trimMode: TrimMode.Line,
                           trimCollapsedText: 'Show more',
                           trimExpandedText: 'Show less',
-                          moreStyle: TextStyle(fontSize: 14,
+                          moreStyle: const TextStyle(fontSize: 14,
                               fontWeight: FontWeight.w800),
-                          lessStyle: TextStyle(fontSize: 14,
+                          lessStyle: const TextStyle(fontSize: 14,
                               fontWeight: FontWeight.w800),
                         ),
 

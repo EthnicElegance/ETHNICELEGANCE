@@ -1,17 +1,38 @@
 import 'package:ethnic_elegance/features/authentication/controllers/signin/signin_controller.dart';
 import 'package:ethnic_elegance/features/authentication/screens/password_configuration/forget_password.dart';
 import 'package:ethnic_elegance/features/authentication/screens/signup/signup.dart';
+import 'package:ethnic_elegance/navigation_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/validators/validation.dart';
+class ELoginForm extends StatefulWidget {
+  const ELoginForm({super.key});
 
-class ELoginForm extends StatelessWidget {
-  const ELoginForm({
-    super.key,
-  });
+  @override
+  State<ELoginForm> createState() => _ELoginFormState();
+}
+
+class _ELoginFormState extends State<ELoginForm> {
+  late bool containsKey;
+  @override
+  void initState(){
+    super.initState();
+    _checkIfLoggedIn();
+  }
+
+  Future<void> _checkIfLoggedIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    containsKey = prefs.containsKey('key');
+
+    if (containsKey) {
+      // If the key exists, navigate to HomePage
+     Get.offAll(() => const NavigationMenu());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +93,7 @@ class ELoginForm extends StatelessWidget {
 
           //sign In button
 
-          SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => controller.signin() , child: const Text("Sign In"))),
+          SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => controller.signin(context) , child: const Text("Sign In"))),
           const SizedBox(height: ESizes.spaceBtwItems,),
 
           //create account button

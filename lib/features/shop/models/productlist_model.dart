@@ -15,16 +15,18 @@ import '../../../utils/helpers/helper_functions.dart';
 import '../screens/product_details/product_detail.dart';
 
 class EProductList extends StatelessWidget {
-  const EProductList ({super.key,this.limitedProduct = false,this.productCount});
+  const EProductList ({super.key,this.limitedProduct = false,this.productCount, this.allProduct = true, this.productSubCat});
 
   final bool limitedProduct;
+  final bool allProduct;
   final int? productCount;
+  final String? productSubCat;
 
   @override
   Widget build(BuildContext context) {
     final dark = EHelperFunctions.isDarkMode(context);
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: EdgeInsets.zero,
       child: SizedBox(
         width: 400,
         child: StreamBuilder(
@@ -38,6 +40,7 @@ class EProductList extends StatelessWidget {
                 map.forEach((dynamic, v) =>
                     prodlist.add(ProductModel(
                         dynamic.toString(),
+                        v["subcatid"],
                         v["product_name"],
                         v["photo1"],
                         v["photo2"],
@@ -77,7 +80,7 @@ class EProductList extends StatelessWidget {
                             ///Thumbnail
                             ERoundedContainer(
                               height: 180,
-                              padding: const EdgeInsets.all(ESizes.sm),
+                              padding: const EdgeInsets.only(top: 5.0),
                               backgroundColor: dark ? EColors.dark : EColors.light,
                               child: Stack(
                                 children: [
@@ -97,9 +100,6 @@ class EProductList extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  // const ERoundedImage(
-                                  //     imageUrl: "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/ProductImage%2F1-1.jpg?alt=media",
-                                  //     applyImageRadius: true),
 
                                   ///sale Tag
                                   Positioned(
@@ -201,10 +201,12 @@ class EProductList extends StatelessWidget {
                 );
               }
               else {
-                return const CircularProgressIndicator(
-                    backgroundColor: Colors.grey,
-                    valueColor: AlwaysStoppedAnimation(Colors.black),
-                    strokeWidth: 1.5);
+                return const Center(
+                  child: CircularProgressIndicator(
+                      backgroundColor: Colors.grey,
+                      valueColor: AlwaysStoppedAnimation(Colors.black),
+                      strokeWidth: 1.5),
+                );
               }
             }
         ),

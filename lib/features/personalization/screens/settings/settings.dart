@@ -4,11 +4,14 @@ import 'package:ethnic_elegance/common/widgets/custom_shapes/containers/primary_
 import 'package:ethnic_elegance/common/widgets/layouts/list_tiles/settings_menu_tile.dart';
 import 'package:ethnic_elegance/common/widgets/texts/section_heading.dart';
 import 'package:ethnic_elegance/features/authentication/screens/login/login.dart';
+import 'package:ethnic_elegance/features/personalization/screens/address/widgets/address.dart';
 import 'package:ethnic_elegance/features/shop/screens/cart/cart.dart';
+import 'package:ethnic_elegance/features/shop/screens/order/widgets/order.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../common/widgets/layouts/list_tiles/user_profile_tile.dart';
 import '../../../../utils/constants/colors.dart';
@@ -51,7 +54,7 @@ class SettingsScreen extends StatelessWidget {
                     icon: Iconsax.safe_home,
                     title: 'My Addresses',
                     subtitle: 'Set shopping delivery address',
-                    onTap: () {},
+                    onTap: () => Get.to(() => const UserAddressScreen())
                   ),
                   ESettingsMenuTile(
                     icon: Iconsax.shopping_cart,
@@ -63,7 +66,7 @@ class SettingsScreen extends StatelessWidget {
                     icon: Iconsax.bag_tick,
                     title: 'My Orders',
                     subtitle: 'In-progress and Completed Orders',
-                    onTap: () {},
+                    onTap: () => Get.to(() => const OrderScreen()),
                   ),
                   ESettingsMenuTile(
                     icon: Iconsax.bank,
@@ -119,7 +122,11 @@ class SettingsScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: OutlinedButton(
-                        onPressed: () => Get.to(() => const LoginScreen()), child: const Text('Logout')),
+                        onPressed: () async {
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          prefs.clear();
+                          Get.offAll(() => const LoginScreen());
+                          }, child: const Text('Logout')),
                   ),
                   const SizedBox(height: ESizes.spaceBtwSections * 2.5),
                 ],

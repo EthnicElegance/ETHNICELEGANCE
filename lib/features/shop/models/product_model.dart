@@ -2,6 +2,7 @@ import 'dart:core';
 
 class ProductModel {
   late String key;
+  late String subcatid;
   late String pname;
   late String pphoto1;
   late String pphoto2;
@@ -16,6 +17,7 @@ class ProductModel {
 
   ProductModel(
       this.key,
+      this.subcatid,
       this.pname,
       this.pphoto1,
       this.pphoto2,
@@ -31,6 +33,7 @@ class ProductModel {
   factory ProductModel.fromJson(Map<String, dynamic> document) {
     return ProductModel(
         document["key"],
+        document["subcatid"],
         document["pname"],
         document["pphoto1"],
         document["pphoto2"],

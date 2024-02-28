@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 import 'package:ethnic_elegance/navigation_menu.dart';
-// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ethnic_elegance/utils/constants/image_strings.dart';
 import 'package:ethnic_elegance/utils/popups/full_screen_loader.dart';
@@ -11,10 +10,7 @@ import 'package:ethnic_elegance/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-import '../../../../common/widgets/success_screen/success_screen.dart';
-
-// import '../../../../saveData.dart';
-import '../../../../utils/constants/text_strings.dart';
+import '../../../../saveData.dart';
 import '../../../../utils/helpers/network_manager.dart';
 
 class SigninController extends GetxController {
@@ -22,17 +18,16 @@ class SigninController extends GetxController {
 
   //variables
   final hidePassword = true.obs;
-
   final email = TextEditingController();
   final password = TextEditingController();
 
+
   GlobalKey<FormState> signinFormKey = GlobalKey<FormState>();
 
-  DatabaseReference dbRef =
-      FirebaseDatabase.instance.ref().child('Project/UserRegister');
+
 
   //Signup
-  void signin() async {
+  void signin(BuildContext context) async {
     try {
       //Start loading
       EFullScreenLoader.openLoadingDialog(
@@ -53,109 +48,48 @@ class SigninController extends GetxController {
         EFullScreenLoader.stopLoading();
         return;
       }
-
-      //move to verify email screen
-      // if (kDebugMode) {
-      //   print('--------------------------Process is Start---------------------------------');
-      // }
-      // String pass1 = encryptString(password.text.trim());
-      // var pass= password.text.trim();
-      // if (kDebugMode) {
-      //   print('password was $pass');
-      // }
-      // if (kDebugMode) {
-      //   print('password was $pass1');
-      // }
-      // Query dbRef2 = FirebaseDatabase.instance
-      //     .ref()
-      //     .child('Project/UserRegister')
-      //     .orderByChild("Email")
-      //     .equalTo(email);
-      // var count = 0;
-      // // var msg = "Email does not exist";
-      // Map data2;
-      // if (kDebugMode) {
-      //   print("Entering the loop");
-      // }
-      //
-      // String? key;
-      // await dbRef2.once().then((documentSnapshot) => {
-      //       for (var x in documentSnapshot.snapshot.children)
-      //         {
-      //           key = x.key,
-      //           data2 = x.value as Map,
-      //
-      //           print("Data = $data2"),
-      //           print("Data = $key"),
-      //
-      // // print("key is $key"),
-      //           if (pass1 == data2["Password"])
-      //             {
-      //               count = count + 1,
-      //               saveData("key", key),
-      //
-      //
-      //
-      //             }
-      //           else
-      //             {
-      //               count = count + 1,
-      //               // EFullScreenLoader.stopLoading(),
-      //               ELoaders.errorSnackBar(
-      //                   title: 'Wrong Password',
-      //                   message:
-      //                       'Your account password is wrong! Enter the right Password to continue'
-      //               ),
-      //             }
-      //
-      //         }
-      //     });
-      // if (count == 0) {
-      //   // EFullScreenLoader.stopLoading();
-      //
-      //   ELoaders.errorSnackBar(
-      //       title: 'Email not found',
-      //       message:
-      //           'Your account Email address does not found! enter valid email to continue');
-      // }
-
-      // dbRef.push().set(regobj.toJson());
       EFullScreenLoader.stopLoading();
 
-      ELoaders.successSnackBar(
-          title: 'Congratulations',
-          message: 'Your account has been created! Verify email to continue');
-      // Get.to(() => const NavigationMenu());
+      final dbRef =
+      FirebaseDatabase.instance.ref().child('Project/UserRegister').orderByChild("Email").equalTo(email.text);
+      final snapshot = await dbRef.once();
 
-      Get.to(
-        () => SuccessScreen(
-            image: EImages.successfullyRegisterAnimation,
-            title: ETexts.yourAccountCreatedTitle,
-            subTitle: ETexts.yourAccountCreatedSubTitle,
-            onPressed: () => Get.to(() => const NavigationMenu())),
-      );
-      // Navigator.of(context).pop();
-      // Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //       builder: (context) => SuccessScreen(
-      //                   image: EImages.successfullyRegisterAnimation,
-      //                   title: ETexts.yourAccountCreatedTitle,
-      //                   subTitle: ETexts.yourAccountCreatedSubTitle,
-      //                   onPressed: () => Get.offAll(() => const NavigationMenu())
-      //               ),
-      //     )
-      // );
+      // Check if any data was retrieved
+      if (snapshot.snapshot.children.isEmpty) {
+        // Handle empty dbRef case (e.g., display error message)
+        ELoaders.errorSnackBar(title: 'Email not found', message: 'The provided email is not registered.');
+        return;
+      }else {
+        var encPassword = encryptString(password.text);
+        Map data;
+        var count = 0;
+        await dbRef.once().then((documentSnapshot) async {
+          for (var x in documentSnapshot.snapshot.children) {
+            String? key = x.key;
+            data = x.value as Map;
+            if (data["Email"] == email.text &&
+                data["Password"].toString() == encPassword) {
+              saveData('key', key);
+              count = count + 1;
+              success();
+            } else {
+              ELoaders.errorSnackBar(
+                  title: 'Oh snap!', message: "Wrong Password");
+            }
+          }
+        });
+      }
     } catch (e) {
-      /*//remove loader
-      EFullScreenLoader.stopLoading();*/
-      //show error to user
       ELoaders.errorSnackBar(title: 'Oh snap!', message: e.toString());
     }
-    // finally {
-    //   //remove loader
-    //   EFullScreenLoader.stopLoading();
-    // }
+  }
+
+  void success() {
+
+    ELoaders.successSnackBar(
+        title: 'Congratulations',
+        message: 'Your account has been created! Verify email to continue');
+    Get.offAll(() => const NavigationMenu());
   }
 
   String encryptString(String originalString) {
