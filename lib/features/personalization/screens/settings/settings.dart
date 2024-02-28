@@ -6,6 +6,7 @@ import 'package:ethnic_elegance/common/widgets/texts/section_heading.dart';
 import 'package:ethnic_elegance/features/authentication/screens/login/login.dart';
 import 'package:ethnic_elegance/features/personalization/screens/address/widgets/address.dart';
 import 'package:ethnic_elegance/features/shop/screens/cart/cart.dart';
+// import 'package:ethnic_elegance/features/shop/screens/checkout/widgets/checkout.dart';
 import 'package:ethnic_elegance/features/shop/screens/order/widgets/order.dart';
 
 import 'package:flutter/material.dart';
@@ -72,7 +73,7 @@ class SettingsScreen extends StatelessWidget {
                     icon: Iconsax.bank,
                     title: 'Bank Account',
                     subtitle: 'Withdraw balance to registered bank account',
-                    onTap: () {},
+                    onTap: () {}/*=> Get.to(() => const CheckOutScreen())*/,
                   ),
                   ESettingsMenuTile(
                     icon: Iconsax.discount_shape,

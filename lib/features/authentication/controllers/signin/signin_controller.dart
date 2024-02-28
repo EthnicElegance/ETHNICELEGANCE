@@ -10,7 +10,7 @@ import 'package:ethnic_elegance/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-import '../../../../saveData.dart';
+import '../../../../sharepreferences.dart';
 import '../../../../utils/helpers/network_manager.dart';
 
 class SigninController extends GetxController {
@@ -62,7 +62,7 @@ class SigninController extends GetxController {
       }else {
         var encPassword = encryptString(password.text);
         Map data;
-        var count = 0;
+
         await dbRef.once().then((documentSnapshot) async {
           for (var x in documentSnapshot.snapshot.children) {
             String? key = x.key;
@@ -70,7 +70,7 @@ class SigninController extends GetxController {
             if (data["Email"] == email.text &&
                 data["Password"].toString() == encPassword) {
               saveData('key', key);
-              count = count + 1;
+
               success();
             } else {
               ELoaders.errorSnackBar(

@@ -15,6 +15,7 @@ import 'package:firebase_database/firebase_database.dart';
 import '../../../../common/widgets/success_screen/success_screen.dart';
 
 // import '../../../../data/repositories/authentication/authentication_repository.dart';
+// import '../../../../sharepreferences.dart';
 import '../../../../utils/constants/text_strings.dart';
 import '../../../../utils/helpers/network_manager.dart';
 import '../../models/signup_model.dart';
@@ -110,13 +111,19 @@ class SignupController extends GetxController {
             contactNumber.text.trim(),
             email.text.trim(),
             pass1);
-        dbRef.push().set(regobj.toJson());
+      dbRef.push().set(regobj.toJson());
+      // Future<String> key = dbRef.push().set(regobj.toJson()).then((documentSnapshot) {
+      //   print(documentSnapshot); // Inspect the documentSnapshot object
+      //   return documentSnapshot.id;
+      // });
 
       EFullScreenLoader.stopLoading();
 
       ELoaders.successSnackBar(
           title: 'Congratulations',
           message: 'Your account has been created! Verify email to continue');
+      // print(key);
+      // saveData('key', key);
       // Get.to(() => const NavigationMenu());
       Get.to(
             () =>
