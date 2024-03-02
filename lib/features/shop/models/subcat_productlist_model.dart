@@ -71,6 +71,7 @@ class _ESubCatProductListState extends State<ESubCatProductList> {
                     v["product_colour"],
                     v["fabric"],
                     v["detail"],
+                    v["DateTime"],
                     v["availability"])));
                 return GridView.builder(
                   itemCount: widget.limitedProduct ? widget.productCount : prodlist.length,
@@ -239,14 +240,12 @@ class _ESubCatProductListState extends State<ESubCatProductList> {
                     }
                 );
               } else {
-                return Center(
-                  child: Container(
-                    child: const CircularProgressIndicator(
+                return const Center(
+                  child: CircularProgressIndicator(
 
-                        backgroundColor: Colors.grey,
-                        valueColor: AlwaysStoppedAnimation(Colors.black),
-                        strokeWidth: 2),
-                  ),
+                      backgroundColor: Colors.grey,
+                      valueColor: AlwaysStoppedAnimation(Colors.black),
+                      strokeWidth: 2),
                 );
               }
             }),

@@ -14,6 +14,7 @@ class ProductModel {
   late String fabric;
   late String details;
   late String availability;
+  late String datetime;
 
   ProductModel(
       this.key,
@@ -28,6 +29,7 @@ class ProductModel {
       this.colour,
       this.fabric,
       this.details,
+      this.datetime,
       this.availability);
 
   factory ProductModel.fromJson(Map<String, dynamic> document) {
@@ -44,6 +46,7 @@ class ProductModel {
         document["colour"],
         document["fabric"],
         document["details"],
+        document["datetime"],
         document["availability"]);
   }
 }

@@ -75,28 +75,6 @@ class SignupController extends GetxController {
         return;
       }
 
-      // //register user in the firebase authentication & save user data in the firebase
-      // final userCredential = await AuthenticationRepository.instance.registerWithEmailAndPassword(email.text.trim(), password.text.trim());
-      //
-      // //save authenticated userdata in the Firebase Firestore
-      // final newUser = UserModel(
-      //   id: userCredential.user!.uid,
-      //   firstname: firstname.text.trim(),
-      //   lastname: lastname.text.trim(),
-      //   email: email.text.trim(),
-      //   // contactNumber: contactNumber.text.trim(),
-      //   profilePicture: '',
-      //   phoneNumber: contactNumber.text.trim(),
-      // );
-      // final userRepository = Get.put(UserRepository());
-      // await userRepository.saveUserRecord(newUser);
-      //
-      // //remove loader
-      //
-      // //show success message
-      //
-      //move to verify email screen
-
       if(selectedRadio == 2){
         usertype = 'Retail Customer';
       }else{
@@ -122,9 +100,6 @@ class SignupController extends GetxController {
       ELoaders.successSnackBar(
           title: 'Congratulations',
           message: 'Your account has been created! Verify email to continue');
-      // print(key);
-      // saveData('key', key);
-      // Get.to(() => const NavigationMenu());
       Get.to(
             () =>
             SuccessScreen(
@@ -134,18 +109,6 @@ class SignupController extends GetxController {
                 onPressed: () => Get.to(() => const NavigationMenu())
             ),
       );
-      // Navigator.of(context).pop();
-      // Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //       builder: (context) => SuccessScreen(
-      //                   image: EImages.successfullyRegisterAnimation,
-      //                   title: ETexts.yourAccountCreatedTitle,
-      //                   subTitle: ETexts.yourAccountCreatedSubTitle,
-      //                   onPressed: () => Get.offAll(() => const NavigationMenu())
-      //               ),
-      //     )
-      // );
     } catch (e) {
       /*//remove loader
       EFullScreenLoader.stopLoading();*/

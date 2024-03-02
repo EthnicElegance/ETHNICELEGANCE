@@ -21,15 +21,15 @@ class ECartItems extends StatelessWidget{
           if(showAddRemoveButtons) const SizedBox(height: ESizes.spaceBtwItems),
 
           if(showAddRemoveButtons)
-            const Row(
+            Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
-                  SizedBox(width: 70),
+                  const SizedBox(width: 70),
                   EProductQuantityWithAddRemoveButton(),
 
-                  EProductPriceText(price: '256'),
+                  const EProductPriceText(price: '256'),
                 ],
               ),
             ],

@@ -5,22 +5,73 @@ import 'package:ethnic_elegance/common/widgets/texts/product_title_text.dart';
 import 'package:ethnic_elegance/common/widgets/texts/section_heading.dart';
 import 'package:ethnic_elegance/utils/constants/colors.dart';
 import 'package:ethnic_elegance/utils/constants/sizes.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../utils/helpers/helper_functions.dart';
 
-class EProductAttributes extends StatelessWidget {
+//
+// class PaController extends GetxController {
+//   // final RxInt counter1 = RxInt(0);
+//   final RxBool counter = RxBool(false);
+//
+//   void change() {
+//     counter.value = !counter.value;
+//   }
+// }
+
+class EProductAttributes extends StatefulWidget {
   const EProductAttributes(
       {super.key,
       required this.colour,
       required this.fabric,
       required this.details,
-        required this.price});
+      required this.price,
+      required this.id});
 
-  final String colour, price, fabric, details;
+  final String colour, price, fabric, details, id;
+
+  @override
+  State<EProductAttributes> createState() => _EProductAttributesState();
+}
+
+class _EProductAttributesState extends State<EProductAttributes> {
+  Map? data;
+  var recdata;
+  var recdata1;
+  bool chk = false;
+  // int _selectedValue = 0;
+  int i = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<Map?> _fetchSubCategories() async {
+    final ref =
+        FirebaseDatabase.instance.ref().child("Project/product/${widget.id}");
+    await ref.once().then(
+        (documentSnapshot) => {recdata = documentSnapshot.snapshot.value});
+
+    print('---------------------------------recdata--------------------------');
+    print(recdata);
+    print(recdata['size']);
+    final ref2 = FirebaseDatabase.instance
+        .ref()
+        .child("Project/size/${recdata['size']}");
+    await ref2.once().then(
+        (documentSnapshot) => {recdata1 = documentSnapshot.snapshot.value});
+    print(
+        '---------------------------------recdata1--------------------------');
+    print(recdata1);
+
+    return recdata1;
+  }
 
   @override
   Widget build(BuildContext context) {
+
     final dark = EHelperFunctions.isDarkMode(context);
     return Column(
       children: [
@@ -44,20 +95,10 @@ class EProductAttributes extends StatelessWidget {
                           const EProductTitleText(
                               title: 'Price : ', smallSize: true),
                           const SizedBox(width: ESizes.spaceBtwItems),
-
-                          ///Actual Price
-                          // Text(
-                          //   '\$25',
-                          //   style: Theme.of(context)
-                          //       .textTheme
-                          //       .titleSmall!
-                          //       .apply(decoration: TextDecoration.lineThrough),
-                          // ),
                           const SizedBox(width: ESizes.spaceBtwItems),
-
                           /// Sale Price
                           EProductPriceText(
-                            price: price,
+                            price: widget.price,
                           )
                         ],
                       ),
@@ -67,7 +108,7 @@ class EProductAttributes extends StatelessWidget {
                         children: [
                           const EProductTitleText(
                               title: 'Fabric : ', smallSize: true),
-                          Text(fabric,
+                          Text(widget.fabric,
                               style: Theme.of(context).textTheme.titleMedium),
                         ],
                       ),
@@ -78,8 +119,7 @@ class EProductAttributes extends StatelessWidget {
 
               /// Variation Description
               EProductTitleText(
-                title:
-                    details,
+                title: widget.details,
                 smallSize: true,
                 maxLines: 4,
               ),
@@ -110,27 +150,58 @@ class EProductAttributes extends StatelessWidget {
             ),
           ],
         ),
-
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const ESectionHeading(
-              title: 'Size',
-              showActionButton: false,
-            ),
-            const SizedBox(height: ESizes.spaceBtwItems / 2),
-            Wrap(
-              spacing: 8,
-              children: [
-                EChoiceChip(
-                    text: 'EU 34', selected: true, onSelected: (value) {}),
-                EChoiceChip(
-                    text: 'EU 36', selected: false, onSelected: (value) {}),
-                EChoiceChip(
-                    text: 'EU 38', selected: false, onSelected: (value) {}),
-              ],
-            ),
-          ],
+        FutureBuilder(
+          future: _fetchSubCategories(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            //final boolList = snapshot.data!.entries.map((entry) => entry.key == false).toList();
+            var boolList = snapshot.data!.entries
+                .map((entry) => {entry.key: false})
+                .toList();
+            print(boolList);
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data == null) {
+              return const Center(
+                child: Text(
+                  'Up Comming Data',
+                  style: TextStyle(fontSize: 10),
+                ),
+              );
+            } else {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const ESectionHeading(
+                    title: 'Size',
+                    showActionButton: false,
+                  ),
+                  const SizedBox(height: ESizes.spaceBtwItems / 2),
+                  Wrap(
+                    spacing: 8,
+                    children: [
+                      for (var entry in snapshot.data!.entries)
+                        if (entry.value != '0')
+                          EChoiceChip(
+                              text: entry.key + '  ' + entry.value,
+                              selected: false,
+                              onSelected: (value) {
+                                for (var b in boolList) {
+                                  print(b.keys
+                                      .first); // Prints the entire boolList
+                                  if (b.keys.first == entry.key) {
+                                    b[b.keys.first] = value;
+                                  }
+                                }
+                                print(boolList);
+                              })
+                    ],
+                  ),
+                ],
+              );
+            }
+          },
         ),
       ],
     );

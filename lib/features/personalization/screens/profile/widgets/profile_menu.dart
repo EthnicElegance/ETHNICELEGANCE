@@ -24,8 +24,8 @@ class EProfileMenu extends StatelessWidget{
         padding: const EdgeInsets.symmetric(vertical: ESizes.spaceBtwItems/ 1.5),
         child: Row(
           children: [
-            Expanded(flex: 3, child: Text('Name', style: Theme.of(context).textTheme.bodySmall,overflow: TextOverflow.ellipsis)),
-            Expanded(flex: 5, child: Text('Ethnic Elegance',style: Theme.of(context).textTheme.bodyMedium,overflow: TextOverflow.ellipsis)),
+            Expanded(flex: 3, child: Text(title, style: Theme.of(context).textTheme.bodySmall,overflow: TextOverflow.ellipsis)),
+            Expanded(flex: 5, child: Text(value,style: Theme.of(context).textTheme.bodyMedium,overflow: TextOverflow.ellipsis)),
             const Expanded(child: Icon(Iconsax.arrow_right_34,size: 18)),
           ],
         )

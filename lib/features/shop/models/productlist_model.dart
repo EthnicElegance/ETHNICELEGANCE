@@ -33,13 +33,24 @@ class EProductList extends StatelessWidget {
             stream: FirebaseDatabase.instance.ref().child("Project/product").onValue,
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
+
                 Map<dynamic, dynamic> map = snapshot.data.snapshot
                     .value;
+
+                if (map.isEmpty) {
+                  return const Center(
+                    child: Text(
+                      'Up Comming Data',
+                      style: TextStyle(fontSize: 10),
+                    ),
+                  );
+                }
                 List<ProductModel> prodlist = [];
                 prodlist.clear();
-                map.forEach((dynamic, v) =>
+                map.forEach((dynamic key,dynamic v) {
+                  if (v != null) {
                     prodlist.add(ProductModel(
-                        dynamic.toString(),
+                        key.toString(),
                         v["subcatid"],
                         v["product_name"],
                         v["photo1"],
@@ -51,7 +62,11 @@ class EProductList extends StatelessWidget {
                         v["product_colour"],
                         v["fabric"],
                         v["detail"],
-                        v["availability"])));
+                        v["DateTime"],
+                        v["availability"]));
+                  }
+                });
+
                 return GridView.builder(
                   itemCount: limitedProduct ? productCount : prodlist.length,
                   shrinkWrap: true,

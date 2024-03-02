@@ -21,9 +21,10 @@ class ProductDetailScreen extends StatelessWidget {
   final String id;
   @override
   Widget build(BuildContext context) {
+    print(id);
     // final dark = EHelperFunctions.isDarkMode(context);
     return  Scaffold(
-      bottomNavigationBar: const EBottomAddToCart(),
+      bottomNavigationBar: EBottomAddToCart(),
       body: SingleChildScrollView(
         child: StreamBuilder(
           stream: FirebaseDatabase.instance.ref().child("Project/product/$id").onValue,
@@ -65,7 +66,7 @@ class ProductDetailScreen extends StatelessWidget {
                           fabric: data['fabric'],),
 
                         /// Attributes
-                        EProductAttributes(colour: data['product_colour'],price:data['customer_price'],details: data['detail'],fabric: data['fabric'],),
+                        EProductAttributes(colour: data['product_colour'],price:data['customer_price'],details: data['detail'],fabric: data['fabric'],id: id),
                         const SizedBox(height: ESizes.spaceBtwSections),
 
                         /// Checkout Button
@@ -112,10 +113,12 @@ class ProductDetailScreen extends StatelessWidget {
               );
             }
             else {
-              return const CircularProgressIndicator(
-                  backgroundColor: Colors.grey,
-                  valueColor: AlwaysStoppedAnimation(Colors.black),
-                  strokeWidth: 1.5);
+              return const Center(
+                child: CircularProgressIndicator(
+                    backgroundColor: Colors.grey,
+                    valueColor: AlwaysStoppedAnimation(Colors.black),
+                    strokeWidth: 1.5),
+              );
             }
           }
         ),

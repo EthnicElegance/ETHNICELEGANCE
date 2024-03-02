@@ -9,9 +9,14 @@ import '../../../../common/widgets/products/cart/add_remove_button.dart';
 import '../../../../common/widgets/products/cart/cart_item.dart';
 
 import '../../../../utils/constants/sizes.dart';
-
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -23,22 +28,22 @@ class CartScreen extends StatelessWidget {
               shrinkWrap: true,
               itemCount: 8,
               separatorBuilder: (_, __) => const SizedBox(height: ESizes.spaceBtwSections,),
-              itemBuilder: (_, index) => const Column(
+              itemBuilder: (_, index) => Column(
                 children: [
-                  ECartItem(),
-                  SizedBox(height: ESizes.spaceBtwItems),
+                  const ECartItem(),
+                  const SizedBox(height: ESizes.spaceBtwItems),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          SizedBox(width: 70),
+                          const SizedBox(width: 70),
                           //add remove button
                           EProductQuantityWithAddRemoveButton(),
                         ],
                       ),
-                      EProductPriceText(price: '256'),
+                      const EProductPriceText(price: '256'),
                     ],
                   )
                 ],

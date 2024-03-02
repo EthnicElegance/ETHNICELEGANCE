@@ -10,12 +10,31 @@ import 'package:get/get.dart';
 import '../../../../common/widgets/custom_shapes/containers/primary_header_container.dart';
 import '../../../../common/widgets/custom_shapes/containers/search_container.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
+import '../../../../sharepreferences.dart';
 import '../../models/productlist_model.dart';
 
-
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+
+}
+
+
+
+class _HomeScreenState extends State<HomeScreen> {
+  String? userid;
+
+  @override
+  void initState() {
+    super.initState();
+    getKey().then((String? value) {
+      setState(() {
+        userid = value;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,12 +93,17 @@ class HomeScreen extends StatelessWidget {
                 children: [
 
                   ///Product Slider
-                  const EPromoSlider(
-                    banners: [
-                      EImages.onBoardingImage1,
-                      EImages.onBoardingImage2,
-                      EImages.onBoardingImage3,
-                    ],
+                  FutureBuilder(
+                    future: null,
+                    builder: (context, snapshot) {
+                      return const EPromoSlider(
+                        banners: [
+                          EImages.onBoardingImage1,
+                          EImages.onBoardingImage2,
+                          EImages.onBoardingImage3,
+                        ],
+                      );
+                    }
                   ),
                   const SizedBox(height: ESizes.spaceBtwSections),
 
