@@ -10,16 +10,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../../utils/helpers/helper_functions.dart';
 
-//
-// class PaController extends GetxController {
-//   // final RxInt counter1 = RxInt(0);
-//   final RxBool counter = RxBool(false);
-//
-//   void change() {
-//     counter.value = !counter.value;
-//   }
-// }
-
 class EProductAttributes extends StatefulWidget {
   const EProductAttributes(
       {super.key,
@@ -71,6 +61,7 @@ class _EProductAttributesState extends State<EProductAttributes> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> size = [];
 
     final dark = EHelperFunctions.isDarkMode(context);
     return Column(
@@ -93,8 +84,7 @@ class _EProductAttributesState extends State<EProductAttributes> {
                       Row(
                         children: [
                           const EProductTitleText(
-                              title: 'Price : ', smallSize: true),
-                          const SizedBox(width: ESizes.spaceBtwItems),
+                              title: '  Price : ', smallSize: true),
                           const SizedBox(width: ESizes.spaceBtwItems),
                           /// Sale Price
                           EProductPriceText(
@@ -108,6 +98,7 @@ class _EProductAttributesState extends State<EProductAttributes> {
                         children: [
                           const EProductTitleText(
                               title: 'Fabric : ', smallSize: true),
+                          const SizedBox(width: ESizes.spaceBtwItems),
                           Text(widget.fabric,
                               style: Theme.of(context).textTheme.titleMedium),
                         ],
@@ -153,6 +144,13 @@ class _EProductAttributesState extends State<EProductAttributes> {
         FutureBuilder(
           future: _fetchSubCategories(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            for (var entry in snapshot.data!.entries) {
+              if (entry.value != '0') {
+                size.add(entry.key);
+              }
+            }
+            print(size);
+
             //final boolList = snapshot.data!.entries.map((entry) => entry.key == false).toList();
             var boolList = snapshot.data!.entries
                 .map((entry) => {entry.key: false})
@@ -184,9 +182,12 @@ class _EProductAttributesState extends State<EProductAttributes> {
                       for (var entry in snapshot.data!.entries)
                         if (entry.value != '0')
                           EChoiceChip(
-                              text: entry.key + '  ' + entry.value,
+                              text: entry.key,
                               selected: false,
                               onSelected: (value) {
+                                setState(() {
+
+                                });
                                 for (var b in boolList) {
                                   print(b.keys
                                       .first); // Prints the entire boolList
@@ -195,7 +196,9 @@ class _EProductAttributesState extends State<EProductAttributes> {
                                   }
                                 }
                                 print(boolList);
-                              })
+                              }
+                              )
+
                     ],
                   ),
                 ],

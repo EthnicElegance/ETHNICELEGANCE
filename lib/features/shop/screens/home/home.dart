@@ -2,6 +2,7 @@ import 'package:ethnic_elegance/features/shop/screens/all_product/all_products.d
 import 'package:ethnic_elegance/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:ethnic_elegance/features/shop/screens/home/widgets/home_categories.dart';
 import 'package:ethnic_elegance/features/shop/screens/home/widgets/promo_slider.dart';
+import 'package:ethnic_elegance/navigation_menu.dart';
 import 'package:ethnic_elegance/utils/constants/colors.dart';
 import 'package:ethnic_elegance/utils/constants/image_strings.dart';
 import 'package:ethnic_elegance/utils/constants/sizes.dart';
@@ -38,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: const NavigationMenu(),
       body: SingleChildScrollView(
         child: Column(
           children: [

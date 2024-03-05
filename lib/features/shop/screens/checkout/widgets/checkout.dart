@@ -4,7 +4,7 @@ import 'package:ethnic_elegance/common/widgets/success_screen/success_screen.dar
 import 'package:ethnic_elegance/features/shop/screens/checkout/widgets/billing_address_section.dart';
 import 'package:ethnic_elegance/features/shop/screens/checkout/widgets/billing_amount_section.dart';
 import 'package:ethnic_elegance/features/shop/screens/checkout/widgets/billing_payment_section.dart';
-import 'package:ethnic_elegance/navigation_menu.dart';
+import 'package:ethnic_elegance/features/shop/screens/home/home.dart';
 import 'package:ethnic_elegance/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -62,7 +62,7 @@ class CheckOutScreen extends StatelessWidget {
                   image: EImages.successfulPaymentIcon,
                   title: 'Payment Success',
                   subTitle: 'your item will be shipped soon',
-                  onPressed: () => Get.offAll(() => const NavigationMenu()),
+                  onPressed: () => Get.offAll(() => const HomeScreen()),
               ),
               ),
               child: const Text('Checkout \$256.0')),

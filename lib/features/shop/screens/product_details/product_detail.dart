@@ -5,41 +5,39 @@ import 'package:ethnic_elegance/features/shop/screens/product_details/widgets/pr
 import 'package:ethnic_elegance/features/shop/screens/product_details/widgets/product_meta_data.dart';
 import 'package:ethnic_elegance/features/shop/screens/product_details/widgets/rating_share_widget.dart';
 import 'package:ethnic_elegance/features/shop/screens/product_reviews/product_reviews.dart';
-// import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-// import 'package:ethnic_elegance/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:readmore/readmore.dart';
 import '../../../../utils/constants/sizes.dart';
-// import '../../models/product_model.dart';
 
-class ProductDetailScreen extends StatelessWidget {
+class ProductDetailScreen extends StatefulWidget {
   const ProductDetailScreen({super.key, required this.id});
   final String id;
   @override
+  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+}
+
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  @override
   Widget build(BuildContext context) {
-    print(id);
-    // final dark = EHelperFunctions.isDarkMode(context);
+
     return  Scaffold(
       bottomNavigationBar: EBottomAddToCart(),
       body: SingleChildScrollView(
         child: StreamBuilder(
-          stream: FirebaseDatabase.instance.ref().child("Project/product/$id").onValue,
+          stream: FirebaseDatabase.instance.ref().child("Project/product/${widget.id}").onValue,
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.hasData) {
-              // Map<dynamic, dynamic> map = snapshot.data.snapshot
-              //     .value;
-              // List<ProductModel> prodlist = [];
-              //
+
               final data = snapshot.data!.snapshot.value as Map<dynamic, dynamic>;
               return Column(
                 children: [
 
                   /// 1-Product Image Slider
-                  EProductImageSlider(image1: data['photo1'],image2: data['photo2'],image3: data['photo3'],),
+                  EProductImageSlider(image1: data['photo1'],image2: data['photo2'],image3: data['photo3'],productId: widget.id),
 
                   /// 2- Product Details
                   Padding(
@@ -66,7 +64,7 @@ class ProductDetailScreen extends StatelessWidget {
                           fabric: data['fabric'],),
 
                         /// Attributes
-                        EProductAttributes(colour: data['product_colour'],price:data['customer_price'],details: data['detail'],fabric: data['fabric'],id: id),
+                        EProductAttributes(colour: data['product_colour'],price:data['customer_price'],details: data['detail'],fabric: data['fabric'],id: widget.id),
                         const SizedBox(height: ESizes.spaceBtwSections),
 
                         /// Checkout Button

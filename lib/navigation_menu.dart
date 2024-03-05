@@ -9,39 +9,91 @@ import 'package:iconsax/iconsax.dart';
 import 'features/shop/screens/store/store.dart';
 import 'features/shop/screens/wishlist/wishlist.dart';
 
-class NavigationMenu extends StatelessWidget {
+class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});
 
   @override
+  State<NavigationMenu> createState() => _NavigationMenuState();
+}
+
+class _NavigationMenuState extends State<NavigationMenu> {
+  static int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    if (index==0)
+    {
+      Navigator.pop(context);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+    }
+    else if (index==1)
+    {
+      Navigator.pop(context);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const StoreScreen()));
+    }
+    else if (index==2)
+    {
+      Navigator.pop(context);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const FavouriteScreen()));
+    }
+    else if (index==3)
+    {
+      Navigator.pop(context);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const SettingsScreen()));
+    }
+    else
+    {
+      Navigator.pop(context);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final controller = Get.put(NavigationController());
     final darkMode = EHelperFunctions.isDarkMode(context);
 
-    return Scaffold(
-      bottomNavigationBar: Obx(
-        () => NavigationBar(
-          height: 80,
-          elevation: 0,
-          selectedIndex: controller.selectedIndex.value,
-          onDestinationSelected: (index) =>
-              controller.selectedIndex.value = index,
-          backgroundColor: darkMode ? EColors.black : EColors.white,
-          indicatorColor: darkMode ? EColors.white.withOpacity(0.1) : EColors.black.withOpacity(0.1),
-          destinations: const [
-            NavigationDestination(icon: Icon(Iconsax.home), label: "Home"),
-            NavigationDestination(icon: Icon(Iconsax.shop), label: "Store"),
-            NavigationDestination(icon: Icon(Iconsax.heart), label: "Wishlist"),
-            NavigationDestination(icon: Icon(Iconsax.user), label: "Profile"),
-          ],
+    return  BottomNavigationBar(
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Iconsax.home),
+          label: 'Home',
+          backgroundColor: Colors.blue,
         ),
-      ),
-      body: Obx(() => controller.screens[controller.selectedIndex.value]),
+        BottomNavigationBarItem(
+          icon: Icon(Iconsax.shop),
+          label: 'Store',
+          backgroundColor: Colors.green,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Iconsax.heart),
+          label: 'Wishlist',
+          backgroundColor: Colors.purple,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Iconsax.user),
+          label: 'Profile',
+          backgroundColor: Colors.yellow,
+        ),
+      ],
+      currentIndex: _selectedIndex,
+      selectedItemColor: darkMode ? EColors.white : EColors.black ,
+      onTap: _onItemTapped,
+      elevation: 0,
+      type: BottomNavigationBarType.fixed, // Fixed
+      backgroundColor: darkMode ? EColors.black : EColors.white, //
     );
   }
 }
 
 class NavigationController extends GetxController {
-  final Rx<int> selectedIndex = 0.obs;
+  final Rx<int> selectedIndex = 0.obs ;
 
   final screens = [
     const HomeScreen(),
@@ -49,4 +101,5 @@ class NavigationController extends GetxController {
     const FavouriteScreen(),
     const SettingsScreen()
   ];
+
 }

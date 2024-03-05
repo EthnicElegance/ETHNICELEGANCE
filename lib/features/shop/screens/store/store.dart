@@ -1,14 +1,12 @@
 import 'package:ethnic_elegance/common/widgets/appbar/appbar.dart';
 import 'package:ethnic_elegance/common/widgets/custom_shapes/containers/search_container.dart';
 import 'package:ethnic_elegance/common/widgets/texts/section_heading.dart';
-// import 'package:ethnic_elegance/features/shop/screens/store/widgets/category_tab.dart';
+import 'package:ethnic_elegance/navigation_menu.dart';
 import 'package:ethnic_elegance/utils/constants/colors.dart';
 import 'package:ethnic_elegance/utils/constants/sizes.dart';
 import 'package:ethnic_elegance/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-// import '../../../../common/widgets/appbar/tabbar.dart';
 
 import '../../../../common/widgets/products/cart/cart_menu_icon.dart';
 import '../../models/categorylist_model.dart';
@@ -31,6 +29,7 @@ class StoreScreen extends StatelessWidget {
             ECartCounterIcon(iconColor: Colors.black),
           ],
         ),
+        bottomNavigationBar: const NavigationMenu(),
         body: NestedScrollView(
           physics: const NeverScrollableScrollPhysics(),
             headerSliverBuilder: (_, innerBoxIsScrolled) {

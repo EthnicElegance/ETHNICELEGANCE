@@ -13,7 +13,7 @@ class EAppTheme{
 
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
-    // fontFamily: ''
+    // fontFamily:  ,
     brightness: Brightness.light,
     primaryColor: Colors.blue,
     textTheme: ETextTheme.lightTextTheme,

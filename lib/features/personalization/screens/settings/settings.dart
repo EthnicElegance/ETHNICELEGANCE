@@ -1,19 +1,16 @@
 import 'package:ethnic_elegance/common/widgets/appbar/appbar.dart';
 import 'package:ethnic_elegance/common/widgets/custom_shapes/containers/primary_header_container.dart';
-
 import 'package:ethnic_elegance/common/widgets/layouts/list_tiles/settings_menu_tile.dart';
 import 'package:ethnic_elegance/common/widgets/texts/section_heading.dart';
 import 'package:ethnic_elegance/features/authentication/screens/login/login.dart';
 import 'package:ethnic_elegance/features/personalization/screens/address/widgets/address.dart';
 import 'package:ethnic_elegance/features/shop/screens/cart/cart.dart';
-// import 'package:ethnic_elegance/features/shop/screens/checkout/widgets/checkout.dart';
 import 'package:ethnic_elegance/features/shop/screens/order/widgets/order.dart';
-
+import 'package:ethnic_elegance/navigation_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../../common/widgets/layouts/list_tiles/user_profile_tile.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
@@ -24,6 +21,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: const NavigationMenu(),
       body: SingleChildScrollView(
         child: Column(
           children: [

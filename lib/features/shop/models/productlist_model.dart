@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:ethnic_elegance/features/shop/models/product_model.dart';
+import 'package:ethnic_elegance/features/shop/models/wishlist_item.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,12 +12,16 @@ import '../../../common/widgets/custom_shapes/containers/rounded_container.dart'
 import '../../../common/widgets/icons/circular_icon.dart';
 import '../../../common/widgets/texts/product_price_text.dart';
 import '../../../common/widgets/texts/product_title_text.dart';
+import '../../../sharepreferences.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_functions.dart';
+import '../../../utils/popups/loaders.dart';
+import '../controllers/wishlist_service.dart';
 import '../screens/product_details/product_detail.dart';
 
-class EProductList extends StatelessWidget {
+
+class EProductList extends StatefulWidget {
   const EProductList ({super.key,this.limitedProduct = false,this.productCount, this.allProduct = true, this.productSubCat});
 
   final bool limitedProduct;
@@ -23,8 +30,61 @@ class EProductList extends StatelessWidget {
   final String? productSubCat;
 
   @override
+  State<EProductList> createState() => _EProductListState();
+}
+
+class _EProductListState extends State<EProductList> {
+
+  late Query dbRef;
+  late Query dbRefUser;
+  String? userid;
+  Map<int, Map> userMap = {};
+  late Map data1;
+  late Map data2;
+  late List<Map> userName = [];
+  Map<dynamic, dynamic>? userData;
+
+  List<Map> appointment = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getKey().then((String? value) {
+      setState(() {
+        userid = value;
+      });
+    });
+  }
+
+  Future<void> getHospitalData() async {
+
+    appointment.clear();
+    userMap.clear();
+    dbRef = FirebaseDatabase.instance.ref().child('Project/wishlist');
+    dbRef
+        .orderByChild("userId")
+        .equalTo(userid)
+        .onValue
+        .listen((event) async {
+      Map<dynamic, dynamic>? values = event.snapshot.value as Map?;
+      if (values != null) {
+        values.forEach((key, value) async {
+          appointment.add({
+            'wishlistkey': key,
+            'productId': value['productId'],
+            "userId": value["userId"],
+          });
+        });
+      }
+    });
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     final dark = EHelperFunctions.isDarkMode(context);
+    getHospitalData();
+
     return Padding(
       padding: EdgeInsets.zero,
       child: SizedBox(
@@ -40,7 +100,7 @@ class EProductList extends StatelessWidget {
                 if (map.isEmpty) {
                   return const Center(
                     child: Text(
-                      'Up Comming Data',
+                      'Up Coming Data',
                       style: TextStyle(fontSize: 10),
                     ),
                   );
@@ -66,9 +126,10 @@ class EProductList extends StatelessWidget {
                         v["availability"]));
                   }
                 });
-
+                final productIds = appointment.map((item) => item['productId']).toList();
+                final wishlistIds = appointment.map((item) => item['wishlistkey']).toList();
                 return GridView.builder(
-                  itemCount: limitedProduct ? productCount : prodlist.length,
+                  itemCount: widget.limitedProduct ?widget.productCount : prodlist.length,
                   shrinkWrap: true,
                   padding: EdgeInsets.zero,
                   physics: const NeverScrollableScrollPhysics(),
@@ -79,6 +140,11 @@ class EProductList extends StatelessWidget {
                     mainAxisExtent: 280,
                   ),
                   itemBuilder: (BuildContext context,int index) {
+
+                    String productId = prodlist[index].key;
+                    final found = productIds.contains(productId);
+                    var icon = found ? Iconsax.heart5 : Iconsax.heart;
+
                     return GestureDetector(
                       onTap: () => Get.to(() => ProductDetailScreen(id: prodlist[index].key,)),
                       child: Container(
@@ -134,12 +200,40 @@ class EProductList extends StatelessWidget {
                                   ),
 
                                   /// Favourite Icon Button
-                                  const Positioned(
+                                  Positioned(
                                     top: 0,
                                     right: 0,
-                                    child: ECircularIcon(
-                                        icon: Iconsax.heart5, color: Colors.red),
-                                  ),
+                                    child: ECircularIcon(icon: icon, color: Colors.red,
+                                      onPressed: ()  async {
+                                        if(icon == Iconsax.heart){
+                                          setState(() {
+                                            icon = Iconsax.heart5;
+                                          });
+                                          await WishlistService().addToWishlist(WishlistItem(productId: productId, userId: userid));
+                                          ELoaders.successSnackBar(
+                                              title: 'Added to Wishlist',
+                                            message: 'the product ${prodlist[index].pname} Added to Wishlist'
+                                              );
+                                          // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Added to Wishlist')));
+                                        }
+                                        else if(icon == Iconsax.heart5){
+                                          setState(() {
+                                            icon = Iconsax.heart;
+                                          });
+                                          // final foundWishlistId = wishlistIds.firstWhere((id) => productIds.contains(productId), orElse: () => -1);
+                                          String productId = prodlist[index].key;
+
+                                          await WishlistService()
+                                              .removeFromWishlist(
+                                              wishlistIds.firstWhere((id) => productIds.contains(productId)));
+                                          ELoaders.successSnackBar(
+                                            title: 'Removed from Wishlist',
+                                            message: 'the product ${prodlist[index].pname} Removed from Wishlist'
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  )
                                 ],
                               ),
                             ),

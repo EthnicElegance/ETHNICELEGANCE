@@ -1,13 +1,38 @@
 import 'package:ethnic_elegance/common/styles/spacing_styles.dart';
 import 'package:ethnic_elegance/features/authentication/screens/login/widgets/login_form.dart';
 import 'package:ethnic_elegance/features/authentication/screens/login/widgets/login_header.dart';
+import 'package:ethnic_elegance/features/shop/screens/home/home.dart';
 import 'package:ethnic_elegance/utils/constants/colors.dart';
 import 'package:ethnic_elegance/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  late bool containsKey;
+
+  @override
+  void initState(){
+    super.initState();
+    _checkIfLoggedIn();
+  }
+
+  Future<void> _checkIfLoggedIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    containsKey = prefs.containsKey('key');
+
+    if (containsKey) {
+      Get.offAll(() => const HomeScreen());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

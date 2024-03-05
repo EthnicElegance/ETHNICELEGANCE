@@ -22,12 +22,10 @@ class ETabBar extends StatelessWidget implements PreferredSizeWidget{
         unselectedLabelColor: EColors.darkerGrey,
       ),
     );
-    // TODO: implement build
-    throw UnimplementedError();
   }
 
   @override
-  // TODO: implement preferredSize
+
   Size get preferredSize => Size.fromHeight(EDeviceUtils.getAppBarHeight());
   
 }

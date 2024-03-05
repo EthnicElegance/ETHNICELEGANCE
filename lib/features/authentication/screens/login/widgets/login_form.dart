@@ -1,7 +1,7 @@
 import 'package:ethnic_elegance/features/authentication/controllers/signin/signin_controller.dart';
 import 'package:ethnic_elegance/features/authentication/screens/password_configuration/forget_password.dart';
 import 'package:ethnic_elegance/features/authentication/screens/signup/signup.dart';
-import 'package:ethnic_elegance/navigation_menu.dart';
+import 'package:ethnic_elegance/features/shop/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -30,7 +30,7 @@ class _ELoginFormState extends State<ELoginForm> {
 
     if (containsKey) {
       // If the key exists, navigate to HomePage
-     Get.offAll(() => const NavigationMenu());
+     Get.offAll(() => const HomeScreen());
     }
   }
 
