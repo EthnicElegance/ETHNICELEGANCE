@@ -34,9 +34,9 @@ class _EWishListState extends State<EWishList> {
   Map<int, Map> userMap = {};
   late Map data1;
   late Map data2;
-  late List<Map> userName = [];
+  late List<Map> productList = [];
 
-  List<Map> appointment = [];
+  List<Map> wishList = [];
 
   @override
   void initState() {
@@ -50,7 +50,7 @@ class _EWishListState extends State<EWishList> {
 
   Future<void> getHospitalData() async {
     _streamController = StreamController<List<Map>>();
-    appointment.clear();
+    wishList.clear();
     userMap.clear();
     dbRef = FirebaseDatabase.instance.ref().child('Project/wishlist');
     dbRef.orderByChild("userId").equalTo(userid).onValue.listen((event) async {
@@ -59,16 +59,16 @@ class _EWishListState extends State<EWishList> {
         var productId;
         values.forEach((key, value) async {
           productId = value["productId"];
-          appointment.add({
+          wishList.add({
             'wishlistkey': key,
             'productId': value['productId'],
             "userId": value["userId"],
           });
-          await fetchUserData(productId, appointment.length - 1);
+          await fetchUserData(productId, wishList.length - 1);
         });
       }
-      _streamController.add(appointment);
-      print(appointment.length);
+      _streamController.add(wishList);
+      print(wishList.length);
     });
   }
 
@@ -299,6 +299,6 @@ class _EWishListState extends State<EWishList> {
       "detail": userData!["detail"],
       "availability": userData!["availability"]
     };
-    _streamController.add(appointment); // Update the stream with new data
+    _streamController.add(wishList); // Update the stream with new data
   }
 }
