@@ -1,9 +1,7 @@
 import 'package:ethnic_elegance/common/widgets/appbar/appbar.dart';
 import 'package:ethnic_elegance/common/widgets/custom_shapes/curved_edges/curved_edges_widget.dart';
 import 'package:ethnic_elegance/common/widgets/icons/circular_icon.dart';
-// import 'package:ethnic_elegance/common/widgets/images/rounded_image.dart';
 import 'package:ethnic_elegance/utils/constants/colors.dart';
-// import 'package:ethnic_elegance/utils/constants/image_strings.dart';
 import 'package:ethnic_elegance/utils/constants/sizes.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -138,16 +136,13 @@ class _EProductImageSliderState extends State<EProductImageSlider> {
             EAppBar(
               showBackArrow: true,
               actions: [
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  child: ECircularIcon(icon: icon, color: Colors.red,
+                ECircularIcon(icon: icon, color: Colors.red,
                     onPressed: ()  async {
                       if(icon == Iconsax.heart){
                         setState(() {
                           icon = Iconsax.heart5;
                         });
-                        await WishlistService().addToWishlist(WishlistItem(productId: productId, userId: userid));
+                        await WishlistService().addToWishlist(WishlistItem(productId: widget.productId, userId: userid));
                         ELoaders.successSnackBar(
                             title: 'Added to Wishlist',
                             message: 'the product has been Added to Wishlist'
@@ -158,12 +153,9 @@ class _EProductImageSliderState extends State<EProductImageSlider> {
                         setState(() {
                           icon = Iconsax.heart;
                         });
-                        // final foundWishlistId = wishlistIds.firstWhere((id) => productIds.contains(productId), orElse: () => -1);
-                        String productId = widget.productId;
-
                         await WishlistService()
                             .removeFromWishlist(
-                            wishlistIds.firstWhere((id) => productIds.contains(productId)));
+                            wishlistIds.firstWhere((id) => productIds.contains(widget.productId)));
                         ELoaders.successSnackBar(
                             title: 'Removed from Wishlist',
                             message: 'the product has been Removed from Wishlist'
@@ -171,7 +163,6 @@ class _EProductImageSliderState extends State<EProductImageSlider> {
                       }
                     },
                   ),
-                )
               ],
             ),
           ],

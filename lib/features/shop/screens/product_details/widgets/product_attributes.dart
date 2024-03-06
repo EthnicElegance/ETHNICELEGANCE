@@ -44,17 +44,17 @@ class _EProductAttributesState extends State<EProductAttributes> {
     await ref.once().then(
         (documentSnapshot) => {recdata = documentSnapshot.snapshot.value});
 
-    print('---------------------------------recdata--------------------------');
-    print(recdata);
-    print(recdata['size']);
+    // print('---------------------------------recdata--------------------------');
+    // print(recdata);
+    // print(recdata['size']);
     final ref2 = FirebaseDatabase.instance
         .ref()
         .child("Project/size/${recdata['size']}");
     await ref2.once().then(
         (documentSnapshot) => {recdata1 = documentSnapshot.snapshot.value});
-    print(
-        '---------------------------------recdata1--------------------------');
-    print(recdata1);
+    // print(
+    //     '---------------------------------recdata1--------------------------');
+    // print(recdata1);
 
     return recdata1;
   }
@@ -144,67 +144,61 @@ class _EProductAttributesState extends State<EProductAttributes> {
         FutureBuilder(
           future: _fetchSubCategories(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            for (var entry in snapshot.data!.entries) {
-              if (entry.value != '0') {
-                size.add(entry.key);
+            if (snapshot.hasData) {
+              for (var entry in snapshot.data!.entries) {
+                if (entry.value != '0') {
+                  size.add(entry.key);
+                }
+              }
+              // var boolList = snapshot.data!.entries
+              //     .map((entry) => {entry.key: false})
+              //     .toList();
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else if (!snapshot.hasData || snapshot.data == null) {
+                return const Center(
+                  child: Text(
+                    'Up Coming Data',
+                    style: TextStyle(fontSize: 10),
+                  ),
+                );
+              } else {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const ESectionHeading(
+                      title: 'Size',
+                      showActionButton: false,
+                    ),
+                    const SizedBox(height: ESizes.spaceBtwItems / 2),
+                    Wrap(
+                      spacing: 8,
+                      children: [
+                        for (var entry in snapshot.data!.entries)
+                          if (entry.value != '0')
+                            EChoiceChip(
+                                text: entry.key,
+                                selected: false,
+                                onSelected: (value) {}
+                            )
+
+                      ],
+                    ),
+                  ],
+                );
               }
             }
-            print(size);
-
-            //final boolList = snapshot.data!.entries.map((entry) => entry.key == false).toList();
-            var boolList = snapshot.data!.entries
-                .map((entry) => {entry.key: false})
-                .toList();
-            print(boolList);
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
-            } else if (!snapshot.hasData || snapshot.data == null) {
+            else {
               return const Center(
-                child: Text(
-                  'Up Comming Data',
-                  style: TextStyle(fontSize: 10),
-                ),
-              );
-            } else {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const ESectionHeading(
-                    title: 'Size',
-                    showActionButton: false,
-                  ),
-                  const SizedBox(height: ESizes.spaceBtwItems / 2),
-                  Wrap(
-                    spacing: 8,
-                    children: [
-                      for (var entry in snapshot.data!.entries)
-                        if (entry.value != '0')
-                          EChoiceChip(
-                              text: entry.key,
-                              selected: false,
-                              onSelected: (value) {
-                                setState(() {
-
-                                });
-                                for (var b in boolList) {
-                                  print(b.keys
-                                      .first); // Prints the entire boolList
-                                  if (b.keys.first == entry.key) {
-                                    b[b.keys.first] = value;
-                                  }
-                                }
-                                print(boolList);
-                              }
-                              )
-
-                    ],
-                  ),
-                ],
+                child: CircularProgressIndicator(
+                    backgroundColor: Colors.grey,
+                    valueColor: AlwaysStoppedAnimation(Colors.black),
+                    strokeWidth: 1.5),
               );
             }
-          },
+          }
         ),
       ],
     );

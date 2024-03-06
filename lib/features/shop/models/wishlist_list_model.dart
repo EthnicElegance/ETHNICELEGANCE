@@ -13,6 +13,7 @@ import '../../../common/widgets/texts/product_title_text.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_functions.dart';
+import '../../../utils/popups/loaders.dart';
 import '../controllers/wishlist_service.dart';
 import '../screens/product_details/product_detail.dart';
 import '../screens/wishlist/wishlist.dart';
@@ -101,7 +102,7 @@ class _EWishListState extends State<EWishList> {
                   if (data1.isNotEmpty && data2.isNotEmpty) {
                     return GestureDetector(
                       onTap: () => Get.to(
-                          () => ProductDetailScreen(id: data1['productId'])),
+                          () => ProductDetailScreen(id: prodlist[index]['productId'])),
                       child: Container(
                         width: 180,
                         padding: const EdgeInsets.all(1),
@@ -170,10 +171,10 @@ class _EWishListState extends State<EWishList> {
                                             prodlist[index]['wishlistkey'];
                                         await WishlistService()
                                             .removeFromWishlist(wishlistId);
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(const SnackBar(
-                                                content: Text(
-                                                    'Removed from Wishlist')));
+                                        ELoaders.successSnackBar(
+                                            title: 'Removed from Wishlist',
+                                            message: 'the product has been Removed from Wishlist'
+                                        );
                                         Get.offAll(
                                             () => const FavouriteScreen());
                                       },
@@ -198,7 +199,7 @@ class _EWishListState extends State<EWishList> {
                                       height: ESizes.spaceBtwItems / 2),
                                   Row(
                                     children: [
-                                      Text(data1['wishlistkey'],
+                                      Text(data2['availability'],
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 1,
                                           style: Theme.of(context)

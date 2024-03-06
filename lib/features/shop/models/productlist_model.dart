@@ -209,23 +209,21 @@ class _EProductListState extends State<EProductList> {
                                           setState(() {
                                             icon = Iconsax.heart5;
                                           });
-                                          await WishlistService().addToWishlist(WishlistItem(productId: productId, userId: userid));
+                                          await WishlistService().addToWishlist(WishlistItem(productId: prodlist[index].key, userId: userid));
                                           ELoaders.successSnackBar(
                                               title: 'Added to Wishlist',
                                             message: 'the product ${prodlist[index].pname} Added to Wishlist'
                                               );
-                                          // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Added to Wishlist')));
+
                                         }
                                         else if(icon == Iconsax.heart5){
                                           setState(() {
                                             icon = Iconsax.heart;
                                           });
-                                          // final foundWishlistId = wishlistIds.firstWhere((id) => productIds.contains(productId), orElse: () => -1);
-                                          String productId = prodlist[index].key;
 
                                           await WishlistService()
                                               .removeFromWishlist(
-                                              wishlistIds.firstWhere((id) => productIds.contains(productId)));
+                                              wishlistIds.firstWhere((id) => productIds.contains(prodlist[index].key)));
                                           ELoaders.successSnackBar(
                                             title: 'Removed from Wishlist',
                                             message: 'the product ${prodlist[index].pname} Removed from Wishlist'

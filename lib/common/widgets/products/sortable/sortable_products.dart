@@ -25,7 +25,6 @@ class ESortableProducts extends StatelessWidget {
         /// Products
         const EProductList(),
 
-        // EGridLayout(itemCount: 8, itemBuilder: (_, index) => const EProductCardVertical()),
       ],
     );
   }
