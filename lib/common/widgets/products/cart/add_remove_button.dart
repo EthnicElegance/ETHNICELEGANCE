@@ -398,6 +398,24 @@ class _EProductQuantityWithAddRemoveButtonState
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
+        IconButton(
+          onPressed: () {
+            // Delete item from the cart in Firebase
+            FirebaseDatabase.instance
+                .ref()
+                .child("Project/cart/${widget.cartId}")
+                .remove()
+                .then((_) => ELoaders.successSnackBar(
+                title: 'Item Removed',
+                message: 'Item removed from cart'))
+                .catchError((error) => ELoaders.errorSnackBar(
+                title: 'Failed to remove',
+                message: 'Failed to remove item: $error'));
+          },
+          icon: const Icon(Icons.delete),
+          color: Colors.red,
+        ),
+        const SizedBox(width: ESizes.spaceBtwItems),
         ECircularIcon(
           onPressed: () {
             controller.decrement(widget.cartId, widget.price);
@@ -444,24 +462,6 @@ class _EProductQuantityWithAddRemoveButtonState
           size: ESizes.md,
           color: EColors.white,
           backgroundColor: EColors.primary,
-        ),
-        const SizedBox(width: ESizes.spaceBtwItems),
-        IconButton(
-          onPressed: () {
-            // Delete item from the cart in Firebase
-            FirebaseDatabase.instance
-                .ref()
-                .child("Project/cart/${widget.cartId}")
-                .remove()
-                .then((_) => ELoaders.successSnackBar(
-                title: 'Item Removed',
-                message: 'Item removed from cart'))
-                .catchError((error) => ELoaders.errorSnackBar(
-                title: 'Failed to remove',
-                message: 'Failed to remove item: $error'));
-          },
-          icon: const Icon(Icons.delete),
-          color: Colors.red,
         ),
       ],
     );

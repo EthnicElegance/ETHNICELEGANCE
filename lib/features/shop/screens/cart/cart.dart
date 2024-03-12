@@ -247,7 +247,7 @@ class _CartScreenState extends State<CartScreen> {
                       children: [
                         Row(
                           children: [
-                            const SizedBox(width: 70),
+                            const SizedBox(width: 10),
                             EProductQuantityWithAddRemoveButton(
                               cartQty: cartList[index].cartQTY,
                               cartId: cartList[index].id, price: cartList[index].price,
