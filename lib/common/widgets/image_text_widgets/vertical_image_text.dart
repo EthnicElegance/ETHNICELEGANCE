@@ -25,8 +25,8 @@ class EVerticalImageText extends StatelessWidget {
           children: [
             ///Circular Icon
             Container(
-              width: 56,
-              height: 56,
+              width: 60,
+              height: 60,
               padding: const EdgeInsets.all(ESizes.sm),
               decoration: BoxDecoration(
                 color: backgroundColor ?? ( dark ? EColors.black : EColors.white),

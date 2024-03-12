@@ -28,14 +28,14 @@ class EWishList extends StatefulWidget {
 class _EWishListState extends State<EWishList> {
   String? userid;
   late Query dbRef;
-  late Query dbRefUser;
+  late Query dbRefWish;
   late StreamController<List<Map>> _streamController;
   Map<dynamic, dynamic>? userData;
-  Map<int, Map> userMap = {};
+  Map<int, Map> prodMap = {};
   late Map data1;
   late Map data2;
   late List<Map> productList = [];
-
+  
   List<Map> wishList = [];
 
   @override
@@ -48,10 +48,10 @@ class _EWishListState extends State<EWishList> {
     });
   }
 
-  Future<void> getHospitalData() async {
+  Future<void> getWishListData() async {
     _streamController = StreamController<List<Map>>();
     wishList.clear();
-    userMap.clear();
+    prodMap.clear();
     dbRef = FirebaseDatabase.instance.ref().child('Project/wishlist');
     dbRef.orderByChild("userId").equalTo(userid).onValue.listen((event) async {
       Map<dynamic, dynamic>? values = event.snapshot.value as Map?;
@@ -64,18 +64,17 @@ class _EWishListState extends State<EWishList> {
             'productId': value['productId'],
             "userId": value["userId"],
           });
-          await fetchUserData(productId, wishList.length - 1);
+          await fetchProductData(productId, wishList.length - 1);
         });
       }
       _streamController.add(wishList);
-      print(wishList.length);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final dark = EHelperFunctions.isDarkMode(context);
-    getHospitalData();
+    getWishListData();
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: SizedBox(
@@ -84,9 +83,9 @@ class _EWishListState extends State<EWishList> {
           stream: _streamController.stream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              List<Map>? prodlist = snapshot.data;
+              List<Map>? wlist = snapshot.data;
               return GridView.builder(
-                itemCount: prodlist!.length,
+                itemCount: wlist!.length,
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
                 physics: const NeverScrollableScrollPhysics(),
@@ -97,12 +96,12 @@ class _EWishListState extends State<EWishList> {
                   mainAxisExtent: 280,
                 ),
                 itemBuilder: (context, index) {
-                  data1 = prodlist[index];
-                  data2 = userMap[index] ?? {};
+                  data1 = wlist[index];
+                  data2 = prodMap[index] ?? {};
                   if (data1.isNotEmpty && data2.isNotEmpty) {
                     return GestureDetector(
                       onTap: () => Get.to(
-                          () => ProductDetailScreen(id: prodlist[index]['productId'])),
+                          () => ProductDetailScreen(id: wlist[index]['productId'],index: index,)),
                       child: Container(
                         width: 180,
                         padding: const EdgeInsets.all(1),
@@ -168,7 +167,7 @@ class _EWishListState extends State<EWishList> {
                                       color: Colors.red,
                                       onPressed: () async {
                                         String wishlistId =
-                                            prodlist[index]['wishlistkey'];
+                                            wlist[index]['wishlistkey'];
                                         await WishlistService()
                                             .removeFromWishlist(wishlistId);
                                         ELoaders.successSnackBar(
@@ -280,13 +279,13 @@ class _EWishListState extends State<EWishList> {
     );
   }
 
-  Future<void> fetchUserData(String key, int index) async {
+  Future<void> fetchProductData(String key, int index) async {
     DatabaseReference dbUserData =
         FirebaseDatabase.instance.ref().child("Project/product").child(key);
     DatabaseEvent userDataEvent = await dbUserData.once();
     DataSnapshot userDataSnapshot = userDataEvent.snapshot;
     userData = userDataSnapshot.value as Map?;
-    userMap[index] = {
+    prodMap[index] = {
       "product_name": userData!["product_name"],
       "photo1": userData!["photo1"],
       "photo2": userData!["photo2"],

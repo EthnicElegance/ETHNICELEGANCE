@@ -217,6 +217,9 @@ import 'package:ethnic_elegance/common/widgets/texts/product_title_text.dart';
 import 'package:ethnic_elegance/common/widgets/texts/section_heading.dart';
 import 'package:ethnic_elegance/utils/constants/colors.dart';
 import 'package:ethnic_elegance/utils/constants/sizes.dart';
+import 'package:get/get.dart';
+
+import 'bottom_add_to_cart_widget.dart';
 
 class EProductAttributes extends StatefulWidget {
   const EProductAttributes({
@@ -235,14 +238,20 @@ class EProductAttributes extends StatefulWidget {
 }
 
 class _EProductAttributesState extends State<EProductAttributes> {
+  final CartController controller = Get.put(CartController());
+
   late List<String> size;
+  late List<String> colors;
   String? selectedSize;
+  String? selectedColor;
 
   @override
   void initState() {
     super.initState();
     selectedSize = null;
+    selectedColor = null;
     size = [];
+    colors = [];
     _fetchSubCategories();
   }
 
@@ -252,7 +261,22 @@ class _EProductAttributesState extends State<EProductAttributes> {
     final recdata = documentSnapshot.snapshot.value as Map<dynamic, dynamic>?;
 
     if (recdata != null) {
+
+
+    }
+
+    if (recdata != null) {
+
       final sizeData = recdata['size'] as String?;
+      final colorData = recdata['product_colour'] as String?;
+      print(colorData);
+      if (colorData != null) {
+        colors = recdata.entries
+            .where((entry) => entry.key == 'product_colour')
+            .map((entry) => entry.value.toString())
+            .toList();
+      }
+      print(colors);
       if (sizeData != null) {
         final ref2 = FirebaseDatabase.instance.ref().child("Project/size/$sizeData");
         final documentSnapshot2 = await ref2.once();
@@ -298,7 +322,7 @@ class _EProductAttributesState extends State<EProductAttributes> {
                         children: [
                           const EProductTitleText(title: 'Fabric : ', smallSize: true),
                           const SizedBox(width: ESizes.spaceBtwItems),
-                          Text(widget.fabric, style: Theme.of(context).textTheme.subtitle1),
+                          Text(widget.fabric, style: Theme.of(context).textTheme.titleMedium),
                         ],
                       ),
                     ],
@@ -321,14 +345,36 @@ class _EProductAttributesState extends State<EProductAttributes> {
             const SizedBox(height: ESizes.spaceBtwItems / 2),
             Wrap(
               spacing: 8,
-              children: [
-                EChoiceChip(text: 'Green', selected: false, onSelected: (value) {}),
-                EChoiceChip(text: 'Blue', selected: true, onSelected: (value) {}),
-                EChoiceChip(text: 'Red', selected: false, onSelected: (value) {}),
-              ],
+              children: colors.map((item) {
+                return EChoiceChip(
+                  text: item,
+                  selected: selectedColor == item,
+                  onSelected: (value) {
+                    setState(() {
+                      selectedColor = value ? item : null;
+                    });
+                    print(colors);
+                  },
+                );
+              }).toList(),
             ),
           ],
         ),
+        // Column(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     const ESectionHeading(title: 'Colors', showActionButton: false),
+        //     const SizedBox(height: ESizes.spaceBtwItems / 2),
+        //     Wrap(
+        //       spacing: 8,
+        //       children: [
+        //         EChoiceChip(text: 'Green', selected: false, onSelected: (value) {}),
+        //         EChoiceChip(text: 'Blue', selected: true, onSelected: (value) {}),
+        //         EChoiceChip(text: 'Red', selected: false, onSelected: (value) {}),
+        //       ],
+        //     ),
+        //   ],
+        // ),
         const SizedBox(height: ESizes.spaceBtwItems),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -344,6 +390,7 @@ class _EProductAttributesState extends State<EProductAttributes> {
                   onSelected: (value) {
                     setState(() {
                       selectedSize = value ? item : null;
+                      controller.size = RxString(item);
                     });
                   },
                 );

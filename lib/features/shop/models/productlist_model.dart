@@ -94,8 +94,7 @@ class _EProductListState extends State<EProductList> {
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
 
-                Map<dynamic, dynamic> map = snapshot.data.snapshot
-                    .value;
+                Map<dynamic, dynamic> map = snapshot.data.snapshot.value;
 
                 if (map.isEmpty) {
                   return const Center(
@@ -109,21 +108,23 @@ class _EProductListState extends State<EProductList> {
                 prodlist.clear();
                 map.forEach((dynamic key,dynamic v) {
                   if (v != null) {
-                    prodlist.add(ProductModel(
-                        key.toString(),
-                        v["subcatid"],
-                        v["product_name"],
-                        v["photo1"],
-                        v["photo2"],
-                        v["photo3"],
-                        v["retailer_price"],
-                        v["size"],
-                        v["qty"],
-                        v["product_colour"],
-                        v["fabric"],
-                        v["detail"],
-                        v["DateTime"],
-                        v["availability"]));
+                    if(v["retailer_price"] != '0'){
+                      prodlist.add(ProductModel(
+                          key.toString(),
+                          v["subcatid"],
+                          v["product_name"],
+                          v["photo1"],
+                          v["photo2"],
+                          v["photo3"],
+                          v["retailer_price"],
+                          v["size"],
+                          v["qty"],
+                          v["product_colour"],
+                          v["fabric"],
+                          v["detail"],
+                          v["DateTime"],
+                          v["availability"]));
+                    }
                   }
                 });
                 final productIds = appointment.map((item) => item['productId']).toList();
@@ -140,170 +141,199 @@ class _EProductListState extends State<EProductList> {
                     mainAxisExtent: 280,
                   ),
                   itemBuilder: (BuildContext context,int index) {
+                    if(prodlist[index].price != '0') {
+                      String productId = prodlist[index].key;
+                      final found = productIds.contains(productId);
+                      var icon = found ? Iconsax.heart5 : Iconsax.heart;
 
-                    String productId = prodlist[index].key;
-                    final found = productIds.contains(productId);
-                    var icon = found ? Iconsax.heart5 : Iconsax.heart;
+                      return GestureDetector(
+                        onTap: () =>
+                            Get.to(() =>
+                                ProductDetailScreen(id: prodlist[index].key,index: index,)),
+                        child: Container(
+                          width: 180,
+                          padding: const EdgeInsets.all(1),
+                          decoration: BoxDecoration(
+                            boxShadow: [EShadowStyle.verticalProductShadow],
+                            borderRadius: BorderRadius.circular(
+                                ESizes.productImageRadius),
+                            color: dark ? EColors.darkerGrey : EColors.white,
+                          ),
+                          child: Column(
+                            children: [
 
-                    return GestureDetector(
-                      onTap: () => Get.to(() => ProductDetailScreen(id: prodlist[index].key,)),
-                      child: Container(
-                        width: 180,
-                        padding: const EdgeInsets.all(1),
-                        decoration: BoxDecoration(
-                          boxShadow: [EShadowStyle.verticalProductShadow],
-                          borderRadius: BorderRadius.circular(ESizes.productImageRadius),
-                          color: dark ? EColors.darkerGrey : EColors.white,
-                        ),
-                        child: Column(
-                          children: [
+                              ///Thumbnail
+                              ERoundedContainer(
+                                height: 180,
+                                padding: const EdgeInsets.only(top: 5.0),
+                                backgroundColor: dark ? EColors.dark : EColors
+                                    .light,
+                                child: Stack(
+                                  children: [
 
-                            ///Thumbnail
-                            ERoundedContainer(
-                              height: 180,
-                              padding: const EdgeInsets.only(top: 5.0),
-                              backgroundColor: dark ? EColors.dark : EColors.light,
-                              child: Stack(
+                                    ///Thumbnail Image
+                                    GestureDetector(
+                                      onTap: () {},
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                              ESizes.md),
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                              ESizes.md),
+                                          child: Image(
+                                              image: NetworkImage(
+                                                  "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/ProductImage%2F${prodlist[index]
+                                                      .pphoto1}?alt=media"),
+                                              fit: BoxFit.contain),
+                                        ),
+                                      ),
+                                    ),
+
+                                    ///sale Tag
+                                    Positioned(
+                                      top: 12,
+                                      child: ERoundedContainer(
+                                        radius: ESizes.sm,
+                                        backgroundColor: EColors.secondary
+                                            .withOpacity(0.8),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: ESizes.sm,
+                                            vertical: ESizes.xs),
+                                        child: Text('25%',
+                                            style: Theme
+                                                .of(context)
+                                                .textTheme
+                                                .labelLarge!
+                                                .apply(color: EColors.black)),
+                                      ),
+                                    ),
+
+                                    /// Favourite Icon Button
+                                    Positioned(
+                                      top: 0,
+                                      right: 0,
+                                      child: ECircularIcon(
+                                        icon: icon, color: Colors.red,
+                                        onPressed: () async {
+                                          if (icon == Iconsax.heart) {
+                                            setState(() {
+                                              icon = Iconsax.heart5;
+                                            });
+                                            await WishlistService()
+                                                .addToWishlist(WishlistItem(
+                                                productId: prodlist[index].key,
+                                                userId: userid));
+                                            ELoaders.successSnackBar(
+                                                title: 'Added to Wishlist',
+                                                message: 'the product ${prodlist[index]
+                                                    .pname} Added to Wishlist'
+                                            );
+                                          }
+                                          else if (icon == Iconsax.heart5) {
+                                            setState(() {
+                                              icon = Iconsax.heart;
+                                            });
+
+                                            await WishlistService()
+                                                .removeFromWishlist(
+                                                wishlistIds.firstWhere((id) =>
+                                                    productIds.contains(
+                                                        prodlist[index].key)));
+                                            ELoaders.successSnackBar(
+                                                title: 'Removed from Wishlist',
+                                                message: 'the product ${prodlist[index]
+                                                    .pname} Removed from Wishlist'
+                                            );
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: ESizes.spaceBtwItems / 2),
+
+                              ///details
+                              Padding(
+                                padding: const EdgeInsets.only(left: ESizes.sm),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    EProductTitleText(
+                                      title: prodlist[index].pname,
+                                      smallSize: true,
+                                    ),
+                                    const SizedBox(
+                                        height: ESizes.spaceBtwItems / 2),
+                                    Row(
+                                      children: [
+                                        Text(prodlist[index].availability,
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                            style: Theme
+                                                .of(context)
+                                                .textTheme
+                                                .labelMedium),
+                                        const SizedBox(height: ESizes.xs),
+                                        const Icon(Iconsax.verify5,
+                                            color: EColors.primary,
+                                            size: ESizes.iconXs)
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const Spacer(),
+
+                              ///Price Row
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceBetween,
                                 children: [
 
-                                  ///Thumbnail Image
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(ESizes.md),
+                                  ///Price
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: ESizes.sm),
+                                    child: EProductPriceText(
+                                        price: prodlist[index].price),
+                                  ),
+
+                                  ///Add To Cart
+                                  Container(
+                                    decoration: const BoxDecoration(
+                                      color: EColors.dark,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(
+                                            ESizes.cardRadiusMd),
+                                        bottomRight:
+                                        Radius.circular(
+                                            ESizes.productImageRadius),
                                       ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(ESizes.md),
-                                        child: Image(
-                                            image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/ProductImage%2F${prodlist[index].pphoto1}?alt=media"),
-                                            fit: BoxFit.contain),
+                                    ),
+                                    child: const SizedBox(
+                                      width: ESizes.iconLg * 1.2,
+                                      height: ESizes.iconLg * 1.2,
+                                      child: Center(
+                                        child: Icon(
+                                          Iconsax.add,
+                                          color: EColors.white,
+                                        ),
                                       ),
                                     ),
-                                  ),
-
-                                  ///sale Tag
-                                  Positioned(
-                                    top: 12,
-                                    child: ERoundedContainer(
-                                      radius: ESizes.sm,
-                                      backgroundColor: EColors.secondary.withOpacity(0.8),
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: ESizes.sm, vertical: ESizes.xs),
-                                      child: Text('25%',
-                                          style: Theme
-                                              .of(context)
-                                              .textTheme
-                                              .labelLarge!
-                                              .apply(color: EColors.black)),
-                                    ),
-                                  ),
-
-                                  /// Favourite Icon Button
-                                  Positioned(
-                                    top: 0,
-                                    right: 0,
-                                    child: ECircularIcon(icon: icon, color: Colors.red,
-                                      onPressed: ()  async {
-                                        if(icon == Iconsax.heart){
-                                          setState(() {
-                                            icon = Iconsax.heart5;
-                                          });
-                                          await WishlistService().addToWishlist(WishlistItem(productId: prodlist[index].key, userId: userid));
-                                          ELoaders.successSnackBar(
-                                              title: 'Added to Wishlist',
-                                            message: 'the product ${prodlist[index].pname} Added to Wishlist'
-                                              );
-
-                                        }
-                                        else if(icon == Iconsax.heart5){
-                                          setState(() {
-                                            icon = Iconsax.heart;
-                                          });
-
-                                          await WishlistService()
-                                              .removeFromWishlist(
-                                              wishlistIds.firstWhere((id) => productIds.contains(prodlist[index].key)));
-                                          ELoaders.successSnackBar(
-                                            title: 'Removed from Wishlist',
-                                            message: 'the product ${prodlist[index].pname} Removed from Wishlist'
-                                          );
-                                        }
-                                      },
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: ESizes.spaceBtwItems / 2),
-
-                            ///details
-                            Padding(
-                              padding: const EdgeInsets.only(left: ESizes.sm),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  EProductTitleText(
-                                    title: prodlist[index].pname,
-                                    smallSize: true,
-                                  ),
-                                  const SizedBox(height: ESizes.spaceBtwItems / 2),
-                                  Row(
-                                    children: [
-                                      Text(prodlist[index].availability,
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
-                                          style: Theme
-                                              .of(context)
-                                              .textTheme
-                                              .labelMedium),
-                                      const SizedBox(height: ESizes.xs),
-                                      const Icon(Iconsax.verify5,
-                                          color: EColors.primary, size: ESizes.iconXs)
-                                    ],
                                   ),
                                 ],
                               ),
-                            ),
-                            const Spacer(),
-                            ///Price Row
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-
-                                ///Price
-                                Padding(
-                                  padding: const EdgeInsets.only(left: ESizes.sm),
-                                  child: EProductPriceText(price: prodlist[index].price),
-                                ),
-
-                                ///Add To Cart
-                                Container(
-                                  decoration: const BoxDecoration(
-                                    color: EColors.dark,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(ESizes.cardRadiusMd),
-                                      bottomRight:
-                                      Radius.circular(ESizes.productImageRadius),
-                                    ),
-                                  ),
-                                  child: const SizedBox(
-                                    width: ESizes.iconLg * 1.2,
-                                    height: ESizes.iconLg * 1.2,
-                                    child: Center(
-                                      child: Icon(
-                                        Iconsax.add,
-                                        color: EColors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    }
+                    else{
+                      return Container();
+                    }
                   },
                 );
               }
@@ -321,7 +351,3 @@ class _EProductListState extends State<EProductList> {
     );
   }
 }
-
-// Padding EProductList() {
-//   return
-// }

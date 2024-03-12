@@ -39,7 +39,8 @@ class EHomeCategories extends StatelessWidget {
                     )));
                 return ListView.builder(
                   shrinkWrap: true,
-                  itemCount: 6,
+                  itemCount: 5,
+
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context,
                       int index) {

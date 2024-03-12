@@ -14,8 +14,10 @@ import 'package:readmore/readmore.dart';
 import '../../../../utils/constants/sizes.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  const ProductDetailScreen({super.key, required this.id});
+  const ProductDetailScreen({super.key, required this.id, this.index});
   final String id;
+  final index;
+
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
 }
@@ -23,9 +25,7 @@ class ProductDetailScreen extends StatefulWidget {
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
-
     return  Scaffold(
-      bottomNavigationBar: EBottomAddToCart(),
       body: SingleChildScrollView(
         child: StreamBuilder(
           stream: FirebaseDatabase.instance.ref().child("Project/product/${widget.id}").onValue,
@@ -33,11 +33,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             if (snapshot.hasData) {
 
               final data = snapshot.data!.snapshot.value as Map<dynamic, dynamic>;
+
               return Column(
                 children: [
 
                   /// 1-Product Image Slider
-                  EProductImageSlider(image1: data['photo1'],image2: data['photo2'],image3: data['photo3'],productId: widget.id),
+                  EProductImageSlider(image1: data['photo1'],image2: data['photo2'],image3: data['photo3'],productId: widget.id,index: widget.index,),
 
                   /// 2- Product Details
                   Padding(
@@ -64,7 +65,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           fabric: data['fabric'],),
 
                         /// Attributes
-                        EProductAttributes(colour: data['product_colour'],price:data['customer_price'],details: data['detail'],fabric: data['fabric'],id: widget.id),
+                        EProductAttributes(colour: data['product_colour'],price:data['retailer_price'],details: data['detail'],fabric: data['fabric'],id: widget.id),
                         const SizedBox(height: ESizes.spaceBtwSections),
 
                         /// Checkout Button
@@ -121,6 +122,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           }
         ),
       ),
+      bottomNavigationBar: EBottomAddToCart(id: widget.id, index: widget.index,),
     );
   }
 }

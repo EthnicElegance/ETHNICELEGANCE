@@ -71,32 +71,10 @@ class StoreScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-
-                  ///Tabs
-                  // bottom: const ETabBar(
-                  //     tabs: [
-                  //       Tab(child: Text('Kurti')),
-                  //       Tab(child: Text('Lengha-Choli')),
-                  //       Tab(child: Text('Dupatta')),
-                  //       Tab(child: Text('Saree')),
-                  //       Tab(child: Text('Salwar-Suit')),
-                  //       Tab(child: Text('Blouse')),
-                  //   ],
-                  // ),
                 ),
               ];
             },
             body: Container(),
-            // TabBarView(
-            //   children: [
-            //     ECategoryTab(),
-            //     ECategoryTab(),
-            //     ECategoryTab(),
-            //     ECategoryTab(),
-            //     ECategoryTab(),
-            //     ECategoryTab(),
-            //   ],
-            // ),
         ),
       ),
     );
