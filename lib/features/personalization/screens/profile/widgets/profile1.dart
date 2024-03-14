@@ -1,7 +1,7 @@
 import 'package:ethnic_elegance/common/widgets/appbar/appbar.dart';
 import 'package:ethnic_elegance/common/widgets/images/circular_image.dart';
 import 'package:ethnic_elegance/common/widgets/texts/section_heading.dart';
-
+import 'package:ethnic_elegance/features/personalization/screens/settings/settings1.dart';
 import 'package:ethnic_elegance/sharepreferences.dart';
 import 'package:ethnic_elegance/utils/constants/colors.dart';
 import 'package:ethnic_elegance/utils/constants/image_strings.dart';
@@ -10,8 +10,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-
-import '../../settings/settings.dart';
 
 
 class ProfileScreen extends StatefulWidget {
@@ -84,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context){
 
     return Scaffold(
-      appBar: EAppBar(showBackArrow: false,leadingIcon: Iconsax.arrow_left, leadingOnPressed: () => Get.offAll(() => const SettingsScreen()), title: const Text('Profile')),
+      appBar: EAppBar(showBackArrow: false,leadingIcon: Iconsax.arrow_left, leadingOnPressed: () => Get.offAll(() => const SettingsScreen1()), title: const Text('Profile')),
 
       body: FutureBuilder(
           future: _fetchSubCategories(),

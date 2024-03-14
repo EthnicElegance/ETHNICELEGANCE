@@ -138,9 +138,11 @@
 // }
 
 
+import 'package:ethnic_elegance/features/shop/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:iconsax/iconsax.dart';
 
 import '../../../../common/widgets/appbar/appbar.dart';
 import '../../../../common/widgets/products/cart/add_remove_button.dart';
@@ -148,6 +150,7 @@ import '../../../../common/widgets/products/cart/cart_item.dart';
 import '../../../../common/widgets/texts/product_price_text.dart';
 import '../../../../sharepreferences.dart';
 import '../../../../utils/constants/sizes.dart';
+import '../../../personalization/screens/settings/settings.dart';
 import '../../models/cart_insert_model1.dart';
 import '../checkout/widgets/checkout.dart';
 
@@ -225,7 +228,9 @@ class _CartScreenState extends State<CartScreen> {
 
           return Scaffold(
             appBar: EAppBar(
-              showBackArrow: true,
+              showBackArrow: false,
+              leadingIcon: Iconsax.arrow_left,
+              leadingOnPressed: () => Get.offAll(() => const HomeScreen()),
               title: Text(
                 "Cart",
                 style: Theme.of(context).textTheme.titleLarge,

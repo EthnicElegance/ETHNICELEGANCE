@@ -21,8 +21,9 @@ import '../controllers/wishlist_service.dart';
 import '../screens/product_details/product_detail.dart';
 
 
-class EProductList extends StatefulWidget {
-  const EProductList ({super.key,this.limitedProduct = false,this.productCount, this.allProduct = true, this.productSubCat});
+
+class EProductList1 extends StatefulWidget {
+  const EProductList1 ({super.key,this.limitedProduct = false,this.productCount, this.allProduct = true, this.productSubCat});
 
   final bool limitedProduct;
   final bool allProduct;
@@ -30,10 +31,10 @@ class EProductList extends StatefulWidget {
   final String? productSubCat;
 
   @override
-  State<EProductList> createState() => _EProductListState();
+  State<EProductList1> createState() => _EProductList1State();
 }
 
-class _EProductListState extends State<EProductList> {
+class _EProductList1State extends State<EProductList1> {
 
   late Query dbRef;
   late Query dbRefUser;
@@ -108,7 +109,7 @@ class _EProductListState extends State<EProductList> {
                 prodlist.clear();
                 map.forEach((dynamic key,dynamic v) {
                   if (v != null) {
-                    if(v["retailer_price"] != '0'){
+                    if(v["customer_price"] != '0'){
                       prodlist.add(ProductModel(
                           key.toString(),
                           v["subcatid"],
@@ -116,7 +117,7 @@ class _EProductListState extends State<EProductList> {
                           v["photo1"],
                           v["photo2"],
                           v["photo3"],
-                          v["retailer_price"],
+                          v["customer_price"],
                           v["size"],
                           v["qty"],
                           v["product_colour"],
@@ -127,8 +128,6 @@ class _EProductListState extends State<EProductList> {
                     }
                   }
                 });
-                print(prodlist);
-                print(prodlist.length);
                 final productIds = appointment.map((item) => item['productId']).toList();
                 final wishlistIds = appointment.map((item) => item['wishlistkey']).toList();
                 return GridView.builder(
@@ -151,7 +150,7 @@ class _EProductListState extends State<EProductList> {
                       return GestureDetector(
                         onTap: () =>
                             Get.to(() =>
-                                ProductDetailScreen(id: prodlist[index].key,index: index,)),
+                                ProductDetailScreen(id: prodlist[index].key,)),
                         child: Container(
                           width: 180,
                           padding: const EdgeInsets.all(1),

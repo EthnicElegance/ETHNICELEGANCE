@@ -105,6 +105,7 @@ flutter:
     - assets/icons/payment_methods/
     - assets/images/on_boarding_images/
     - assets/icons/category/
+    - assets/images/rent_images/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
