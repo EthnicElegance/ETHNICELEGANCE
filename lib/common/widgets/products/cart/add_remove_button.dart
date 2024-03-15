@@ -370,11 +370,13 @@ class EProductQuantityWithAddRemoveButton extends StatefulWidget {
     required this.cartId,
     required this.cartQty,
     required this.price,
+    this.plusMinusIcon = true,
   }) : super(key: key);
 
   final String cartId;
   final String cartQty;
   final String price;
+  final bool plusMinusIcon;
 
   @override
   State<EProductQuantityWithAddRemoveButton> createState() =>
@@ -416,7 +418,8 @@ class _EProductQuantityWithAddRemoveButtonState
           color: Colors.red,
         ),
         const SizedBox(width: ESizes.spaceBtwItems),
-        ECircularIcon(
+        if(widget.plusMinusIcon)
+          ECircularIcon(
           onPressed: () {
             controller.decrement(widget.cartId, widget.price);
             _quantityController.text = controller.counter.value;
@@ -451,6 +454,7 @@ class _EProductQuantityWithAddRemoveButtonState
           ),
         ),
         const SizedBox(width: ESizes.spaceBtwItems),
+        if(widget.plusMinusIcon)
         ECircularIcon(
           onPressed: () {
             controller.increment(widget.cartId, widget.price);

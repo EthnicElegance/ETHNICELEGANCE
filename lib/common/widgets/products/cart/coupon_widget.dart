@@ -29,6 +29,15 @@ import '../../../../utils/constants/sizes.dart';
                 ),
               ),
           ),
+          
+          ///Apply button
+          
+          ElevatedButton(onPressed: () {}, style: ElevatedButton.styleFrom(
+            foregroundColor: EHelperFunctions.isDarkMode(context) ? EColors.white.withOpacity(0.5) : EColors.dark.withOpacity(0.5),
+            backgroundColor: EColors.grey.withOpacity(0.2),
+            side: BorderSide(color: EColors.grey.withOpacity(0.1))
+          ),
+          child: const Text("Apply"),)
         ],
       )
     );

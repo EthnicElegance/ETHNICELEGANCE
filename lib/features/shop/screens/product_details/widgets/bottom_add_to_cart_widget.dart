@@ -144,6 +144,7 @@ class _EBottomAddToCartState extends State<EBottomAddToCart> {
                             controller.counter.value,
                             controller.size.value,
                             prodlist[widget.index].price,
+                            "${int.parse(prodlist[widget.index].price) * int.parse(controller.counter.value)}",
                             userid!);
                         dbRef.push().set(cartObj.toJson());
                         ELoaders.successSnackBar(

@@ -12,7 +12,7 @@ class EBillingAddressSection extends StatelessWidget{
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ESectionHeading(title: 'Payment Method',buttonTitle: 'Change', onPressed: (){}),
+        ESectionHeading(title: 'Address Details',buttonTitle: 'Change', onPressed: (){}),
         Text('Ethnic Elegance',style: Theme.of(context).textTheme.bodyLarge),
         const SizedBox(height: ESizes.spaceBtwItems/2),
 

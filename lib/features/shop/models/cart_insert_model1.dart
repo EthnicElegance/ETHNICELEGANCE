@@ -6,10 +6,11 @@ class CartInsertModel1 {
   late String cartQTY;
   late String size;
   late String price;
+  late String totalPrice;
   late String userId;
   
 
-  CartInsertModel1(this.id,this.productId, this.cartQTY, this.size, this.price, this.userId);
+  CartInsertModel1(this.id,this.productId, this.cartQTY, this.size, this.price,this.totalPrice, this.userId);
 
   Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
         'id': productId,
@@ -17,10 +18,11 @@ class CartInsertModel1 {
         'cartQty': cartQTY,
         'size': size,
         'price': price,
+        'totalPrice': totalPrice,
         'userId': userId,
       };
 
   factory CartInsertModel1.fromJson(Map<String, dynamic> v) {
-    return CartInsertModel1(v["id"],v["productId"], v["cartQty"], v["size"], v["price"], v["userId"]);
+    return CartInsertModel1(v["id"],v["productId"], v["cartQty"], v["size"], v["price"], v["totalPrice"], v["userId"]);
   }
 }
