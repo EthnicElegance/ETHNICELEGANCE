@@ -60,14 +60,14 @@ class _EProductAttributesState extends State<EProductAttributes> {
 
       final sizeData = recdata['size'] as String?;
       final colorData = recdata['product_colour'] as String?;
-      print(colorData);
+
       if (colorData != null) {
         colors = recdata.entries
             .where((entry) => entry.key == 'product_colour')
             .map((entry) => entry.value.toString())
             .toList();
       }
-      print(colors);
+
       if (sizeData != null) {
         final ref2 = FirebaseDatabase.instance.ref().child("Project/size/$sizeData");
         final documentSnapshot2 = await ref2.once();

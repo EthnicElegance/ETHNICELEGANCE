@@ -7,9 +7,9 @@ class EOutlinedButtonTheme {
     style: OutlinedButton.styleFrom(
       elevation: 0,
       foregroundColor: Colors.black,
-      side: BorderSide(color: Colors.blue),
-      textStyle: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.w600),
-      padding: EdgeInsets.symmetric(vertical: 16,horizontal: 20),
+      side: const BorderSide(color: Colors.blue),
+      textStyle: const TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.w600),
+      padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 20),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
     ),
   );
@@ -17,9 +17,9 @@ class EOutlinedButtonTheme {
     style: OutlinedButton.styleFrom(
       elevation: 0,
       foregroundColor: Colors.white,
-      side: BorderSide(color: Colors.blueAccent),
-      textStyle: TextStyle(fontSize: 16,color: Colors.white,fontWeight: FontWeight.w600),
-      padding: EdgeInsets.symmetric(vertical: 16,horizontal: 20),
+      side: const BorderSide(color: Colors.blueAccent),
+      textStyle: const TextStyle(fontSize: 16,color: Colors.white,fontWeight: FontWeight.w600),
+      padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 20),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
     ),
   );

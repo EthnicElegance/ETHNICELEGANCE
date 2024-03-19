@@ -89,7 +89,7 @@ class _EProductList1State extends State<EProductList1> {
       child: SizedBox(
         width: 400,
         child: StreamBuilder(
-            stream: FirebaseDatabase.instance.ref().child("Project/product").orderByChild("retailer_price").equalTo("0").onValue,
+            stream: FirebaseDatabase.instance.ref().child("Project/product").onValue,
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
 

@@ -1,5 +1,6 @@
 import 'package:ethnic_elegance/common/widgets/texts/section_heading.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -74,14 +75,6 @@ class _EBillingPaymentSectionState extends State<EBillingPaymentSection> {
       );
       DatabaseReference newRef = dbRef.push();
       String newOrderKey = newRef.key!;
-      print("---------------------------Order dbRef--------------------------");
-      print(dbRef);
-      print(
-          "---------------------------Order new dbRef--------------------------");
-      print(newRef);
-      print(
-          "---------------------------Order data Key--------------------------");
-      print(newOrderKey);
 
       newRef.set(regobj.toJson()).then((_) {
         for (var x in cartId) {
@@ -98,18 +91,14 @@ class _EBillingPaymentSectionState extends State<EBillingPaymentSection> {
               data['totalPrice'],
             );
             DatabaseReference newRef1 = dbRef1.push();
-            String newOrderKey1 = newRef1.key!;
-            newRef1.set(regobj1.toJson()).then((_) {
-              print(
-                  "---------------------------Order details data inserted--------------------------");
-              print(newOrderKey1);
-            });
+            // String newOrderKey1 = newRef1.key!;
+            newRef1.set(regobj1.toJson());
           });
         }
       }).catchError((error) {
-        print(
-            '-----------------------------------------------------Error-----------------------------------------------');
-        print('Error adding data: $error');
+        if (kDebugMode) {
+          print('Error adding data: $error');
+        }
       });
 
       // EFullScreenLoader.stopLoading();
@@ -136,8 +125,6 @@ class _EBillingPaymentSectionState extends State<EBillingPaymentSection> {
                   .ref()
                   .child("Project/cart/$x")
                   .remove()
-                  .then((_) =>
-                  print("$x Cart is Removed"))
                   .catchError((error) =>
                   ELoaders.errorSnackBar(
                       title: 'Failed to remove',

@@ -288,7 +288,7 @@ class _EProductImageSliderState extends State<EProductImageSlider> {
               if (map.isEmpty) {
                 return const Center(
                   child: Text(
-                    'Up Comming Data',
+                    'Up Coming Data',
                     style: TextStyle(fontSize: 10),
                   ),
                 );

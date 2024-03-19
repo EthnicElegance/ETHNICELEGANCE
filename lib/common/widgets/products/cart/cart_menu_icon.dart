@@ -248,6 +248,7 @@
 // }
 
 import 'package:ethnic_elegance/features/shop/screens/cart/cart.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -303,7 +304,9 @@ class _ECartCounterIconState extends State<ECartCounterIcon> {
             }
           } catch (e) {
             // Handle error appropriately (e.g., show error message)
-            print('Error: $e');
+            if (kDebugMode) {
+              print('Error: $e');
+            }
           }
         } else {
           // Handle when there are no items in the cart

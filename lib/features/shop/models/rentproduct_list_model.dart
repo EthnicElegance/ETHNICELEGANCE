@@ -99,12 +99,12 @@ class _ERentProductListState extends State<ERentProductList> {
                 );
               }
 
-              final List<RentProductModel> rentprodlist = [];
-              rentprodlist.clear();
+              final List<RentProductModel> rentProdList = [];
+              rentProdList.clear();
 
               map.forEach((key, v) {
                 if (v != null) {
-                  rentprodlist.add(RentProductModel(
+                  rentProdList.add(RentProductModel(
                     key,
                     v["catid"],
                     v["RentProduct_name"],
@@ -129,7 +129,7 @@ class _ERentProductListState extends State<ERentProductList> {
               return GridView.builder(
                 itemCount: widget.limitedProduct
                     ? widget.productCount
-                    : rentprodlist.length,
+                    : rentProdList.length,
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
                 physics: const NeverScrollableScrollPhysics(),
@@ -140,13 +140,13 @@ class _ERentProductListState extends State<ERentProductList> {
                   mainAxisExtent: 280,
                 ),
                 itemBuilder: (BuildContext context, int index) {
-                  //final productId = rentprodlist[index].key;
+                  //final productId = rentProdList[index].key;
                   //final found = productIds.contains(productId);
                   //final icon = found ? Iconsax.heart5 : Iconsax.heart;
 
                   return GestureDetector(
                     onTap: () => Get.to(() => ProductDetailScreen(
-                      id: rentprodlist[index].key,
+                      id: rentProdList[index].key,
                     )),
                     child: Container(
                       width: 180,
@@ -176,7 +176,7 @@ class _ERentProductListState extends State<ERentProductList> {
                                       borderRadius: BorderRadius.circular(ESizes.md),
                                       child: Image(
                                         image: NetworkImage(
-                                            "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/RentProductImage%2F${rentprodlist[index].rphoto1}?alt=media"),
+                                            "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/RentProductImage%2F${rentProdList[index].rphoto1}?alt=media"),
                                         fit: BoxFit.contain,
                                       ),
                                     ),
@@ -215,14 +215,14 @@ class _ERentProductListState extends State<ERentProductList> {
                                       if (icon == Iconsax.heart) {
                                         await WishlistService().addToWishlist(
                                           WishlistItem(
-                                            productId: rentprodlist[index].key,
+                                            productId: rentProdList[index].key,
                                             userId: userid!,
                                           ),
                                         );
                                         ELoaders.successSnackBar(
                                           title: 'Added to Wishlist',
                                           message:
-                                          'The product ${rentprodlist[index].pname} has been added to Wishlist',
+                                          'The product ${rentProdList[index].pname} has been added to Wishlist',
                                         );
                                       } else if (icon == Iconsax.heart5) {
                                         await WishlistService()
@@ -233,7 +233,7 @@ class _ERentProductListState extends State<ERentProductList> {
                                         ELoaders.successSnackBar(
                                           title: 'Removed from Wishlist',
                                           message:
-                                          'The product ${rentprodlist[index].pname} has been removed from Wishlist',
+                                          'The product ${rentProdList[index].pname} has been removed from Wishlist',
                                         );
                                       }
                                       getWishlistData(); // Refresh wishlist data
@@ -252,14 +252,14 @@ class _ERentProductListState extends State<ERentProductList> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 EProductTitleText(
-                                  title: rentprodlist[index].rname,
+                                  title: rentProdList[index].rname,
                                   smallSize: true,
                                 ),
                                 const SizedBox(height: ESizes.spaceBtwItems / 2),
                                 Row(
                                   children: [
                                     Text(
-                                      rentprodlist[index].ravailability,
+                                      rentProdList[index].ravailability,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
                                       style: Theme.of(context)
@@ -281,7 +281,7 @@ class _ERentProductListState extends State<ERentProductList> {
                               Padding(
                                 padding: const EdgeInsets.only(left: ESizes.sm),
                                 child: EProductPriceText(
-                                  price: rentprodlist[index].rprice,
+                                  price: rentProdList[index].rprice,
                                 ),
                               ),
                               Container(

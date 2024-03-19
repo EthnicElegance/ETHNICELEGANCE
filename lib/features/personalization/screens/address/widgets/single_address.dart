@@ -85,7 +85,7 @@ class _ESingleAddressState extends State<ESingleAddress> {
                 ));
               }
             });
-            print(addressList[0].addressId);
+
             return ERoundedContainer(
                 width: double.infinity,
                 padding: const EdgeInsets.all(ESizes.md),

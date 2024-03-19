@@ -1,8 +1,5 @@
-
 import 'package:ethnic_elegance/common/widgets/appbar/appbar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../utils/constants/sizes.dart';
 import 'widgets/orders_list.dart';
 

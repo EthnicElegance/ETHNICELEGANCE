@@ -93,7 +93,7 @@ class _UserAddressScreenState extends State<UserAddressScreen> {
                 ));
               }
             });
-            print(addressList[0].addressId);
+
             return Scaffold(
               floatingActionButton: FloatingActionButton(
                 onPressed: () => Get.to(() => const AddNewAddressScreen()),

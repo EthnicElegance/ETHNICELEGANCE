@@ -71,7 +71,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     };
     _updateUserData(newData);
 
-    // Show a snackbar or any other feedback to indicate changes are saved
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Changes saved')),
     );

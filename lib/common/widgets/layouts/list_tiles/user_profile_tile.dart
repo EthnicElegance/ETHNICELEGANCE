@@ -38,9 +38,6 @@ class _EUerProfileTitleState extends State<EUerProfileTitle> {
     FirebaseDatabase.instance.ref().child("Project/UserRegister/$userid");
     await ref.once().then(
             (documentSnapshot) => {recdata = documentSnapshot.snapshot.value});
-    print('---------------------------------recdata--------------------------');
-    print(recdata);
-
     return recdata;
   }
 
