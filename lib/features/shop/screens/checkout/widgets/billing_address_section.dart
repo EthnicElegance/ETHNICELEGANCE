@@ -1,3 +1,4 @@
+import 'package:ethnic_elegance/features/personalization/screens/address/widgets/add_new_address.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -80,11 +81,11 @@ class _EBillingAddressSectionState extends State<EBillingAddressSection> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const ESectionHeading(
+                ESectionHeading(
                     title: 'Shipping Address',
-                    // buttonTitle: 'Change',
-                    showActionButton: false,
-                    // onPressed: () {}
+                    buttonTitle: 'Change',
+                    // showActionButton: false,
+                    onPressed: () => Get.to(() => const AddNewAddressScreen())
                 ),
                 const SizedBox(height: ESizes.spaceBtwItems / 2),
 

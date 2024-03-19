@@ -298,27 +298,29 @@ class _EProductImageSliderState extends State<EProductImageSlider> {
 
               map.forEach((dynamic key, dynamic v) {
                 if (v != null) {
-                  prodlist.add(ProductModel(
-                      key.toString(),
-                      v["subcatid"],
-                      v["product_name"],
-                      v["photo1"],
-                      v["photo2"],
-                      v["photo3"],
-                      v["retailer_price"],
-                      v["size"],
-                      v["qty"],
-                      v["product_colour"],
-                      v["fabric"],
-                      v["detail"],
-                      v["DateTime"],
-                      v["availability"]));
+                  if(v["customer_price"] != '0'){
+                    prodlist.add(ProductModel(
+                        key.toString(),
+                        v["subcatid"],
+                        v["product_name"],
+                        v["photo1"],
+                        v["photo2"],
+                        v["photo3"],
+                        v["customer_price"],
+                        v["size"],
+                        v["qty"],
+                        v["product_colour"],
+                        v["fabric"],
+                        v["detail"],
+                        v["DateTime"],
+                        v["availability"]));
+                  }
                 }
               });
 
               int imageCount = 2;
 
-              if(prodlist[widget.index].pphoto3 == ""){
+              if(widget.image3 == ""){
                 imageCount = 1;
               }
               else{
@@ -336,7 +338,7 @@ class _EProductImageSliderState extends State<EProductImageSlider> {
                           const EdgeInsets.all(ESizes.productImageRadius * 2),
                           child: Center(
                               child: Image(
-                                  image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/ProductImage%2F${prodlist[widget.index].pphoto1}?alt=media")))),
+                                  image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/ProductImage%2F${widget.image1}?alt=media")))),
                     ),
 
                     ///Image Slider
@@ -362,8 +364,7 @@ class _EProductImageSliderState extends State<EProductImageSlider> {
                               border: Border.all(color: EColors.primary),
                               padding: const EdgeInsets.all(0),
                               isNetworkImage: true,
-                              imageUrl: "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/ProductImage%2F${prodlist[widget
-                                  .index].pphoto2}?alt=media",
+                              imageUrl: "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/ProductImage%2F${widget.image2}?alt=media",
                             ),
                           ),
                         ),
@@ -394,8 +395,7 @@ class _EProductImageSliderState extends State<EProductImageSlider> {
                                     border: Border.all(color: EColors.primary),
                                     padding: const EdgeInsets.all(0),
                                     isNetworkImage: true,
-                                    imageUrl: "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/ProductImage%2F${prodlist[widget
-                                        .index].pphoto2}?alt=media",
+                                    imageUrl: "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/ProductImage%2F${widget.image2}?alt=media",
                                   );
                                 }
                                 else{
@@ -408,8 +408,7 @@ class _EProductImageSliderState extends State<EProductImageSlider> {
                                     border: Border.all(color: EColors.primary),
                                     padding: const EdgeInsets.all(0),
                                     isNetworkImage: true,
-                                    imageUrl: "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/ProductImage%2F${prodlist[widget
-                                        .index].pphoto3}?alt=media",
+                                    imageUrl: "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/ProductImage%2F${widget.image3}?alt=media",
                                   );
                                 }
                               }

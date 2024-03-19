@@ -160,10 +160,12 @@ class _EBillingPaymentSectionState extends State<EBillingPaymentSection> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ESectionHeading(
+        const ESectionHeading(
           title: 'Payment Method',
-          buttonTitle: 'Change',
-          onPressed: () {},
+          showActionButton: false,
+
+          // buttonTitle: 'Change',
+          // onPressed: () {},
         ),
         const SizedBox(height: ESizes.spaceBtwItems / 2),
         Row(

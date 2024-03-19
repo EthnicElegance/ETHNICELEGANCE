@@ -1,3 +1,4 @@
+import 'package:ethnic_elegance/utils/helpers/helper_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -71,11 +72,11 @@ class _EUerProfileTitleState extends State<EUerProfileTitle> {
             children: [
 
               ListTile(
-                leading: const ERoundedImage(
-                  imageUrl: EImages.lightAppLogo,
+                leading: ERoundedImage(
+                  imageUrl: EHelperFunctions.isDarkMode(context) ? EImages.darkAppLogo : EImages.lightAppLogo,
                   height: 50,
                   width: 50,
-                  padding: EdgeInsets.all(0),
+                  padding: const EdgeInsets.all(0),
                 ),
                 title: Text(username, style: Theme
                     .of(context)

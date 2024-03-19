@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:ethnic_elegance/features/shop/models/product_model.dart';
 import 'package:ethnic_elegance/features/shop/models/wishlist_item.dart';
+import 'package:ethnic_elegance/features/shop/screens/product_details/product_detail1.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,7 +19,6 @@ import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_functions.dart';
 import '../../../utils/popups/loaders.dart';
 import '../controllers/wishlist_service.dart';
-import '../screens/product_details/product_detail.dart';
 
 
 
@@ -91,7 +91,7 @@ class _EProductList1State extends State<EProductList1> {
       child: SizedBox(
         width: 400,
         child: StreamBuilder(
-            stream: FirebaseDatabase.instance.ref().child("Project/product").onValue,
+            stream: FirebaseDatabase.instance.ref().child("Project/product").orderByChild("retailer_price").equalTo("0").onValue,
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
 
@@ -128,6 +128,9 @@ class _EProductList1State extends State<EProductList1> {
                     }
                   }
                 });
+                print("-------------------------------------prodlist------------------------------------------");
+                print(prodlist);
+                print(prodlist.length);
                 final productIds = appointment.map((item) => item['productId']).toList();
                 final wishlistIds = appointment.map((item) => item['wishlistkey']).toList();
                 return GridView.builder(
@@ -150,7 +153,7 @@ class _EProductList1State extends State<EProductList1> {
                       return GestureDetector(
                         onTap: () =>
                             Get.to(() =>
-                                ProductDetailScreen(id: prodlist[index].key,)),
+                                ProductDetailScreen1(id: prodlist[index].key, index: index,)),
                         child: Container(
                           width: 180,
                           padding: const EdgeInsets.all(1),

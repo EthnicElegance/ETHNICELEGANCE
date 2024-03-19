@@ -77,10 +77,10 @@ class _ELoginFormState extends State<ELoginForm> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               //Remember Me
-              Row(
+              const Row(
                 children: [
-                  Checkbox(value: true, onChanged: (value){}),
-                  const Text("Remember Me"),
+                  // Checkbox(value: true, onChanged: (value){}),
+                  Text(""),
                 ],
               ),
 
