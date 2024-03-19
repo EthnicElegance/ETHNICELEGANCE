@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../features/personalization/screens/profile/widgets/profile.dart';
+import '../../../../features/personalization/screens/profile/profile.dart';
 import '../../../../sharepreferences.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/image_strings.dart';

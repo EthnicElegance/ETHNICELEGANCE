@@ -5,8 +5,8 @@ import 'package:ethnic_elegance/features/shop/screens/home/widgets/promo_slider.
 
 import 'package:ethnic_elegance/navigation_menu1.dart';
 import 'package:ethnic_elegance/utils/constants/colors.dart';
-import 'package:ethnic_elegance/utils/constants/image_strings.dart';
 import 'package:ethnic_elegance/utils/constants/sizes.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../common/widgets/custom_shapes/containers/primary_header_container.dart';
@@ -27,6 +27,7 @@ class HomeScreen1 extends StatefulWidget {
 
 class _HomeScreen1State extends State<HomeScreen1> {
   String? userid;
+  List<String> offerImages = [];
 
   @override
   void initState() {
@@ -36,7 +37,33 @@ class _HomeScreen1State extends State<HomeScreen1> {
         userid = value;
       });
     });
+    getOfferImages();
   }
+
+  Future<void> getOfferImages() async {
+    final offerRef = FirebaseDatabase.instance.ref().child('Project/Offer');
+
+    await offerRef.once().then((snapshot) {
+      final data = snapshot.snapshot.value;
+      if (data != null) {
+        offerImages.clear();
+
+        if (data is Map) {
+          // If data is a map, iterate over its values
+          for (var entry in data.values) {
+            if (entry is Map && entry.containsKey('photo')) {
+              setState(() {
+                String imageUrl =
+                    "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/OfferImage%2F${entry['photo']}?alt=media";
+                offerImages.add(imageUrl);
+              });
+            }
+          }
+        }
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,18 +122,30 @@ class _HomeScreen1State extends State<HomeScreen1> {
               child: Column(
                 children: [
                   ///Product Slider
-                  FutureBuilder(
-                    future: null,
-                    builder: (context, snapshot) {
-                      return const EPromoSlider(
-                        banners: [
-                          EImages.onBoardingImage1,
-                          EImages.onBoardingImage2,
-                          EImages.onBoardingImage3,
-                        ],
-                      );
-                    }
-                  ),
+                  // FutureBuilder(
+                  //   future: null,
+                  //   builder: (context, snapshot) {
+                  //     return const EPromoSlider(
+                  //       banners: [
+                  //         EImages.onBoardingImage1,
+                  //         EImages.onBoardingImage2,
+                  //         EImages.onBoardingImage3,
+                  //       ],
+                  //     );
+                  //   }
+                  // ),
+                  if(offerImages.isNotEmpty)
+                    EPromoSlider(banners: offerImages),
+                  if(offerImages.isEmpty)
+                    Container(
+                      width: double.infinity,
+                      height: 200,
+                      color: EColors.grey,
+                      child: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+
                   const SizedBox(height: ESizes.spaceBtwSections),
 
                   ///Heading

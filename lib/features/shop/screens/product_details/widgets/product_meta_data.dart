@@ -5,8 +5,6 @@ import 'package:ethnic_elegance/common/widgets/texts/product_title_text.dart';
 import 'package:ethnic_elegance/utils/constants/enums.dart';
 import 'package:ethnic_elegance/utils/constants/image_strings.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../../common/widgets/custom_shapes/containers/rounded_container.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/helpers/helper_functions.dart';
@@ -29,13 +27,13 @@ class EProductMetaData extends StatelessWidget{
           children: [
             /// Sale Tag
 
-            ERoundedContainer(
-              radius: ESizes.sm,
-              backgroundColor: EColors.secondary.withOpacity(0.8),
-              padding: const EdgeInsets.symmetric(horizontal: ESizes.sm, vertical: ESizes.xs),
-              child: Text('25%', style: Theme.of(context).textTheme.labelLarge!.apply(color: EColors.black)),
-            ),
-            const SizedBox(width: ESizes.spaceBtwItems),
+            // ERoundedContainer(
+            //   radius: ESizes.sm,
+            //   backgroundColor: EColors.secondary.withOpacity(0.8),
+            //   padding: const EdgeInsets.symmetric(horizontal: ESizes.sm, vertical: ESizes.xs),
+            //   child: Text('25%', style: Theme.of(context).textTheme.labelLarge!.apply(color: EColors.black)),
+            // ),
+            // const SizedBox(width: ESizes.spaceBtwItems),
 
             ///Price
             // Text('\₹250', style: Theme.of(context).textTheme.titleSmall!.apply(decoration: TextDecoration.lineThrough)),

@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../common/widgets/appbar/tabbar.dart';
 import '../../../../common/widgets/products/cart/cart_menu_icon.dart';
+import '../../../../sharepreferences.dart';
 import '../../models/subcat_productlist_model.dart';
+import '../../models/subcat_productlist_model1.dart';
 
 class ESubCategoryScreen extends StatefulWidget {
   const ESubCategoryScreen({super.key, required this.id});
@@ -20,11 +22,18 @@ class ESubCategoryScreen extends StatefulWidget {
 class _ESubCategoryScreenState extends State<ESubCategoryScreen> {
   Map? data;
   var recdata;
-
+  String? userid;
+  bool? isRetailCustomer;
   @override
   void initState() {
     super.initState();
+    getKey().then((String? value) {
+      setState(() {
+        userid = value;
+      });
+    });
   }
+
 
   Future<Map?> _fetchSubCategories() async {
 
@@ -39,6 +48,22 @@ class _ESubCategoryScreenState extends State<ESubCategoryScreen> {
     });
 
     return recdata;
+  }
+
+  Future<void> checkUserType() async {
+    final ref = FirebaseDatabase.instance
+        .ref()
+        .child("Project/UserRegister/$userid/UserType");
+    final snapshot = await ref.once();
+    if (snapshot.snapshot.value == "Retail Customer") {
+      setState(() {
+        isRetailCustomer = true;
+      });
+    } else {
+      setState(() {
+        isRetailCustomer = false;
+      });
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -93,8 +118,12 @@ class _ESubCategoryScreenState extends State<ESubCategoryScreen> {
                 },
                 body: TabBarView(
                   children: [
-                     for (var entry in snapshot.data!.entries)
-                        ESubCatProductList(productSubCat: entry.key.toString()),
+                    for (var entry in snapshot.data!.entries)
+                      isRetailCustomer == true
+                          ? ESubCatProductList1(
+                          productSubCat: entry.key.toString())
+                          : ESubCatProductList(
+                          productSubCat: entry.key.toString()),
                   ],
                 ),
               ),

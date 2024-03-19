@@ -3,10 +3,12 @@ import 'package:ethnic_elegance/common/widgets/products/cart/cart_item.dart';
 import 'package:ethnic_elegance/common/widgets/texts/product_price_text.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../common/widgets/appbar/appbar.dart';
 import '../../../../sharepreferences.dart';
 import '../../../../utils/constants/sizes.dart';
+import '../../controllers/checkout_controller.dart';
 import '../../models/cart_insert_model1.dart';
 
 class ECartItems extends StatefulWidget {
@@ -36,6 +38,7 @@ class _ECartItemsState extends State<ECartItems> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(CheckoutController());
     return StreamBuilder(
       stream: FirebaseDatabase.instance
           .ref()
@@ -71,11 +74,12 @@ class _ECartItemsState extends State<ECartItems> {
         } else {
           Map<dynamic, dynamic> cartData =
               snapshot.data!.snapshot.value as Map<dynamic, dynamic>;
-          List<CartInsertModel1> cartList = [];
+          List<CartModel1> cartList = [];
+          List<String> cartIds = [];
 
           cartData.forEach((key, value) {
             if (value != null) {
-              cartList.add(CartInsertModel1(
+              cartList.add(CartModel1(
                 key.toString(),
                 value["productId"],
                 value["cartQty"],
@@ -84,9 +88,10 @@ class _ECartItemsState extends State<ECartItems> {
                 value["totalPrice"],
                 value["userId"],
               ));
+              cartIds.add(key.toString());
             }
           });
-
+          controller.cartId = cartIds;
           return Padding(
             padding: const EdgeInsets.all(20.0),
             child: ListView.separated(

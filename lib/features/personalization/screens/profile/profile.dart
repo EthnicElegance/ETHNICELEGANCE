@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../settings/settings.dart';
+import '../settings/settings.dart';
 
 
 class ProfileScreen extends StatefulWidget {

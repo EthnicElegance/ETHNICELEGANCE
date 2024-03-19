@@ -21,7 +21,7 @@ class EPromoSlider extends StatelessWidget {
     return Column(
       children: [
         CarouselSlider(
-            items: banners.map((url) => ERoundedImage(imageUrl: url/*,isNetworkImage: true*/,)).toList(),
+            items: banners.map((url) => ERoundedImage(imageUrl: url,isNetworkImage: true,)).toList(),
             options: CarouselOptions(viewportFraction: 1,
               onPageChanged: (index, _) =>
                   controller.updatePageIndicator(index),)),

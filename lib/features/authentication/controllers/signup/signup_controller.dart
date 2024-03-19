@@ -1,24 +1,17 @@
 import 'dart:convert';
-// import 'dart:js';
-
 import 'package:crypto/crypto.dart';
-import 'package:ethnic_elegance/features/shop/screens/home/home.dart';
+import 'package:ethnic_elegance/features/authentication/screens/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:ethnic_elegance/utils/constants/image_strings.dart';
 import 'package:ethnic_elegance/utils/popups/full_screen_loader.dart';
 import 'package:ethnic_elegance/utils/popups/loaders.dart';
-// import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:firebase_database/firebase_database.dart';
-
-// import '../../../../data/repositories/authentication/authentication_repository.dart';
 import '../../../../common/widgets/success_screen/success_screen.dart';
-
-// import '../../../../data/repositories/authentication/authentication_repository.dart';
 import '../../../../utils/constants/text_strings.dart';
 import '../../../../utils/helpers/network_manager.dart';
 import '../../models/signup_model.dart';
-// import '../../screens/signup/verify_email.dart';
+
 
 class SignupController extends GetxController {
   static SignupController get instance => Get.find();
@@ -124,7 +117,7 @@ class SignupController extends GetxController {
                 image: EImages.successfullyRegisterAnimation,
                 title: ETexts.yourAccountCreatedTitle,
                 subTitle: ETexts.yourAccountCreatedSubTitle,
-                onPressed: () => Get.to(() => const HomeScreen())
+                onPressed: () => Get.to(() => const LoginScreen())
             ),
       );
       // Navigator.of(context).pop();

@@ -60,8 +60,7 @@ class SigninController extends GetxController {
         ELoaders.errorSnackBar(title: 'Email not found', message: 'The provided email is not registered.');
         return;
       }else {
-        print("------------------------------Data------------------------------");
-        print(snapshot.snapshot.children.length);
+
         var encPassword = encryptString(password.text);
 
         Map data;
@@ -73,9 +72,9 @@ class SigninController extends GetxController {
             if (data["Email"] == email.text &&
                 data["Password"].toString() == encPassword) {
               saveKey(key);
-              //saveData('key', key);
+
               count = count + 1;
-              // Navigator.pop(context);
+
               if(data['UserType'] == "Business Customer") {
                 success();
               }else if(data['UserType'] == "Retail Customer"){

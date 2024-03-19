@@ -3,10 +3,9 @@ import 'package:ethnic_elegance/common/widgets/custom_shapes/containers/primary_
 import 'package:ethnic_elegance/common/widgets/layouts/list_tiles/settings_menu_tile.dart';
 import 'package:ethnic_elegance/common/widgets/texts/section_heading.dart';
 import 'package:ethnic_elegance/features/authentication/screens/login/login.dart';
-import 'package:ethnic_elegance/features/personalization/screens/address/widgets/address.dart';
+import 'package:ethnic_elegance/features/personalization/screens/rent_rules/rulesscreen.dart';
 import 'package:ethnic_elegance/features/shop/screens/cart/cart.dart';
-import 'package:ethnic_elegance/features/shop/screens/order/widgets/order.dart';
-import 'package:ethnic_elegance/navigation_menu.dart';
+import 'package:ethnic_elegance/features/shop/screens/order/order.dart';
 import 'package:ethnic_elegance/navigation_menu1.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,6 +14,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../common/widgets/layouts/list_tiles/user_profile_tile.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
+import '../FAQs/faqscreen.dart';
+import '../address/address.dart';
 
 class SettingsScreen1 extends StatelessWidget {
   const SettingsScreen1({super.key});
@@ -51,10 +52,10 @@ class SettingsScreen1 extends StatelessWidget {
                       title: 'Account Settings', showActionButton: false),
                   const SizedBox(height: ESizes.spaceBtwItems),
                   ESettingsMenuTile(
-                    icon: Iconsax.safe_home,
-                    title: 'My Addresses',
-                    subtitle: 'Set shopping delivery address',
-                    onTap: () => Get.to(() => const UserAddressScreen())
+                      icon: Iconsax.safe_home,
+                      title: 'My Addresses',
+                      subtitle: 'Set shopping delivery address',
+                      onTap: () => Get.to(() => const UserAddressScreen())
                   ),
                   ESettingsMenuTile(
                     icon: Iconsax.shopping_cart,
@@ -69,55 +70,26 @@ class SettingsScreen1 extends StatelessWidget {
                     onTap: () => Get.to(() => const OrderScreen()),
                   ),
                   ESettingsMenuTile(
-                    icon: Iconsax.bank,
-                    title: 'Bank Account',
-                    subtitle: 'Withdraw balance to registered bank account',
-                    onTap: () {}/*=> Get.to(() => const CheckOutScreen())*/,
-                  ),
-                  ESettingsMenuTile(
                     icon: Iconsax.discount_shape,
                     title: 'My Coupons',
                     subtitle: 'List of all discounted coupons',
                     onTap: () {},
                   ),
+
                   ESettingsMenuTile(
-                    icon: Iconsax.notification,
-                    title: 'Notifications',
-                    subtitle: 'set any kind of notification message',
-                    onTap: () {},
+                    icon: Iconsax.message_question,
+                    title: 'FAQs',
+                    subtitle: 'List of all the FAQs',
+                    onTap: () => Get.to(() => const FaqScreen()),
                   ),
+
                   ESettingsMenuTile(
-                    icon: Iconsax.security_card,
-                    title: 'Account Privacy',
-                    subtitle: 'Manage data usage and connected accounts',
-                    onTap: () {},
+                    icon: Iconsax.book,
+                    title: 'Renting Rules',
+                    subtitle: 'List of all the rules of rent product',
+                    onTap: () => Get.to(() => const RulesScreen()),
                   ),
-                  const SizedBox(height: ESizes.spaceBtwSections),
-                  const ESectionHeading(
-                      title: 'App Settings', showActionButton: false),
-                  const SizedBox(height: ESizes.spaceBtwItems),
-                  const ESettingsMenuTile(
-                      icon: Iconsax.document_upload,
-                      title: 'Load Data',
-                      subtitle: 'Upload Data to your Cloud Firebase'),
-                  ESettingsMenuTile(
-                    icon: Iconsax.location,
-                    title: 'Geolocation',
-                    subtitle: 'Set recommendation based on location',
-                    trailing: Switch(value: true, onChanged: (value) {}),
-                  ),
-                  ESettingsMenuTile(
-                    icon: Iconsax.security_user,
-                    title: 'Safe Mode',
-                    subtitle: 'Search result is safe for all ages',
-                    trailing: Switch(value: false, onChanged: (value) {}),
-                  ),
-                  ESettingsMenuTile(
-                    icon: Iconsax.image,
-                    title: 'HD Image Quality',
-                    subtitle: 'Set image quality to be seen',
-                    trailing: Switch(value: true, onChanged: (value) {}),
-                  ),
+
                   const SizedBox(height: ESizes.spaceBtwSections),
                   SizedBox(
                     width: double.infinity,
@@ -126,7 +98,7 @@ class SettingsScreen1 extends StatelessWidget {
                           SharedPreferences prefs = await SharedPreferences.getInstance();
                           prefs.clear();
                           Get.offAll(() => const LoginScreen());
-                          }, child: const Text('Logout')),
+                        }, child: const Text('Logout')),
                   ),
                   const SizedBox(height: ESizes.spaceBtwSections * 2.5),
                 ],

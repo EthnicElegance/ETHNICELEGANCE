@@ -343,12 +343,7 @@ class CartController1 extends GetxController {
       'cartQty': value,
       'totalPrice': totalPriceValue.toString(),
       'pricePerItem': price,
-    }).then((_) => ELoaders.successSnackBar(
-        title: 'Quantity Updated',
-        message: 'Quantity and price updated successfully'))
-        .catchError((error) => ELoaders.errorSnackBar(
-        title: 'Failed to update',
-        message: 'Failed to update quantity and price: $error'));
+    });
   }
 
   void increment(String cartId, String price) {
@@ -436,7 +431,8 @@ class _EProductQuantityWithAddRemoveButtonState
               : EColors.light,
         ),
         const SizedBox(width: ESizes.spaceBtwItems),
-        SizedBox(
+        if(widget.plusMinusIcon)
+          SizedBox(
           width: 40,
           child: TextFormField(
             controller: _quantityController,
@@ -453,6 +449,26 @@ class _EProductQuantityWithAddRemoveButtonState
             ),
           ),
         ),
+        if(!widget.plusMinusIcon)
+          SizedBox(
+            width: 40,
+            child: TextFormField(
+              enabled: false,
+              controller: _quantityController,
+              onChanged: (value) {
+                controller.updateQuantity(value, widget.cartId, widget.price);
+              },
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                contentPadding:
+                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+            ),
+          ),
+        
         const SizedBox(width: ESizes.spaceBtwItems),
         if(widget.plusMinusIcon)
         ECircularIcon(

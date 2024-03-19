@@ -69,9 +69,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         const SizedBox(height: ESizes.spaceBtwSections),
 
                         /// Checkout Button
-                        SizedBox(width: double.infinity, child: ElevatedButton(
-                            onPressed: () {}, child: const Text('Checkout'))),
-                        const SizedBox(height: ESizes.spaceBtwSections),
+                        // SizedBox(width: double.infinity, child: ElevatedButton(
+                        //     onPressed: () {}, child: const Text('Checkout'))),
+                        // const SizedBox(height: ESizes.spaceBtwSections),
 
                         /// Description
                         const ESectionHeading(

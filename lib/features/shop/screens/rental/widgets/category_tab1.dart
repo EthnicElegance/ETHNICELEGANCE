@@ -1,8 +1,5 @@
 import 'package:ethnic_elegance/features/shop/models/subcat_productlist_model.dart';
 import 'package:flutter/material.dart';
-import '../../../../../common/widgets/layouts/grid_layout.dart';
-import '../../../../../common/widgets/products_cart/product_card_vertical.dart';
-import '../../../../../common/widgets/texts/section_heading.dart';
 import '../../../../../utils/constants/sizes.dart';
 
 class ECategoryTab extends StatelessWidget{

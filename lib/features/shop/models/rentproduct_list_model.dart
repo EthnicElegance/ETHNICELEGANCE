@@ -1,6 +1,4 @@
-import 'package:ethnic_elegance/features/shop/models/product_model.dart';
 import 'package:ethnic_elegance/features/shop/models/rentproduct_model.dart';
-import 'package:ethnic_elegance/features/shop/models/wishlist_item.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,15 +6,12 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../common/styles/shadows.dart';
 import '../../../common/widgets/custom_shapes/containers/rounded_container.dart';
-import '../../../common/widgets/icons/circular_icon.dart';
 import '../../../common/widgets/texts/product_price_text.dart';
 import '../../../common/widgets/texts/product_title_text.dart';
 import '../../../sharepreferences.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_functions.dart';
-import '../../../utils/popups/loaders.dart';
-import '../controllers/wishlist_service.dart';
 import '../screens/product_details/product_detail.dart';
 
 class ERentProductList extends StatefulWidget {

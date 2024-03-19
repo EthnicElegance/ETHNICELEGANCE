@@ -193,23 +193,23 @@ class _EProductList1State extends State<EProductList1> {
                                     ),
 
                                     ///sale Tag
-                                    Positioned(
-                                      top: 12,
-                                      child: ERoundedContainer(
-                                        radius: ESizes.sm,
-                                        backgroundColor: EColors.secondary
-                                            .withOpacity(0.8),
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: ESizes.sm,
-                                            vertical: ESizes.xs),
-                                        child: Text('25%',
-                                            style: Theme
-                                                .of(context)
-                                                .textTheme
-                                                .labelLarge!
-                                                .apply(color: EColors.black)),
-                                      ),
-                                    ),
+                                    // Positioned(
+                                    //   top: 12,
+                                    //   child: ERoundedContainer(
+                                    //     radius: ESizes.sm,
+                                    //     backgroundColor: EColors.secondary
+                                    //         .withOpacity(0.8),
+                                    //     padding: const EdgeInsets.symmetric(
+                                    //         horizontal: ESizes.sm,
+                                    //         vertical: ESizes.xs),
+                                    //     child: Text('25%',
+                                    //         style: Theme
+                                    //             .of(context)
+                                    //             .textTheme
+                                    //             .labelLarge!
+                                    //             .apply(color: EColors.black)),
+                                    //   ),
+                                    // ),
 
                                     /// Favourite Icon Button
                                     Positioned(
@@ -303,28 +303,28 @@ class _EProductList1State extends State<EProductList1> {
                                   ),
 
                                   ///Add To Cart
-                                  Container(
-                                    decoration: const BoxDecoration(
-                                      color: EColors.dark,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(
-                                            ESizes.cardRadiusMd),
-                                        bottomRight:
-                                        Radius.circular(
-                                            ESizes.productImageRadius),
-                                      ),
-                                    ),
-                                    child: const SizedBox(
-                                      width: ESizes.iconLg * 1.2,
-                                      height: ESizes.iconLg * 1.2,
-                                      child: Center(
-                                        child: Icon(
-                                          Iconsax.add,
-                                          color: EColors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  // Container(
+                                  //   decoration: const BoxDecoration(
+                                  //     color: EColors.dark,
+                                  //     borderRadius: BorderRadius.only(
+                                  //       topLeft: Radius.circular(
+                                  //           ESizes.cardRadiusMd),
+                                  //       bottomRight:
+                                  //       Radius.circular(
+                                  //           ESizes.productImageRadius),
+                                  //     ),
+                                  //   ),
+                                  //   child: const SizedBox(
+                                  //     width: ESizes.iconLg * 1.2,
+                                  //     height: ESizes.iconLg * 1.2,
+                                  //     child: Center(
+                                  //       child: Icon(
+                                  //         Iconsax.add,
+                                  //         color: EColors.white,
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ],

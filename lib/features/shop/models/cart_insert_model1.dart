@@ -1,6 +1,6 @@
 import 'dart:core';
 
-class CartInsertModel1 {
+class CartModel1 {
   late String id;
   late String productId;
   late String cartQTY;
@@ -10,7 +10,7 @@ class CartInsertModel1 {
   late String userId;
   
 
-  CartInsertModel1(this.id,this.productId, this.cartQTY, this.size, this.price,this.totalPrice, this.userId);
+  CartModel1(this.id,this.productId, this.cartQTY, this.size, this.price,this.totalPrice, this.userId);
 
   Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
         'id': productId,
@@ -22,7 +22,7 @@ class CartInsertModel1 {
         'userId': userId,
       };
 
-  factory CartInsertModel1.fromJson(Map<String, dynamic> v) {
-    return CartInsertModel1(v["id"],v["productId"], v["cartQty"], v["size"], v["price"], v["totalPrice"], v["userId"]);
+  factory CartModel1.fromJson(Map<String, dynamic> v) {
+    return CartModel1(v["id"],v["productId"], v["cartQty"], v["size"], v["price"], v["totalPrice"], v["userId"]);
   }
 }

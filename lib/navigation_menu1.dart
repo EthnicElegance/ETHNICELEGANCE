@@ -1,4 +1,3 @@
-import 'package:ethnic_elegance/features/personalization/screens/settings/settings.dart';
 import 'package:ethnic_elegance/features/personalization/screens/settings/settings1.dart';
 import 'package:ethnic_elegance/features/shop/screens/home/home1.dart';
 import 'package:ethnic_elegance/features/shop/screens/rental/rental.dart';
@@ -8,10 +7,8 @@ import 'package:ethnic_elegance/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-
-import 'features/shop/screens/store/store.dart';
 import 'features/shop/screens/store/store1.dart';
-import 'features/shop/screens/wishlist/wishlist.dart';
+
 
 class NavigationMenu1 extends StatefulWidget {
   const NavigationMenu1({super.key});
@@ -37,7 +34,7 @@ class _NavigationMenu1State extends State<NavigationMenu1> {
     {
       Navigator.pop(context);
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const StoreScreen()));
+          context, MaterialPageRoute(builder: (context) => const StoreScreen1()));
     }
     else if (index==2)
     {
@@ -49,13 +46,13 @@ class _NavigationMenu1State extends State<NavigationMenu1> {
     {
       Navigator.pop(context);
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const FavouriteScreen()));
+          context, MaterialPageRoute(builder: (context) => const FavouriteScreen1()));
     }
     else if (index==4)
     {
       Navigator.pop(context);
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const SettingsScreen()));
+          context, MaterialPageRoute(builder: (context) => const SettingsScreen1()));
     }
     else
     {
