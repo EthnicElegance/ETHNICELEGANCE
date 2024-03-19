@@ -52,7 +52,7 @@ class _EOrderListItemsState extends State<EOrderListItems> {
               snapshot.data!.snapshot.value == null) {
             return const Center(
                 child: Text(
-                  'Cart is Empty',
+                  'No Order History',
                   style: TextStyle(fontSize: 16),
                 ),
               );

@@ -50,11 +50,22 @@ class _EBillingAddressSectionState extends State<EBillingAddressSection> {
             );
           } else if (!snapshot.hasData ||
               snapshot.data!.snapshot.value == null) {
-            return const Center(
-              child: Text(
-                'Address is Empty',
-                style: TextStyle(fontSize: 16),
-              ),
+            return Column(
+              children: [
+                ESectionHeading(
+                    title: 'Shipping Address',
+                    buttonTitle: 'Add',
+                    // showActionButton: false,
+                    onPressed: () => Get.to(() => const AddNewAddressScreen())
+                ),
+                const SizedBox(height: ESizes.spaceBtwItems / 2),
+                const Center(
+                  child: Text(
+                    'Address Not Available',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ],
             );
           } else {
             Map<dynamic, dynamic> addressData =

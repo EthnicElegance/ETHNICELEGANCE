@@ -12,6 +12,7 @@ import '../../../../sharepreferences.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../models/cart_insert_model1.dart';
 import '../checkout/checkout.dart';
+import '../home/home1.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -22,6 +23,7 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   String? userId;
+  bool? isRetailCustomer;
 
   @override
   void initState() {
@@ -30,7 +32,27 @@ class _CartScreenState extends State<CartScreen> {
       setState(() {
         userId = value;
       });
+      checkUserType();
     });
+  }
+
+  Future<void> checkUserType() async {
+    if (mounted) {
+      final ref = FirebaseDatabase.instance
+          .ref()
+          .child("Project/UserRegister/$userId/UserType");
+      final snapshot = await ref.once();
+
+      if (snapshot.snapshot.value == "Retail Customer") {
+        setState(() {
+          isRetailCustomer = true;
+        });
+      } else {
+        setState(() {
+          isRetailCustomer = false;
+        });
+      }
+    }
   }
 
   @override
@@ -90,7 +112,7 @@ class _CartScreenState extends State<CartScreen> {
             appBar: EAppBar(
               showBackArrow: false,
               leadingIcon: Iconsax.arrow_left,
-              leadingOnPressed: () => Get.offAll(() => const HomeScreen()),
+              leadingOnPressed: () => isRetailCustomer == true ? Get.offAll(() => const HomeScreen1()) : Get.offAll(() => const HomeScreen()),
               title: Text(
                 "Cart",
                 style: Theme.of(context).textTheme.titleLarge,
