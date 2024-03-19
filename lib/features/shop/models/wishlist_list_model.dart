@@ -205,9 +205,6 @@ class _EWishListState extends State<EWishList> {
                                               .textTheme
                                               .labelMedium),
                                       const SizedBox(height: ESizes.xs),
-                                      const Icon(Iconsax.verify5,
-                                          color: EColors.primary,
-                                          size: ESizes.iconXs)
                                     ],
                                   ),
                                 ],

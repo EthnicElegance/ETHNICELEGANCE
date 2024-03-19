@@ -1,5 +1,5 @@
-import 'package:ethnic_elegance/features/shop/models/product_model.dart';
-import 'package:ethnic_elegance/features/shop/models/wishlist_item.dart';
+import 'dart:async';
+import 'package:ethnic_elegance/sharepreferences.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,34 +10,33 @@ import '../../../common/widgets/custom_shapes/containers/rounded_container.dart'
 import '../../../common/widgets/icons/circular_icon.dart';
 import '../../../common/widgets/texts/product_price_text.dart';
 import '../../../common/widgets/texts/product_title_text.dart';
-import '../../../sharepreferences.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_functions.dart';
 import '../../../utils/popups/loaders.dart';
 import '../controllers/wishlist_service.dart';
 import '../screens/product_details/product_detail.dart';
+import '../screens/wishlist/wishlist.dart';
 
-class ESubCatProductList1 extends StatefulWidget {
-  const ESubCatProductList1({
-    Key? key,
-    this.limitedProduct = false,
-    this.productCount,
-    required this.productSubCat,
-  }) : super(key: key);
-
-  final bool limitedProduct;
-  final int? productCount;
-  final String productSubCat;
+class EWishList1 extends StatefulWidget {
+  const EWishList1({super.key});
 
   @override
-  State<ESubCatProductList1> createState() => _ESubCatProductList1State();
+  State<EWishList1> createState() => _EWishList1State();
 }
 
-class _ESubCatProductList1State extends State<ESubCatProductList1> {
-  late Query dbRef;
+class _EWishList1State extends State<EWishList1> {
   String? userid;
-  List<Map<String, dynamic>> appointment = [];
+  late Query dbRef;
+  late Query dbRefWish;
+  late StreamController<List<Map>> _streamController;
+  Map<dynamic, dynamic>? userData;
+  Map<int, Map> prodMap = {};
+  late Map data1;
+  late Map data2;
+  late List<Map> productList = [];
+  
+  List<Map> wishList = [];
 
   @override
   void initState() {
@@ -46,95 +45,47 @@ class _ESubCatProductList1State extends State<ESubCatProductList1> {
       setState(() {
         userid = value;
       });
-      getWishlistData();
     });
   }
 
-  Future<void> getWishlistData() async {
-    appointment.clear();
-    final wishListRef =
-        FirebaseDatabase.instance.ref().child('Project/wishlist');
-    wishListRef
-        .orderByChild("userId")
-        .equalTo(userid)
-        .onValue
-        .listen((event) async {
-      final Map<dynamic, dynamic>? values =
-          event.snapshot.value as Map<dynamic, dynamic>?;
-
+  Future<void> getWishListData() async {
+    _streamController = StreamController<List<Map>>();
+    wishList.clear();
+    prodMap.clear();
+    dbRef = FirebaseDatabase.instance.ref().child('Project/wishlist');
+    dbRef.orderByChild("userId").equalTo(userid).onValue.listen((event) async {
+      Map<dynamic, dynamic>? values = event.snapshot.value as Map?;
       if (values != null) {
-        values.forEach((key, value) {
-          appointment.add({
+        var productId;
+        values.forEach((key, value) async {
+          productId = value["productId"];
+          wishList.add({
             'wishlistkey': key,
             'productId': value['productId'],
             "userId": value["userId"],
           });
+          await fetchProductData(productId, wishList.length - 1);
         });
       }
-      setState(() {}); // Refresh UI
+      _streamController.add(wishList);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final dark = EHelperFunctions.isDarkMode(context);
+    getWishListData();
     return Padding(
-      padding: EdgeInsets.zero,
+      padding: const EdgeInsets.all(10.0),
       child: SizedBox(
         width: 400,
-        child: StreamBuilder(
-          stream: FirebaseDatabase.instance
-              .ref()
-              .child("Project/product")
-              .orderByChild('subcatid')
-              .equalTo(widget.productSubCat)
-              .onValue,
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        child: StreamBuilder<List<Map>>(
+          stream: _streamController.stream,
+          builder: (context, snapshot) {
             if (snapshot.hasData) {
-              final Map<dynamic, dynamic>? map =
-                  snapshot.data!.snapshot.value as Map<dynamic, dynamic>?;
-
-              if (map == null || map.isEmpty) {
-                return const Center(
-                  child: Text(
-                    'Up Coming Data',
-                    style: TextStyle(fontSize: 10),
-                  ),
-                );
-              }
-
-              final List<ProductModel> prodlist = [];
-              prodlist.clear();
-              map.forEach((key, v) {
-                if (v != null) {
-                  if (v["customer_price"] != '0') {
-                    prodlist.add(ProductModel(
-                      key,
-                      v["subcatid"],
-                      v["product_name"],
-                      v["photo1"],
-                      v["photo2"],
-                      v["photo3"],
-                      v["customer_price"],
-                      v["size"],
-                      v["qty"],
-                      v["product_colour"],
-                      v["fabric"],
-                      v["detail"],
-                      v["DateTime"],
-                      v["availability"],
-                    ));
-                  }
-                }
-              });
-
-              final List<String> productIds = appointment
-                  .map((item) => item['productId'].toString())
-                  .toList();
+              List<Map>? wlist = snapshot.data;
               return GridView.builder(
-                itemCount: widget.limitedProduct
-                    ? widget.productCount
-                    : prodlist.length,
+                itemCount: wlist!.length,
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
                 physics: const NeverScrollableScrollPhysics(),
@@ -144,16 +95,13 @@ class _ESubCatProductList1State extends State<ESubCatProductList1> {
                   crossAxisSpacing: ESizes.gridViewSpacing,
                   mainAxisExtent: 280,
                 ),
-                itemBuilder: (BuildContext context, int index) {
-                    final productId = prodlist[index].key;
-                    final found = productIds.contains(productId);
-                    final icon = found ? Iconsax.heart5 : Iconsax.heart;
-
+                itemBuilder: (context, index) {
+                  data1 = wlist[index];
+                  data2 = prodMap[index] ?? {};
+                  if (data1.isNotEmpty && data2.isNotEmpty) {
                     return GestureDetector(
-                      onTap: () => Get.to(() => ProductDetailScreen(
-                            id: prodlist[index].key,
-                        index: index,
-                          )),
+                      onTap: () => Get.to(
+                          () => ProductDetailScreen(id: wlist[index]['productId'],index: index,)),
                       child: Container(
                         width: 180,
                         padding: const EdgeInsets.all(1),
@@ -168,7 +116,7 @@ class _ESubCatProductList1State extends State<ESubCatProductList1> {
                             ///Thumbnail
                             ERoundedContainer(
                               height: 180,
-                              padding: const EdgeInsets.only(top: 5.0),
+                              padding: const EdgeInsets.all(ESizes.sm),
                               backgroundColor:
                                   dark ? EColors.dark : EColors.light,
                               child: Stack(
@@ -185,10 +133,9 @@ class _ESubCatProductList1State extends State<ESubCatProductList1> {
                                         borderRadius:
                                             BorderRadius.circular(ESizes.md),
                                         child: Image(
-                                          image: NetworkImage(
-                                              "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/ProductImage%2F${prodlist[index].pphoto1}?alt=media"),
-                                          fit: BoxFit.contain,
-                                        ),
+                                            image: NetworkImage(
+                                                "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/ProductImage%2F${data2['photo1']}?alt=media"),
+                                            fit: BoxFit.contain),
                                       ),
                                     ),
                                   ),
@@ -201,16 +148,13 @@ class _ESubCatProductList1State extends State<ESubCatProductList1> {
                                   //     backgroundColor:
                                   //         EColors.secondary.withOpacity(0.8),
                                   //     padding: const EdgeInsets.symmetric(
-                                  //       horizontal: ESizes.sm,
-                                  //       vertical: ESizes.xs,
-                                  //     ),
-                                  //     child: Text(
-                                  //       '25%',
-                                  //       style: Theme.of(context)
-                                  //           .textTheme
-                                  //           .labelLarge!
-                                  //           .apply(color: EColors.black),
-                                  //     ),
+                                  //         horizontal: ESizes.sm,
+                                  //         vertical: ESizes.xs),
+                                  //     child: Text('25%',
+                                  //         style: Theme.of(context)
+                                  //             .textTheme
+                                  //             .labelLarge!
+                                  //             .apply(color: EColors.black)),
                                   //   ),
                                   // ),
 
@@ -219,38 +163,22 @@ class _ESubCatProductList1State extends State<ESubCatProductList1> {
                                     top: 0,
                                     right: 0,
                                     child: ECircularIcon(
-                                      icon: icon,
+                                      icon: Iconsax.heart5,
                                       color: Colors.red,
                                       onPressed: () async {
-                                        if (icon == Iconsax.heart) {
-                                          await WishlistService().addToWishlist(
-                                            WishlistItem(
-                                              productId: prodlist[index].key,
-                                              userId: userid!,
-                                            ),
-                                          );
-                                          ELoaders.successSnackBar(
-                                            title: 'Added to Wishlist',
-                                            message:
-                                                'The product ${prodlist[index].pname} has been added to Wishlist',
-                                          );
-                                        } else if (icon == Iconsax.heart5) {
-                                          await WishlistService()
-                                              .removeFromWishlist(appointment
-                                                      .firstWhere((item) =>
-                                                          item['productId'] ==
-                                                          productId)[
-                                                  'wishlistkey']);
-                                          ELoaders.successSnackBar(
+                                        String wishlistId =
+                                            wlist[index]['wishlistkey'];
+                                        await WishlistService()
+                                            .removeFromWishlist(wishlistId);
+                                        ELoaders.successSnackBar(
                                             title: 'Removed from Wishlist',
-                                            message:
-                                                'The product ${prodlist[index].pname} has been removed from Wishlist',
-                                          );
-                                        }
-                                        getWishlistData(); // Refresh wishlist data
+                                            message: 'the product has been Removed from Wishlist'
+                                        );
+                                        Get.offAll(
+                                            () => const FavouriteScreen());
                                       },
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
@@ -263,21 +191,19 @@ class _ESubCatProductList1State extends State<ESubCatProductList1> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   EProductTitleText(
-                                    title: prodlist[index].pname,
+                                    title: data2['product_name'],
                                     smallSize: true,
                                   ),
                                   const SizedBox(
                                       height: ESizes.spaceBtwItems / 2),
                                   Row(
                                     children: [
-                                      Text(
-                                        prodlist[index].availability,
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelMedium,
-                                      ),
+                                      Text(data2['availability'],
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium),
                                       const SizedBox(height: ESizes.xs),
                                     ],
                                   ),
@@ -290,13 +216,15 @@ class _ESubCatProductList1State extends State<ESubCatProductList1> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                ///Price
                                 Padding(
                                   padding:
                                       const EdgeInsets.only(left: ESizes.sm),
                                   child: EProductPriceText(
-                                    price: prodlist[index].price,
-                                  ),
+                                      price: data2['customer_price']),
                                 ),
+
+                                ///Add To Cart
                                 // Container(
                                 //   decoration: const BoxDecoration(
                                 //     color: EColors.dark,
@@ -324,20 +252,49 @@ class _ESubCatProductList1State extends State<ESubCatProductList1> {
                         ),
                       ),
                     );
+                  } else {
+                    return const Center(
+                        child: CircularProgressIndicator(
+                      backgroundColor: Colors.grey,
+                      valueColor: AlwaysStoppedAnimation(Colors.black),
+                      strokeWidth: 1.5,
+                    ));
+                  }
                 },
               );
             } else {
               return const Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.grey,
-                  valueColor: AlwaysStoppedAnimation(Colors.black),
-                  strokeWidth: 2,
-                ),
-              );
+                  child: CircularProgressIndicator(
+                backgroundColor: Colors.grey,
+                valueColor: AlwaysStoppedAnimation(Colors.black),
+                strokeWidth: 1.5,
+              ));
             }
           },
         ),
       ),
     );
+  }
+
+  Future<void> fetchProductData(String key, int index) async {
+    DatabaseReference dbUserData =
+        FirebaseDatabase.instance.ref().child("Project/product").child(key);
+    DatabaseEvent userDataEvent = await dbUserData.once();
+    DataSnapshot userDataSnapshot = userDataEvent.snapshot;
+    userData = userDataSnapshot.value as Map?;
+    prodMap[index] = {
+      "product_name": userData!["product_name"],
+      "photo1": userData!["photo1"],
+      "photo2": userData!["photo2"],
+      "photo3": userData!["photo3"],
+      "customer_price": userData!["customer_price"],
+      "size": userData!["size"],
+      "qty": userData!["qty"],
+      "product_colour": userData!["product_colour"],
+      "fabric": userData!["fabric"],
+      "detail": userData!["detail"],
+      "availability": userData!["availability"]
+    };
+    _streamController.add(wishList); // Update the stream with new data
   }
 }

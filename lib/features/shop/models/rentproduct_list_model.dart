@@ -267,11 +267,6 @@ class _ERentProductListState extends State<ERentProductList> {
                                           .labelMedium,
                                     ),
                                     const SizedBox(height: ESizes.xs),
-                                    const Icon(
-                                      Iconsax.verify5,
-                                      color: EColors.primary,
-                                      size: ESizes.iconXs,
-                                    ),
                                   ],
                                 ),
                               ],

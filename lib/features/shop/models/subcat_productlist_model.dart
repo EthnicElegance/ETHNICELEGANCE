@@ -279,11 +279,6 @@ class _ESubCatProductListState extends State<ESubCatProductList> {
                                             .labelMedium,
                                       ),
                                       const SizedBox(height: ESizes.xs),
-                                      const Icon(
-                                        Iconsax.verify5,
-                                        color: EColors.primary,
-                                        size: ESizes.iconXs,
-                                      ),
                                     ],
                                   ),
                                 ],

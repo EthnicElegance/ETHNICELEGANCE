@@ -277,9 +277,6 @@ class _EProductListState extends State<EProductList> {
                                                 .textTheme
                                                 .labelMedium),
                                         const SizedBox(height: ESizes.xs),
-                                        const Icon(Iconsax.verify5,
-                                            color: EColors.primary,
-                                            size: ESizes.iconXs)
                                       ],
                                     ),
                                   ],

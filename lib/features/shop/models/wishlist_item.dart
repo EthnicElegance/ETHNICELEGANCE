@@ -14,9 +14,4 @@ class WishlistItem {
   }
 }
 
-  /*factory WishlistModel.fromJson(Map<String, dynamic> document) {
-    return WishlistModel(
-        document["productId"], document["userId"]
-    );
-  }*/
 

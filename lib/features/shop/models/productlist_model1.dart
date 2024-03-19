@@ -7,7 +7,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../../common/styles/shadows.dart';
 import '../../../common/widgets/custom_shapes/containers/rounded_container.dart';
 import '../../../common/widgets/icons/circular_icon.dart';
@@ -17,7 +16,6 @@ import '../../../sharepreferences.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_functions.dart';
-import '../../../utils/popups/loaders.dart';
 import '../controllers/wishlist_service.dart';
 
 
@@ -45,7 +43,7 @@ class _EProductList1State extends State<EProductList1> {
   late List<Map> userName = [];
   Map<dynamic, dynamic>? userData;
 
-  List<Map> appointment = [];
+  List<Map> wishlistList = [];
 
   @override
   void initState() {
@@ -59,7 +57,7 @@ class _EProductList1State extends State<EProductList1> {
 
   Future<void> getHospitalData() async {
 
-    appointment.clear();
+    wishlistList.clear();
     userMap.clear();
     dbRef = FirebaseDatabase.instance.ref().child('Project/wishlist');
     dbRef
@@ -70,7 +68,7 @@ class _EProductList1State extends State<EProductList1> {
       Map<dynamic, dynamic>? values = event.snapshot.value as Map?;
       if (values != null) {
         values.forEach((key, value) async {
-          appointment.add({
+          wishlistList.add({
             'wishlistkey': key,
             'productId': value['productId'],
             "userId": value["userId"],
@@ -128,11 +126,8 @@ class _EProductList1State extends State<EProductList1> {
                     }
                   }
                 });
-                print("-------------------------------------prodlist------------------------------------------");
-                print(prodlist);
-                print(prodlist.length);
-                final productIds = appointment.map((item) => item['productId']).toList();
-                final wishlistIds = appointment.map((item) => item['wishlistkey']).toList();
+                final productIds = wishlistList.map((item) => item['productId']).toList();
+                final wishlistIds = wishlistList.map((item) => item['wishlistkey']).toList();
                 return GridView.builder(
                   itemCount: widget.limitedProduct ?widget.productCount : prodlist.length,
                   shrinkWrap: true,
@@ -229,11 +224,11 @@ class _EProductList1State extends State<EProductList1> {
                                                 .addToWishlist(WishlistItem(
                                                 productId: prodlist[index].key,
                                                 userId: userid));
-                                            ELoaders.successSnackBar(
-                                                title: 'Added to Wishlist',
-                                                message: 'the product ${prodlist[index]
-                                                    .pname} Added to Wishlist'
-                                            );
+                                            // ELoaders.successSnackBar(
+                                            //     title: 'Added to Wishlist',
+                                            //     message: 'the product ${prodlist[index]
+                                            //         .pname} Added to Wishlist'
+                                            // );
                                           }
                                           else if (icon == Iconsax.heart5) {
                                             setState(() {
@@ -245,11 +240,11 @@ class _EProductList1State extends State<EProductList1> {
                                                 wishlistIds.firstWhere((id) =>
                                                     productIds.contains(
                                                         prodlist[index].key)));
-                                            ELoaders.successSnackBar(
-                                                title: 'Removed from Wishlist',
-                                                message: 'the product ${prodlist[index]
-                                                    .pname} Removed from Wishlist'
-                                            );
+                                            // ELoaders.successSnackBar(
+                                            //     title: 'Removed from Wishlist',
+                                            //     message: 'the product ${prodlist[index]
+                                            //         .pname} Removed from Wishlist'
+                                            // );
                                           }
                                         },
                                       ),
@@ -281,9 +276,6 @@ class _EProductList1State extends State<EProductList1> {
                                                 .textTheme
                                                 .labelMedium),
                                         const SizedBox(height: ESizes.xs),
-                                        const Icon(Iconsax.verify5,
-                                            color: EColors.primary,
-                                            size: ESizes.iconXs)
                                       ],
                                     ),
                                   ],

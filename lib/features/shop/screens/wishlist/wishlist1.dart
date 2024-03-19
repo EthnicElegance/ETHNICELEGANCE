@@ -1,6 +1,6 @@
 import 'package:ethnic_elegance/common/widgets/appbar/appbar.dart';
 import 'package:ethnic_elegance/common/widgets/icons/circular_icon.dart';
-import 'package:ethnic_elegance/features/shop/models/wishlist_list_model.dart';
+import 'package:ethnic_elegance/features/shop/models/wishlist_list_model1.dart';
 import 'package:ethnic_elegance/features/shop/screens/home/home1.dart';
 import 'package:ethnic_elegance/navigation_menu1.dart';
 import 'package:ethnic_elegance/sharepreferences.dart';
@@ -46,7 +46,7 @@ class _FavouriteScreen1State extends State<FavouriteScreen1> {
           padding: EdgeInsets.all(ESizes.defaultSpace),
           child: Column(
             children: [
-              EWishList()
+              EWishList1()
             ],
           ),
         ),
