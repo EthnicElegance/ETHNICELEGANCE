@@ -1,4 +1,5 @@
 import 'package:ethnic_elegance/common/widgets/texts/section_heading.dart';
+import 'package:ethnic_elegance/features/shop/screens/home/home1.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:pay/pay.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../common/widgets/success_screen/success_screen.dart';
 import '../../../../../payment_configurations.dart' as payment_configurations;
+import '../../../../../sharepreferences.dart';
 import '../../../../../utils/constants/image_strings.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/constants/text_strings.dart';
@@ -44,13 +46,39 @@ class _EBillingPaymentSectionState extends State<EBillingPaymentSection> {
       FirebaseDatabase.instance.ref().child('Project/OrderDetail');
 
   var oId = "";
-
+  String? userId;
+  bool? isRetailCustomer;
   @override
   void initState() {
     super.initState();
-    _googlePayConfigFuture = PaymentConfiguration.fromAsset(
-      'payment/default_google_pay_config.json',
-    );
+    getKey().then((String? value) {
+      setState(() {
+        userId = value;
+      });
+      _googlePayConfigFuture = PaymentConfiguration.fromAsset(
+        'payment/default_google_pay_config.json',
+      );
+      checkUserType();
+    });
+  }
+
+  Future<void> checkUserType() async {
+    if (mounted) {
+      final ref = FirebaseDatabase.instance
+          .ref()
+          .child("Project/UserRegister/$userId/UserType");
+      final snapshot = await ref.once();
+
+      if (snapshot.snapshot.value == "Retail Customer") {
+        setState(() {
+          isRetailCustomer = true;
+        });
+      } else {
+        setState(() {
+          isRetailCustomer = false;
+        });
+      }
+    }
   }
 
   Future<void> onGooglePayResult(paymentResult) async {
@@ -130,7 +158,7 @@ class _EBillingPaymentSectionState extends State<EBillingPaymentSection> {
                       title: 'Failed to remove',
                       message: 'Failed to remove item: $error'));
             }
-            Get.offAll(() => const HomeScreen());
+            isRetailCustomer == true ? Get.offAll(() => const HomeScreen1()) : Get.offAll(() => const HomeScreen());
           },
         ),
       );
