@@ -5,6 +5,7 @@ import 'package:ethnic_elegance/common/widgets/texts/section_heading.dart';
 import 'package:ethnic_elegance/features/authentication/screens/login/login.dart';
 import 'package:ethnic_elegance/features/personalization/screens/rent_rules/rulesscreen.dart';
 import 'package:ethnic_elegance/features/shop/screens/cart/cart.dart';
+import 'package:ethnic_elegance/features/shop/screens/coupons/coupons.dart';
 import 'package:ethnic_elegance/features/shop/screens/order/order.dart';
 import 'package:ethnic_elegance/navigation_menu1.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +74,7 @@ class SettingsScreen1 extends StatelessWidget {
                     icon: Iconsax.discount_shape,
                     title: 'My Coupons',
                     subtitle: 'List of all discounted coupons',
-                    onTap: () {},
+                    onTap: () => Get.to(() => const CouponScreen()),
                   ),
 
                   ESettingsMenuTile(

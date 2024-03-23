@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../common/widgets/layouts/list_tiles/user_profile_tile.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
+import '../../../shop/screens/coupons/coupons.dart';
 import '../address/address.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -72,7 +73,7 @@ class SettingsScreen extends StatelessWidget {
                     icon: Iconsax.discount_shape,
                     title: 'My Coupons',
                     subtitle: 'List of all discounted coupons',
-                    onTap: () {},
+                    onTap: () => Get.to(() => const CouponScreen()),
                   ),
 
                   ESettingsMenuTile(

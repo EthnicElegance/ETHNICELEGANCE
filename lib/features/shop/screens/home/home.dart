@@ -140,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: ESizes.spaceBtwSections),
 
                   ///Popular Products
-                  const EProductList(limitedProduct: true, productCount: 6),
+                  const EProductList(limitedProduct: true, productCount: 6,sortBy: 'All Products'),
                 ],
               ),
             )

@@ -1,4 +1,4 @@
-import 'package:ethnic_elegance/features/shop/screens/cart/cart.dart';
+import 'package:ethnic_elegance/features/shop/screens/rent_cart/rent_cart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,8 +7,8 @@ import 'package:firebase_database/firebase_database.dart';
 import '../../../../sharepreferences.dart';
 import '../../../../utils/constants/colors.dart';
 
-class ECartCounterIcon extends StatefulWidget {
-  const ECartCounterIcon({
+class ERentCartCounterIcon extends StatefulWidget {
+  const ERentCartCounterIcon({
     Key? key,
     required this.iconColor,
   }) : super(key: key);
@@ -16,10 +16,10 @@ class ECartCounterIcon extends StatefulWidget {
   final Color iconColor;
 
   @override
-  State<ECartCounterIcon> createState() => _ECartCounterIconState();
+  State<ERentCartCounterIcon> createState() => _ERentCartCounterIconState();
 }
 
-class _ECartCounterIconState extends State<ECartCounterIcon> {
+class _ERentCartCounterIconState extends State<ERentCartCounterIcon> {
   late Query _cartQuery; // Query for Firebase cart node
   String? userid;
   int cartItemCount = 0; // Total count of items in the cart
@@ -37,8 +37,9 @@ class _ECartCounterIconState extends State<ECartCounterIcon> {
 
   void _initializeFirebase() {
     if (userid != null) {
-      DatabaseReference cartRef = FirebaseDatabase.instance.ref().child('Project/cart');
-      _cartQuery = cartRef.orderByChild('userId').equalTo(userid); // Apply the query
+      print(userid);
+      DatabaseReference cartRef = FirebaseDatabase.instance.ref().child('Project/RentalCart');
+      _cartQuery = cartRef.orderByChild('UserId').equalTo(userid); // Apply the query
       _cartQuery.onValue.listen((event) {
         if (event.snapshot.exists) {
           // Count the number of items in the cart
@@ -74,7 +75,7 @@ class _ECartCounterIconState extends State<ECartCounterIcon> {
     return Stack(
       children: [
         IconButton(
-          onPressed: () => Get.to(() => const CartScreen()),
+          onPressed: () => Get.to(() => const RentCartScreen()),
           icon: Icon(Iconsax.shopping_bag, color: widget.iconColor),
         ),
         Positioned(

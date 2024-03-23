@@ -21,12 +21,13 @@ import '../controllers/wishlist_service.dart';
 
 
 class EProductList1 extends StatefulWidget {
-  const EProductList1 ({super.key,this.limitedProduct = false,this.productCount, this.allProduct = true, this.productSubCat});
+  const EProductList1 ({super.key,this.limitedProduct = false,this.productCount, this.allProduct = true, this.productSubCat, required this.sortBy});
 
   final bool limitedProduct;
   final bool allProduct;
   final int? productCount;
   final String? productSubCat;
+  final String sortBy;
 
   @override
   State<EProductList1> createState() => _EProductList1State();
@@ -44,6 +45,7 @@ class _EProductList1State extends State<EProductList1> {
   Map<dynamic, dynamic>? userData;
 
   List<Map> wishlistList = [];
+  List<ProductModel> prodlist = [];
 
   @override
   void initState() {
@@ -103,7 +105,6 @@ class _EProductList1State extends State<EProductList1> {
                     ),
                   );
                 }
-                List<ProductModel> prodlist = [];
                 prodlist.clear();
                 map.forEach((dynamic key,dynamic v) {
                   if (v != null) {
@@ -128,6 +129,7 @@ class _EProductList1State extends State<EProductList1> {
                 });
                 final productIds = wishlistList.map((item) => item['productId']).toList();
                 final wishlistIds = wishlistList.map((item) => item['wishlistkey']).toList();
+                _sortProducts();
                 return GridView.builder(
                   itemCount: widget.limitedProduct ?widget.productCount : prodlist.length,
                   shrinkWrap: true,
@@ -345,5 +347,14 @@ class _EProductList1State extends State<EProductList1> {
         ),
       ),
     );
+  }
+  void _sortProducts() {
+    if (widget.sortBy == 'Higher Price') {
+      prodlist.sort(
+              (a, b) => double.parse(b.price).compareTo(double.parse(a.price)));
+    } else if (widget.sortBy == 'Lower Price') {
+      prodlist.sort(
+              (a, b) => double.parse(a.price).compareTo(double.parse(b.price)));
+    }
   }
 }

@@ -1,26 +1,25 @@
 import 'package:ethnic_elegance/common/widgets/custom_shapes/containers/rounded_container.dart';
-import 'package:ethnic_elegance/features/shop/screens/checkout/widgets/billing_address_section.dart';
-import 'package:ethnic_elegance/features/shop/screens/checkout/widgets/billing_amount_section.dart';
-import 'package:ethnic_elegance/features/shop/screens/checkout/widgets/billing_payment_section.dart';
+import 'package:ethnic_elegance/features/shop/models/rent_cart_insert_model1.dart';
+import 'package:ethnic_elegance/features/shop/screens/rent_order/widgets/billing_address_section1.dart';
+import 'package:ethnic_elegance/features/shop/screens/rent_order/widgets/billing_amount_section1.dart';
+import 'package:ethnic_elegance/features/shop/screens/rent_order/widgets/billing_payment_section1.dart';
 import 'package:ethnic_elegance/utils/helpers/helper_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import '../../../../common/widgets/appbar/appbar.dart';
-import '../../../../common/widgets/products/cart/coupon_widget.dart';
 import '../../../../sharepreferences.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
-import '../../models/cart_insert_model1.dart';
-import '../cart/cart_items.dart';
+import '../rent_cart/rent_cart_items.dart';
 
-class CheckOutScreen extends StatefulWidget {
-  const CheckOutScreen({super.key});
+class RentCheckOutScreen extends StatefulWidget {
+  const RentCheckOutScreen({super.key});
 
   @override
-  State<CheckOutScreen> createState() => _CheckOutScreenState();
+  State<RentCheckOutScreen> createState() => _RentCheckOutScreenState();
 }
 
-class _CheckOutScreenState extends State<CheckOutScreen> {
+class _RentCheckOutScreenState extends State<RentCheckOutScreen> {
   String? userId;
 
   @override
@@ -41,8 +40,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     return StreamBuilder(
       stream: FirebaseDatabase.instance
           .ref()
-          .child('Project/cart')
-          .orderByChild('userId')
+          .child('Project/RentalCart')
+          .orderByChild('UserId')
           .equalTo(userId)
           .onValue,
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -59,13 +58,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             appBar: EAppBar(
               showBackArrow: true,
               title: Text(
-                "Checkout",
+                "Rental Order Review",
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
             body: const Center(
               child: Text(
-                'Checkout is Empty',
+                'Order is Empty',
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -74,18 +73,19 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           // print(_googlePayConfigFuture);
           Map<dynamic, dynamic> cartData =
               snapshot.data!.snapshot.value as Map<dynamic, dynamic>;
-          List<CartModel1> cartList = [];
+          List<RentCartInsertModel1> cartList = [];
 
           cartData.forEach((key, value) {
             if (value != null) {
-              cartList.add(CartModel1(
+              cartList.add(RentCartInsertModel1(
                 key.toString(),
-                value["productId"],
-                value["cartQty"],
-                value["size"],
-                value["price"],
-                value["totalPrice"],
-                value["userId"],
+                value["RentProductId"],
+                value["CartQty"],
+                value["Size"],
+                value["Price"],
+                value["Deposit"],
+                value["TotalPrice"],
+                value["UserId"],
               ));
             }
           });
@@ -94,15 +94,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             appBar: EAppBar(
                 showBackArrow: true,
                 title: Text(
-                  "Order Review",
+                  "Rental Order Review",
                   style: Theme.of(context).textTheme.headlineMedium,
                 )),
             body: SingleChildScrollView(
                 child: Column(
               children: [
-                const ECartItems(),
-                // const SizedBox(height: ESizes.spaceBtwSections),
-                const ECouponCode(),
+                const ERentCartItems(),
                 const SizedBox(height: ESizes.spaceBtwSections),
                 ERoundedContainer(
                   showBorder: true,
@@ -110,13 +108,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   backgroundColor: dark ? EColors.black : EColors.white,
                   child: const Column(
                     children: [
-                      EBillingAmountSection(),
+                      EBillingAmountSection1(),
                       SizedBox(height: ESizes.spaceBtwItems),
                       Divider(),
                       SizedBox(height: ESizes.spaceBtwItems),
-                      EBillingAddressSection(),
+                      EBillingAddressSection1(),
                       SizedBox(height: ESizes.spaceBtwItems),
-                      EBillingPaymentSection(),
+                      EBillingPaymentSection1(),
                     ],
                   ),
                 )

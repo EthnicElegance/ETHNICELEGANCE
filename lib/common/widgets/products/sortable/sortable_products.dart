@@ -83,6 +83,7 @@ class ESortableProducts extends StatefulWidget {
 
 class _ESortableProductsState extends State<ESortableProducts> {
   String? userid;
+  String _sortBy = 'All Products';
   bool? isRetailCustomer;
 
   @override
@@ -122,21 +123,22 @@ class _ESortableProductsState extends State<ESortableProducts> {
         ///Dropdown
         DropdownButtonFormField(
           decoration: const InputDecoration(prefixIcon: Icon(Iconsax.sort)),
-          onChanged: (value) {},
+          onChanged: (value) {
+            setState(() {
+              _sortBy = value.toString();
+            });
+          },
           items: [
-            'Name',
+            'All Products',
             'Higher Price',
             'Lower Price',
-            'Sale',
-            'Newest',
-            'Popularity'
           ].map((option) => DropdownMenuItem(value: option, child: Text(option))).toList(),
         ),
         const SizedBox(height: ESizes.spaceBtwSections),
         /// Products
         isRetailCustomer == true
-            ? const EProductList1()
-            : const EProductList()
+            ? EProductList1(sortBy: _sortBy,)
+            : EProductList(sortBy: _sortBy,)
       ],
     );
   }

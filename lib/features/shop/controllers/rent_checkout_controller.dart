@@ -3,12 +3,13 @@ import 'package:ethnic_elegance/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 import '../../../../utils/helpers/network_manager.dart';
 
-class CheckoutController extends GetxController {
-  static CheckoutController get instance => Get.find();
+class RentCheckoutController extends GetxController {
+  static RentCheckoutController get instance => Get.find();
   
   late List<String> cartId;
   late String getKeys;
   late String orderDate;
+  late String depositAmount;
   late String totalAmount;
   late String userAddress;
 

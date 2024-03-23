@@ -1,4 +1,4 @@
-import 'package:ethnic_elegance/features/shop/models/cart_insert_model.dart';
+import 'package:ethnic_elegance/features/shop/models/rent_cart_insert_model.dart';
 import 'package:ethnic_elegance/utils/constants/colors.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +7,8 @@ import '../../../../../sharepreferences.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/helpers/helper_functions.dart';
 import '../../../../../utils/popups/loaders.dart';
-import '../../../models/product_model.dart';
-import '../../cart/cart.dart';
+import '../../../models/rentproduct_model.dart';
+import '../../rent_cart/rent_cart.dart';
 
 class CartController extends GetxController {
   final RxString counter = RxString('1');
@@ -23,17 +23,17 @@ class CartController extends GetxController {
   }
 }
 
-class EBottomAddToCart extends StatefulWidget {
-  const EBottomAddToCart({super.key, required this.id, required this.index});
+class EBottomAddToCart1 extends StatefulWidget {
+  const EBottomAddToCart1({super.key, required this.id, required this.index});
 
   final String id;
   final index;
 
   @override
-  State<EBottomAddToCart> createState() => _EBottomAddToCartState();
+  State<EBottomAddToCart1> createState() => _EBottomAddToCart1State();
 }
 
-class _EBottomAddToCartState extends State<EBottomAddToCart> {
+class _EBottomAddToCart1State extends State<EBottomAddToCart1> {
   final CartController controller = Get.put(CartController());
   String? userid;
 
@@ -49,12 +49,12 @@ class _EBottomAddToCartState extends State<EBottomAddToCart> {
 
   @override
   Widget build(BuildContext context) {
-    // var count = 0;
-    final dbRef = FirebaseDatabase.instance.ref().child('Project/cart');
+
+    final dbRef = FirebaseDatabase.instance.ref().child('Project/RentalCart');
     final dark = EHelperFunctions.isDarkMode(context);
     return StreamBuilder(
         stream:
-            FirebaseDatabase.instance.ref().child('Project/product').onValue,
+            FirebaseDatabase.instance.ref().child('Project/RentProduct').onValue,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
             Map<dynamic, dynamic> map = snapshot.data.snapshot.value;
@@ -67,28 +67,30 @@ class _EBottomAddToCartState extends State<EBottomAddToCart> {
                 ),
               );
             }
-            List<ProductModel> prodlist = [];
+            List<RentProductModel> prodlist = [];
             prodlist.clear();
 
             map.forEach((dynamic key, dynamic v) {
               if (v != null) {
-                prodlist.add(ProductModel(
+                prodlist.add(RentProductModel(
                     key.toString(),
-                    v["subcatid"],
-                    v["product_name"],
+                    v["catid"],
+                    v["RentProduct_name"],
                     v["photo1"],
                     v["photo2"],
                     v["photo3"],
-                    v["retailer_price"],
+                    v["price"],
                     v["size"],
                     v["qty"],
-                    v["product_colour"],
+                    v["RentProduct_colour"],
                     v["fabric"],
-                    v["detail"],
+                    v["RentProduct_detail"],
                     v["DateTime"],
-                    v["availability"]));
+                    v["availability"]
+                ));
               }
             });
+
             return Container(
               padding: const EdgeInsets.symmetric(
                   horizontal: ESizes.defaultSpace,
@@ -103,51 +105,22 @@ class _EBottomAddToCartState extends State<EBottomAddToCart> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Row(
-                  //   children: [
-                  //     ECircularIcon(
-                  //       icon: Iconsax.minus,
-                  //       backgroundColor: EColors.darkerGrey,
-                  //       width: 40,
-                  //       height: 40,
-                  //       color: EColors.white,
-                  //       onPressed: () {
-                  //         if (controller.counter.value != '0' && controller.counter.value != '1') {
-                  //           controller.decrement();
-                  //         }
-                  //       },
-                  //     ),
-                  //     const SizedBox(width: ESizes.spaceBtwItems),
-                  //     Obx(
-                  //       () => Text(controller.counter.value,
-                  //           style: Theme.of(context).textTheme.titleSmall),
-                  //     ),
-                  //     const SizedBox(width: ESizes.spaceBtwItems),
-                  //     ECircularIcon(
-                  //       icon: Iconsax.add,
-                  //       backgroundColor: EColors.black,
-                  //       width: 40,
-                  //       height: 40,
-                  //       color: EColors.white,
-                  //       onPressed: controller.increment,
-                  //     ),
-                  //   ],
-                  // ),
                   ElevatedButton(
                     onPressed: () {
                       if (controller.size.value != '') {
-                        CartInsertModel cartObj = CartInsertModel(
+                        RentCartInsertModel cartObj = RentCartInsertModel(
                             widget.id,
                             controller.counter.value,
                             controller.size.value,
-                            prodlist[widget.index].price,
-                            "${int.parse(prodlist[widget.index].price) * int.parse(controller.counter.value)}",
+                            prodlist[widget.index].rprice,
+                            "${double.parse(prodlist[widget.index].rprice) * 3}",
+                            "${double.parse(prodlist[widget.index].rprice) * int.parse(controller.counter.value)}",
                             userid!);
                         dbRef.push().set(cartObj.toJson());
                         ELoaders.successSnackBar(
-                            title: 'Added to the Cart',
-                            message: 'The product has been added to the Cart');
-                        Get.to(() => const CartScreen());
+                            title: 'Added to the Rent Cart',
+                            message: 'The Rentproduct has been added to the Cart');
+                        Get.to(() => const RentCartScreen());
                       } else {
                         ELoaders.errorSnackBar(
                             title: 'Oh snap!', message: "Select Size");
@@ -158,7 +131,7 @@ class _EBottomAddToCartState extends State<EBottomAddToCart> {
                       backgroundColor: EColors.black,
                       side: const BorderSide(color: EColors.black),
                     ),
-                    child: const Text('Add To Cart'),
+                    child: const Text('Book Now'),
                   )
                 ],
               ),

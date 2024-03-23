@@ -3,20 +3,19 @@ import 'package:ethnic_elegance/utils/popups/loaders.dart';
 import 'package:get/get.dart';
 import '../../../../utils/helpers/network_manager.dart';
 
-class CheckoutController extends GetxController {
-  static CheckoutController get instance => Get.find();
-  
-  late List<String> cartId;
-  late String getKeys;
-  late String orderDate;
-  late String totalAmount;
-  late String userAddress;
+class CouponController extends GetxController {
+  static CouponController get instance => Get.find();
 
-  GlobalKey<FormState> addressKey = GlobalKey<FormState>();
+
+  final couponName = TextEditingController();
+
+
+  GlobalKey<FormState> couponKey = GlobalKey<FormState>();
 
   void insertOrder() async {
     try {
       final isConnected = await NetworkManager.instance.isConnected();
+
 
       if (!isConnected) {
         return;

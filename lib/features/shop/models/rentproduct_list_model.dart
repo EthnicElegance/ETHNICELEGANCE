@@ -1,9 +1,8 @@
 import 'package:ethnic_elegance/features/shop/models/rentproduct_model.dart';
+import 'package:ethnic_elegance/features/shop/screens/rental_product_details/rental_product_detail.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
-
 import '../../../common/styles/shadows.dart';
 import '../../../common/widgets/custom_shapes/containers/rounded_container.dart';
 import '../../../common/widgets/texts/product_price_text.dart';
@@ -12,7 +11,6 @@ import '../../../sharepreferences.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_functions.dart';
-import '../screens/product_details/product_detail.dart';
 
 class ERentProductList extends StatefulWidget {
   const ERentProductList({
@@ -45,31 +43,6 @@ class _ERentProductListState extends State<ERentProductList> {
       //getWishlistData();
     });
   }
-
-  /*Future<void> getWishlistData() async {
-    appointment.clear();
-    final wishListRef =
-    FirebaseDatabase.instance.ref().child('Project/wishlist');
-    wishListRef
-        .orderByChild("userId")
-        .equalTo(userid)
-        .onValue
-        .listen((event) async {
-      final Map<dynamic, dynamic>? values =
-      event.snapshot.value as Map<dynamic, dynamic>?;
-
-      if (values != null) {
-        values.forEach((key, value) {
-          appointment.add({
-            'wishlistkey': key,
-            'productId': value['productId'],
-            "userId": value["userId"],
-          });
-        });
-      }
-      setState(() {}); // Refresh UI
-    });
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -123,9 +96,6 @@ class _ERentProductListState extends State<ERentProductList> {
                 }
               });
 
-              // final List<String> productIds =
-              // appointment.map((item) => item['productId'].toString()).toList();
-
               return GridView.builder(
                 itemCount: widget.limitedProduct
                     ? widget.productCount
@@ -140,13 +110,11 @@ class _ERentProductListState extends State<ERentProductList> {
                   mainAxisExtent: 280,
                 ),
                 itemBuilder: (BuildContext context, int index) {
-                  //final productId = rentProdList[index].key;
-                  //final found = productIds.contains(productId);
-                  //final icon = found ? Iconsax.heart5 : Iconsax.heart;
 
                   return GestureDetector(
-                    onTap: () => Get.to(() => ProductDetailScreen(
+                    onTap: () => Get.to(() => RentalProductDetailScreen(
                       id: rentProdList[index].key,
+                      index: index,
                     )),
                     child: Container(
                       width: 180,
@@ -182,64 +150,6 @@ class _ERentProductListState extends State<ERentProductList> {
                                     ),
                                   ),
                                 ),
-
-                                ///sale Tag
-                                Positioned(
-                                  top: 12,
-                                  child: ERoundedContainer(
-                                    radius: ESizes.sm,
-                                    backgroundColor:
-                                    EColors.secondary.withOpacity(0.8),
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: ESizes.sm,
-                                      vertical: ESizes.xs,
-                                    ),
-                                    child: Text(
-                                      '25%',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelLarge!
-                                          .apply(color: EColors.black),
-                                    ),
-                                  ),
-                                ),
-
-                                /// Favourite Icon Button
-                                /*Positioned(
-                                  top: 0,
-                                  right: 0,
-                                  child: ECircularIcon(
-                                    icon: icon,
-                                    color: Colors.red,
-                                    onPressed: () async {
-                                      if (icon == Iconsax.heart) {
-                                        await WishlistService().addToWishlist(
-                                          WishlistItem(
-                                            productId: rentProdList[index].key,
-                                            userId: userid!,
-                                          ),
-                                        );
-                                        ELoaders.successSnackBar(
-                                          title: 'Added to Wishlist',
-                                          message:
-                                          'The product ${rentProdList[index].pname} has been added to Wishlist',
-                                        );
-                                      } else if (icon == Iconsax.heart5) {
-                                        await WishlistService()
-                                            .removeFromWishlist(appointment
-                                            .firstWhere((item) =>
-                                        item['productId'] ==
-                                            productId)['wishlistkey']);
-                                        ELoaders.successSnackBar(
-                                          title: 'Removed from Wishlist',
-                                          message:
-                                          'The product ${rentProdList[index].pname} has been removed from Wishlist',
-                                        );
-                                      }
-                                      getWishlistData(); // Refresh wishlist data
-                                    },
-                                  ),
-                                )*/
                               ],
                             ),
                           ),
@@ -284,26 +194,12 @@ class _ERentProductListState extends State<ERentProductList> {
                                   price: rentProdList[index].rprice,
                                 ),
                               ),
-                              Container(
-                                decoration: const BoxDecoration(
-                                  color: EColors.dark,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(ESizes.cardRadiusMd),
-                                    bottomRight:
-                                    Radius.circular(ESizes.productImageRadius),
-                                  ),
-                                ),
-                                child: const SizedBox(
-                                  width: ESizes.iconLg * 1.2,
-                                  height: ESizes.iconLg * 1.2,
-                                  child: Center(
-                                    child: Icon(
-                                      Iconsax.add,
-                                      color: EColors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              // Padding(
+                              //   padding: const EdgeInsets.only(left: ESizes.sm),
+                              //   child: EProductPriceText(
+                              //     price: "${double.parse(rentProdList[index].rprice)*5} Deposit",
+                              //   ),
+                              // ),
                             ],
                           ),
                         ],

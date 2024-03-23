@@ -1,4 +1,6 @@
 import 'package:ethnic_elegance/common/widgets/texts/section_heading.dart';
+import 'package:ethnic_elegance/features/shop/models/rent_order_detail_insert_model.dart';
+import 'package:ethnic_elegance/features/shop/models/rent_order_insert_model.dart';
 import 'package:ethnic_elegance/features/shop/screens/home/home1.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
@@ -14,9 +16,7 @@ import '../../../../../utils/constants/image_strings.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/constants/text_strings.dart';
 import '../../../../../utils/popups/loaders.dart';
-import '../../../controllers/checkout_controller.dart';
-import '../../../models/order_detail_insert_model.dart';
-import '../../../models/order_insert_model.dart';
+import '../../../controllers/rent_checkout_controller.dart';
 import '../../home/home.dart';
 
 const _paymentItems = [
@@ -27,23 +27,23 @@ const _paymentItems = [
   )
 ];
 
-class EBillingPaymentSection extends StatefulWidget {
-  const EBillingPaymentSection({Key? key}) : super(key: key);
+class EBillingPaymentSection1 extends StatefulWidget {
+  const EBillingPaymentSection1({Key? key}) : super(key: key);
 
   @override
-  State<EBillingPaymentSection> createState() => _EBillingPaymentSectionState();
+  State<EBillingPaymentSection1> createState() => _EBillingPaymentSection1State();
 }
 
-class _EBillingPaymentSectionState extends State<EBillingPaymentSection> {
-  final controller = Get.put(CheckoutController());
+class _EBillingPaymentSection1State extends State<EBillingPaymentSection1> {
+  final controller = Get.put(RentCheckoutController());
 
   late final Future<PaymentConfiguration> _googlePayConfigFuture;
 
   DatabaseReference dbRef =
-      FirebaseDatabase.instance.ref().child('Project/Order');
+      FirebaseDatabase.instance.ref().child('Project/RentOrder');
 
   DatabaseReference dbRef1 =
-      FirebaseDatabase.instance.ref().child('Project/OrderDetail');
+      FirebaseDatabase.instance.ref().child('Project/RentOrderDetail');
 
   var oId = "";
   String? userId;
@@ -86,40 +86,37 @@ class _EBillingPaymentSectionState extends State<EBillingPaymentSection> {
     late String getKeys;
     List<String> cartId = controller.cartId;
     String orderDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
-    String shippingDate = DateFormat('yyyy-MM-dd').format(DateTime.now().add(const Duration(days: 4)));
     String totalAmount = controller.totalAmount;
-    String userAddress = controller.userAddress;
+    String depositAmount = controller.depositAmount;
 
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       getKeys = prefs.getString('key')!;
-      OrderInsertModel regobj = OrderInsertModel(
+      RentOrderInsertModel regobj = RentOrderInsertModel(
         getKeys,
         orderDate,
-        shippingDate,
         totalAmount,
-        userAddress,
+        depositAmount,
         "Pending",
       );
       DatabaseReference newRef = dbRef.push();
       String newOrderKey = newRef.key!;
-
       newRef.set(regobj.toJson()).then((_) {
         for (var x in cartId) {
           final cartRef =
-              FirebaseDatabase.instance.ref().child('Project/cart/$x');
+              FirebaseDatabase.instance.ref().child('Project/RentalCart/$x');
           cartRef.once().then((snapshot) {
             final data = snapshot.snapshot.value as Map<dynamic, dynamic>; // Adjusted type here
-            OrderDetailInsertModel regobj1 = OrderDetailInsertModel(
+
+            RentOrderDetailInsertModel regobj1 = RentOrderDetailInsertModel(
               newOrderKey,
-              data['productId'],
-              data['cartQty'],
-              data['size'],
-              data['price'],
-              data['totalPrice'],
+              data['RentProductId'],
+              data['CartQty'],
+              data['Size'],
+              data['Price'],
+              data['TotalPrice'],
             );
             DatabaseReference newRef1 = dbRef1.push();
-            // String newOrderKey1 = newRef1.key!;
             newRef1.set(regobj1.toJson());
           });
         }
@@ -138,7 +135,7 @@ class _EBillingPaymentSectionState extends State<EBillingPaymentSection> {
             for (var x in cartId) {
               FirebaseDatabase.instance
                   .ref()
-                  .child("Project/cart/$x")
+                  .child("Project/RentalCart/$x")
                   .remove()
                   .catchError((error) =>
                   ELoaders.errorSnackBar(
