@@ -20,7 +20,6 @@ class ForgetPasswordChange extends StatefulWidget {
 class _ForgetPasswordChangeState extends State<ForgetPasswordChange> {
   final controller = Get.put(ForgetPasswordController());
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,8 +83,6 @@ class _ForgetPasswordChangeState extends State<ForgetPasswordChange> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  // onPressed: () => Get.to(() => const ResetPassword()),
-        
                     onPressed: () {
                       controller.forgetPass(context, widget.userId!);
                     },

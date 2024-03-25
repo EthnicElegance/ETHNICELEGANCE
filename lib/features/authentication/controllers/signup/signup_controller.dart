@@ -81,6 +81,7 @@ class SignupController extends GetxController {
             contactNumber.text.trim(),
             email.text.trim(),
             pass1);
+
         dbRef.push().set(regobj.toJson());
 
       EFullScreenLoader.stopLoading();
