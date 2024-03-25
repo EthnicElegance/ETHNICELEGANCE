@@ -43,7 +43,7 @@ class AuthenticationRepository extends GetxController {
     //       : Get.offAll(() => const OnBoardingScreen());
     // }
     /// local storage
-    
+
 
     deviceStorage.writeIfNull('isFirstTime', true);
     deviceStorage.read('isFirstTime') != true
@@ -84,9 +84,9 @@ class AuthenticationRepository extends GetxController {
   }
 /* ----- Email & Password sign in ---------*/
 
-  /// [EmailAuth] -- signin
+/// [EmailAuth] -- signin
 
-  /// [EmailAuth] -- REGISTER
+/// [EmailAuth] -- REGISTER
 // Future<UserCredential> registerWithEmailAndPassword(
 //     String email, String password) async {
 //   try {
@@ -142,5 +142,5 @@ class AuthenticationRepository extends GetxController {
 //   }
 // }
 
-  /// [EmailV] -- Forgot Password
+/// [EmailV] -- Forgot Password
 }
