@@ -43,7 +43,7 @@ class ETexts{
 
   // -- Authentication Headings
   static const String loginTitle = "SIGN IN";
-  static const String loginSubTitle = "Welcome back";
+  static const String loginSubTitle = "Welcome";
   static const String signupTitle = "Let’s create your account";
   static const String forgetPasswordTitle = "Forget password";
   static const String forgetPasswordSubTitle = "Don’t worry sometimes people can forget too, enter your email and we will send you a password reset link.";
