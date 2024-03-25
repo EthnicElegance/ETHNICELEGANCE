@@ -53,47 +53,34 @@ class AuthenticationRepository extends GetxController {
 
   Future<void> chkUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    getKeys = prefs.getString('key')!;
+    print("------------prefs.getString('key')----------------");
+    print(prefs.getString('key'));
 
-    // print("----------------getKeys-------------------");
-    // print(getKeys);
-    final dbRef =
-    FirebaseDatabase.instance.ref().child('Project/UserRegister').child(getKeys);
-    final DatabaseEvent snapshot = await dbRef.once();
- // print(snapshot.snapshot.value);
-    var dt= snapshot.snapshot.value as Map;
-    String? userType = dt['UserType'];
+    if(prefs.getString('key') != null)
+    {
+      getKeys = prefs.getString('key')!;
+      print("------------getKeys----------------");
+      print(getKeys);
+      final dbRef = FirebaseDatabase.instance
+          .ref()
+          .child('Project/UserRegister')
+          .child(getKeys);
+      final DatabaseEvent snapshot = await dbRef.once();
 
-    // if (userType != null) {
-    //   print('UserType: $userType');
-    // } else {
-    //   print('UserType is null.');
-    // }
-    if (snapshot.snapshot.children.isEmpty) {
-      // Handle empty dbRef case (e.g., display error message)
-      // print("------------------------------Login------------------------------");
+      var dt = snapshot.snapshot.value as Map;
+      String? userType = dt['UserType'];
+      if (snapshot.snapshot.children.isEmpty) {
+        Get.offAll(() => const LoginScreen());
+      } else {
+        if (userType == "Retail Customer") {
+          Get.offAll(() => const HomeScreen1());
+        } else if (userType == "Business Customer") {
+          Get.offAll(() => const HomeScreen());
+        }
+      }
+    }else{
       Get.offAll(() => const LoginScreen());
-    }else {
-      // print("------------------------------Data1------------------------------");
-      // print(snapshot.snapshot.children.length);
-          if(userType == "Retail Customer"){
-
-              Get.offAll(() => const HomeScreen1());
-
-          }else if(userType == "Business Customer"){
-              Get.offAll(() => const HomeScreen());
-          }
     }
-    // containsKey = prefs.containsKey('key');
-    // if (containsKey) {
-    //   // if(userType == "Retail Customer") {
-    //   //   Get.offAll(() => const HomeScreen1());
-    //   // }else {
-    //     Get.offAll(() => const HomeScreen());
-    //   // }
-    // }else{
-    //   Get.offAll(() => const LoginScreen());
-    // }
   }
 /* ----- Email & Password sign in ---------*/
 

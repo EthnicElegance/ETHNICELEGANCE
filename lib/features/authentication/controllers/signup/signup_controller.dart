@@ -67,28 +67,6 @@ class SignupController extends GetxController {
         return;
       }
 
-      // //register user in the firebase authentication & save user data in the firebase
-      // final userCredential = await AuthenticationRepository.instance.registerWithEmailAndPassword(email.text.trim(), password.text.trim());
-      //
-      // //save authenticated userdata in the Firebase Firestore
-      // final newUser = UserModel(
-      //   id: userCredential.user!.uid,
-      //   firstname: firstname.text.trim(),
-      //   lastname: lastname.text.trim(),
-      //   email: email.text.trim(),
-      //   // contactNumber: contactNumber.text.trim(),
-      //   profilePicture: '',
-      //   phoneNumber: contactNumber.text.trim(),
-      // );
-      // final userRepository = Get.put(UserRepository());
-      // await userRepository.saveUserRecord(newUser);
-      //
-      // //remove loader
-      //
-      // //show success message
-      //
-      //move to verify email screen
-
       if(selectedRadio == 2){
         usertype = 'Retail Customer';
       }else{
@@ -120,28 +98,9 @@ class SignupController extends GetxController {
                 onPressed: () => Get.to(() => const LoginScreen())
             ),
       );
-      // Navigator.of(context).pop();
-      // Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //       builder: (context) => SuccessScreen(
-      //                   image: EImages.successfullyRegisterAnimation,
-      //                   title: ETexts.yourAccountCreatedTitle,
-      //                   subTitle: ETexts.yourAccountCreatedSubTitle,
-      //                   onPressed: () => Get.offAll(() => const NavigationMenu())
-      //               ),
-      //     )
-      // );
     } catch (e) {
-      /*//remove loader
-      EFullScreenLoader.stopLoading();*/
-      //show error to user
       ELoaders.errorSnackBar(title: 'Oh snap!', message: e.toString());
     }
-    // finally {
-    //   //remove loader
-    //   EFullScreenLoader.stopLoading();
-    // }
   }
 
   String encryptString(String originalString) {

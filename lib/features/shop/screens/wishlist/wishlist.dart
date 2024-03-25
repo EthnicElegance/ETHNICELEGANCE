@@ -4,16 +4,11 @@ import 'package:ethnic_elegance/features/shop/models/wishlist_list_model.dart';
 import 'package:ethnic_elegance/features/shop/screens/home/home.dart';
 import 'package:ethnic_elegance/navigation_menu.dart';
 import 'package:ethnic_elegance/sharepreferences.dart';
-//import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-
-//import '../../../../common/widgets/layouts/grid_layout.dart';
-//import '../../../../common/widgets/products_cart/product_card_vertical.dart';
 import '../../../../utils/constants/sizes.dart';
-//import '../../controllers/wishlist_service.dart';
-//import '../../models/wishlist_item.dart';
+
 
 class FavouriteScreen extends StatefulWidget {
   const FavouriteScreen({super.key});

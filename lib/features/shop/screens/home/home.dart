@@ -62,6 +62,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // final controller = Get.put(SearchController1());
+
     return Scaffold(
       bottomNavigationBar: const NavigationMenu(),
       body: SingleChildScrollView(

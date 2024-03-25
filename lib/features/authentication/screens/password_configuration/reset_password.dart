@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/constants/text_strings.dart';
 import '../../../../utils/helpers/helper_functions.dart';
+import '../login/login.dart';
 
 class ResetPassword extends StatelessWidget {
   const ResetPassword({super.key});
@@ -37,7 +38,7 @@ class ResetPassword extends StatelessWidget {
 
               //buttons
               SizedBox(width: double.infinity,
-                  child: ElevatedButton(onPressed: () {}, child: const Text("Done"))),
+                  child: ElevatedButton(onPressed: () => Get.offAll(() => const LoginScreen()), child: const Text("Done"))),
               const SizedBox(height: ESizes.spaceBtwItems,),
               SizedBox(width: double.infinity,
                   child: TextButton(onPressed: () {}, child: const Text("Resend Email"))),
