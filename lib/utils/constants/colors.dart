@@ -2,14 +2,7 @@ import 'package:flutter/material.dart';
 
 class EColors {
   // App theme colors
-
-
-  // static const Color primary = Color(0xFF9C3913);
   static const Color primary = Color(0xFFA63632); //BROWN
-  // static const Color primary = Color(0xFF9C2121); //BROWN
-  // static const Color primary = Color(0xFFC34332);
-
-  // static const Color primary = Color(0xFF4b68ff);
   static const Color secondary = Color(0xFFFFE24B);
   static const Color accent = Color(0xFFb0c7ff);
 
