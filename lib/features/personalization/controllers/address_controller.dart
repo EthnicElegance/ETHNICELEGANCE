@@ -27,7 +27,7 @@ class AddressController extends GetxController {
   DatabaseReference dbRef =
   FirebaseDatabase.instance.ref().child('Project/Address');
 
-  void insertAddress() async {
+  void insertAddress(context) async {
     try {
       //Start loading
       EFullScreenLoader.openLoadingDialog(
@@ -68,8 +68,7 @@ class AddressController extends GetxController {
       ELoaders.successSnackBar(
           title: 'Congratulations',
           message: 'Your Address is saved');
-      // Get.back();
-      Get.back();
+      Navigator.pop(context);
       // Get.to(() => const NavigationMenu());
       // Get.offAll(
       //       () => Get.back()

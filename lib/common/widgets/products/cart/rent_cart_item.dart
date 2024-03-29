@@ -58,7 +58,7 @@ class _ERentCartItemState extends State<ERentCartItem> {
             'cartKey': key,
             'RentProductId': value['RentProductId'],
             'Size': value['Size'],
-            "UserId": value["UserId"],
+            'UserId': value['UserId'],
           });
           await fetchProductData(productId, wishList.length - 1);
         });

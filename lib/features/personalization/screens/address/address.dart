@@ -2,11 +2,11 @@ import 'package:ethnic_elegance/common/widgets/appbar/appbar.dart';
 import 'package:ethnic_elegance/features/personalization/models/address_view_model.dart';
 import 'package:ethnic_elegance/features/personalization/screens/address/widgets/single_address.dart';
 import 'package:ethnic_elegance/features/personalization/screens/settings/settings.dart';
+import 'package:ethnic_elegance/features/personalization/screens/settings/settings1.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../../../sharepreferences.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
@@ -20,6 +20,7 @@ class UserAddressScreen extends StatefulWidget {
 }
 
 class _UserAddressScreenState extends State<UserAddressScreen> {
+  bool? isRetailCustomer;
 
   String? userId;
 
@@ -30,9 +31,27 @@ class _UserAddressScreenState extends State<UserAddressScreen> {
       setState(() {
         userId = value;
       });
+      checkUserType();
     });
   }
+  Future<void> checkUserType() async {
+    if (mounted) {
+      final ref = FirebaseDatabase.instance
+          .ref()
+          .child("Project/UserRegister/$userId/UserType");
+      final snapshot = await ref.once();
 
+      if (snapshot.snapshot.value == "Retail Customer") {
+        setState(() {
+          isRetailCustomer = true;
+        });
+      } else {
+        setState(() {
+          isRetailCustomer = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +85,11 @@ class _UserAddressScreenState extends State<UserAddressScreen> {
                   "Address",
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
+                leadingOnPressed: () {
+                  isRetailCustomer!
+                      ? Get.offAll(() => const SettingsScreen1())
+                      : Get.offAll(() => const SettingsScreen());
+                },
               ),
               body: const Center(
                 child: Text(
@@ -103,7 +127,11 @@ class _UserAddressScreenState extends State<UserAddressScreen> {
               appBar: EAppBar(
                 showBackArrow: false,
                 leadingIcon: Iconsax.arrow_left,
-                leadingOnPressed: () => Get.offAll(() => const SettingsScreen()),
+                leadingOnPressed: () {
+                  isRetailCustomer!
+                      ? Get.offAll(() => const SettingsScreen1())
+                      : Get.offAll(() => const SettingsScreen());
+                },
                 title: Text('Addresses',
                     style: Theme.of(context).textTheme.headlineSmall),
               ),

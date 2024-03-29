@@ -1,5 +1,5 @@
 import 'package:ethnic_elegance/common/widgets/appbar/appbar.dart';
-//import 'package:ethnic_elegance/common/widgets/products/cart/rent_cart_menu_icon.dart';
+import 'package:ethnic_elegance/common/widgets/products/cart/rent_cart_menu_icon.dart';
 import 'package:ethnic_elegance/features/shop/models/rent_product/rentproduct_list_model.dart';
 import 'package:ethnic_elegance/utils/constants/colors.dart';
 import 'package:ethnic_elegance/utils/constants/sizes.dart';
@@ -8,14 +8,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import '../../../../common/widgets/appbar/tabbar.dart';
 import '../../../../common/widgets/custom_shapes/containers/rounded_container.dart';
-import '../../../../common/widgets/products/cart/cart_menu_icon.dart';
 import '../../../../navigation_menu1.dart';
 
 class RentalScreen extends StatefulWidget {
-  const RentalScreen({
-    super.key,
-  });
-
+  const RentalScreen({super.key});
   @override
   State<RentalScreen> createState() => _RentalScreenState();
 }
@@ -38,13 +34,15 @@ class _RentalScreenState extends State<RentalScreen> {
         .equalTo('Women');
     await ref.once().then(
         (documentSnapshot) => {recdata = documentSnapshot.snapshot.value});
-
     return recdata;
+
   }
+
   Future<Map?> _fetchSubCategories() async {
     final ref = FirebaseDatabase.instance.ref().child("Project/category").orderByChild('gender').equalTo('Men');
     await ref.once().then(
-        (documentSnapshot) => {recdata = documentSnapshot.snapshot.value});
+        (documentSnapshot) => {recdata = documentSnapshot.snapshot.value}
+    );
 
     return recdata;
   }
@@ -77,7 +75,7 @@ class _RentalScreenState extends State<RentalScreen> {
                       title: Text('Rent',
                           style: Theme.of(context).textTheme.headlineMedium),
                       actions: [
-                        ECartCounterIcon(iconColor: EHelperFunctions.isDarkMode(context) ? EColors.white : EColors.black),
+                        ERentCartCounterIcon(iconColor: EHelperFunctions.isDarkMode(context) ? EColors.white : EColors.black),
                       ],
                     ),
 
@@ -293,7 +291,7 @@ class _RentalScreenState extends State<RentalScreen> {
                       title: Text('Rent',
                           style: Theme.of(context).textTheme.headlineMedium),
                       actions: [
-                        ECartCounterIcon(iconColor: EHelperFunctions.isDarkMode(context) ? EColors.white : EColors.black),
+                        ERentCartCounterIcon(iconColor: EHelperFunctions.isDarkMode(context) ? EColors.white : EColors.black),
                       ],
                     ),
                     bottomNavigationBar: const NavigationMenu1(),

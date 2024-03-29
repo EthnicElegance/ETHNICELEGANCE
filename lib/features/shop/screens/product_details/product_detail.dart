@@ -43,9 +43,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     child: Column(
                       children: [
 
-                        /// Rating & Share Button
-                        // const ERatingAndShare(),
-
                         /// Price, Title, Stock & Brand
                         EProductMetaData(
                           price: data['retailer_price'],
@@ -87,18 +84,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         /// Reviews
                         const Divider(),
                         const SizedBox(height: ESizes.spaceBtwItems),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //     const ESectionHeading(
-                        //         title: 'Reviews(199)', showActionButton: false),
-                        //     IconButton(icon: const Icon(
-                        //         Iconsax.arrow_right_3, size: 18),
-                        //         onPressed: () =>
-                        //             Get.to(() => const ProductReviewsScreen())),
-                        //   ],
-                        // ),
-                        // const SizedBox(height: ESizes.spaceBtwSections),
 
                       ],
                     ),
