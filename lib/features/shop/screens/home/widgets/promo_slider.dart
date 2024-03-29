@@ -21,8 +21,9 @@ class EPromoSlider extends StatelessWidget {
     return Column(
       children: [
         CarouselSlider(
+
             items: banners.map((url) => ERoundedImage(imageUrl: url,isNetworkImage: true,)).toList(),
-            options: CarouselOptions(viewportFraction: 1,
+            options: CarouselOptions(viewportFraction: 1,enlargeCenterPage: true,autoPlay: true,
               onPageChanged: (index, _) =>
                   controller.updatePageIndicator(index),)),
         const SizedBox(
