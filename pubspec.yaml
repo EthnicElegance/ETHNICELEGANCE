@@ -100,7 +100,6 @@ flutter:
     - assets/images/content/
     - assets/images/banners/
     - assets/images/reviews/
-    - assets/images/products/
     - assets/icons/categories/
     - assets/images/animations/
     - assets/icons/payment_methods/
