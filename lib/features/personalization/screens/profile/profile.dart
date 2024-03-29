@@ -109,8 +109,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             ECircularImage(
                                 image: EHelperFunctions.isDarkMode(context) ? EImages.darkAppLogo : EImages.lightAppLogo, width: 130, height: 130,padding: 0),
-                            // TextButton(onPressed: () {},
-                            //     child: const Text('Change Profile Picture')),
 
                           ],
                         ),
