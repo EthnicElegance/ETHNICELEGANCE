@@ -7,7 +7,7 @@ import '../../../../../common/widgets/appbar/appbar.dart';
 import '../../../../../common/widgets/images/rounded_image.dart';
 import '../../../../../sharepreferences.dart';
 import '../../../../../utils/helpers/helper_functions.dart';
-import '../../../models/rentproduct_model.dart';
+import '../../../models/rent_product/rentproduct_model.dart';
 
 class EProductImageSlider1 extends StatefulWidget {
   const EProductImageSlider1({

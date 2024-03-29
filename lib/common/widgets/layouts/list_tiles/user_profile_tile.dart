@@ -1,3 +1,4 @@
+import 'package:ethnic_elegance/features/personalization/screens/profile/profile1.dart';
 import 'package:ethnic_elegance/utils/helpers/helper_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class _EUerProfileTitleState extends State<EUerProfileTitle> {
   String? userid;
   Map? data;
   var recdata;
+  bool? isRetailCustomer;
 
   @override
   void initState() {
@@ -31,6 +33,24 @@ class _EUerProfileTitleState extends State<EUerProfileTitle> {
         userid = value;
       });
     });
+  }
+  Future<void> checkUserType() async {
+    if (mounted) {
+      final ref = FirebaseDatabase.instance
+          .ref()
+          .child("Project/UserRegister/$userid/UserType");
+      final snapshot = await ref.once();
+
+      if (snapshot.snapshot.value == "Retail Customer") {
+        setState(() {
+          isRetailCustomer = true;
+        });
+      } else {
+        setState(() {
+          isRetailCustomer = false;
+        });
+      }
+    }
   }
 
   Future<Map?> _fetchSubCategories() async {
@@ -82,7 +102,7 @@ class _EUerProfileTitleState extends State<EUerProfileTitle> {
                     .apply(color: EColors.white)),
 
                 trailing: IconButton(
-                    onPressed: () => Get.to(() => const ProfileScreen()),
+                    onPressed: () => isRetailCustomer == true ? Get.to(() => const ProfileScreen()) : Get.to(() => const ProfileScreen1()),
                     icon: const Icon(Iconsax.edit, color: EColors.white)),
               ),
             ],

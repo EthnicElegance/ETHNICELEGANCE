@@ -12,14 +12,14 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class ProfileScreen1 extends StatefulWidget {
+  const ProfileScreen1({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<ProfileScreen1> createState() => _ProfileScreen1State();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreen1State extends State<ProfileScreen1> {
 
   String? _firstName = '';
   String? _lastName = '';
@@ -74,7 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Changes saved')),
     );
-    Get.offAll(()=>const ProfileScreen());
+    Get.offAll(()=>const ProfileScreen1());
   }
 
   @override

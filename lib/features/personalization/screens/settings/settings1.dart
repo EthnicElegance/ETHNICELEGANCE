@@ -7,6 +7,7 @@ import 'package:ethnic_elegance/features/personalization/screens/rent_rules/rule
 import 'package:ethnic_elegance/features/shop/screens/cart/cart.dart';
 import 'package:ethnic_elegance/features/shop/screens/coupons/coupons.dart';
 import 'package:ethnic_elegance/features/shop/screens/order/order.dart';
+import 'package:ethnic_elegance/features/shop/screens/rent_order_history/rent_order_history.dart';
 import 'package:ethnic_elegance/navigation_menu1.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -69,6 +70,12 @@ class SettingsScreen1 extends StatelessWidget {
                     title: 'My Orders',
                     subtitle: 'In-progress and Completed Orders',
                     onTap: () => Get.to(() => const OrderScreen()),
+                  ),
+                  ESettingsMenuTile(
+                    icon: Iconsax.briefcase,
+                    title: 'My Rent Orders',
+                    subtitle: 'In-progress and Completed Orders',
+                    onTap: () => Get.to(() => const RentOrderHistory()),
                   ),
                   ESettingsMenuTile(
                     icon: Iconsax.discount_shape,

@@ -1,4 +1,4 @@
-import 'package:ethnic_elegance/features/shop/models/subcat_productlist_model.dart';
+import 'package:ethnic_elegance/features/shop/models/subcat_product/subcat_productlist_model.dart';
 import 'package:flutter/material.dart';
 import '../../../../../utils/constants/sizes.dart';
 

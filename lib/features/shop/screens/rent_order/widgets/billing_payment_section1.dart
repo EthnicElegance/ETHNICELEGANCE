@@ -1,6 +1,6 @@
 import 'package:ethnic_elegance/common/widgets/texts/section_heading.dart';
-import 'package:ethnic_elegance/features/shop/models/rent_order_detail_insert_model.dart';
-import 'package:ethnic_elegance/features/shop/models/rent_order_insert_model.dart';
+import 'package:ethnic_elegance/features/shop/models/rent_order/rent_order_detail_insert_model.dart';
+import 'package:ethnic_elegance/features/shop/models/rent_order/rent_order_insert_model.dart';
 import 'package:ethnic_elegance/features/shop/screens/home/home1.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';

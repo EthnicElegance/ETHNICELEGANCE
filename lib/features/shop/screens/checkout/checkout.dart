@@ -10,7 +10,7 @@ import '../../../../common/widgets/products/cart/coupon_widget.dart';
 import '../../../../sharepreferences.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
-import '../../models/cart_insert_model1.dart';
+import '../../models/cart/cart_insert_model1.dart';
 import '../cart/cart_items.dart';
 
 class CheckOutScreen extends StatefulWidget {

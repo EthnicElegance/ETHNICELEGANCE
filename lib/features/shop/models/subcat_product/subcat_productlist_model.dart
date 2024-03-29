@@ -1,25 +1,25 @@
-import 'package:ethnic_elegance/features/shop/models/product_model.dart';
-import 'package:ethnic_elegance/features/shop/models/wishlist_item.dart';
+import 'package:ethnic_elegance/features/shop/models/product/product_model.dart';
+import 'package:ethnic_elegance/features/shop/models/wishlist/wishlist_item.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../common/styles/shadows.dart';
-import '../../../common/widgets/custom_shapes/containers/rounded_container.dart';
-import '../../../common/widgets/icons/circular_icon.dart';
-import '../../../common/widgets/texts/product_price_text.dart';
-import '../../../common/widgets/texts/product_title_text.dart';
-import '../../../sharepreferences.dart';
-import '../../../utils/constants/colors.dart';
-import '../../../utils/constants/sizes.dart';
-import '../../../utils/helpers/helper_functions.dart';
-import '../../../utils/popups/loaders.dart';
-import '../controllers/wishlist_service.dart';
-import '../screens/product_details/product_detail.dart';
+import '../../../../common/styles/shadows.dart';
+import '../../../../common/widgets/custom_shapes/containers/rounded_container.dart';
+import '../../../../common/widgets/icons/circular_icon.dart';
+import '../../../../common/widgets/texts/product_price_text.dart';
+import '../../../../common/widgets/texts/product_title_text.dart';
+import '../../../../sharepreferences.dart';
+import '../../../../utils/constants/colors.dart';
+import '../../../../utils/constants/sizes.dart';
+import '../../../../utils/helpers/helper_functions.dart';
+import '../../../../utils/popups/loaders.dart';
+import '../../controllers/wishlist_service.dart';
+import '../../screens/product_details/product_detail.dart';
 
-class ESubCatProductList1 extends StatefulWidget {
-  const ESubCatProductList1({
+class ESubCatProductList extends StatefulWidget {
+  const ESubCatProductList({
     Key? key,
     this.limitedProduct = false,
     this.productCount,
@@ -31,10 +31,10 @@ class ESubCatProductList1 extends StatefulWidget {
   final String productSubCat;
 
   @override
-  State<ESubCatProductList1> createState() => _ESubCatProductList1State();
+  State<ESubCatProductList> createState() => _ESubCatProductListState();
 }
 
-class _ESubCatProductList1State extends State<ESubCatProductList1> {
+class _ESubCatProductListState extends State<ESubCatProductList> {
   late Query dbRef;
   String? userid;
   List<Map<String, dynamic>> appointment = [];
@@ -107,7 +107,7 @@ class _ESubCatProductList1State extends State<ESubCatProductList1> {
               prodlist.clear();
               map.forEach((key, v) {
                 if (v != null) {
-                  if (v["customer_price"] != '0') {
+                  if (v["retailer_price"] != '0') {
                     prodlist.add(ProductModel(
                       key,
                       v["subcatid"],
@@ -115,7 +115,7 @@ class _ESubCatProductList1State extends State<ESubCatProductList1> {
                       v["photo1"],
                       v["photo2"],
                       v["photo3"],
-                      v["customer_price"],
+                      v["retailer_price"],
                       v["size"],
                       v["qty"],
                       v["product_colour"],

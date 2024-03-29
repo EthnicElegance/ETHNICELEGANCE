@@ -5,18 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../common/styles/shadows.dart';
-import '../../../common/widgets/custom_shapes/containers/rounded_container.dart';
-import '../../../common/widgets/icons/circular_icon.dart';
-import '../../../common/widgets/texts/product_price_text.dart';
-import '../../../common/widgets/texts/product_title_text.dart';
-import '../../../utils/constants/colors.dart';
-import '../../../utils/constants/sizes.dart';
-import '../../../utils/helpers/helper_functions.dart';
-import '../../../utils/popups/loaders.dart';
-import '../controllers/wishlist_service.dart';
-import '../screens/product_details/product_detail.dart';
-import '../screens/wishlist/wishlist.dart';
+import '../../../../common/styles/shadows.dart';
+import '../../../../common/widgets/custom_shapes/containers/rounded_container.dart';
+import '../../../../common/widgets/icons/circular_icon.dart';
+import '../../../../common/widgets/texts/product_price_text.dart';
+import '../../../../common/widgets/texts/product_title_text.dart';
+import '../../../../utils/constants/colors.dart';
+import '../../../../utils/constants/sizes.dart';
+import '../../../../utils/helpers/helper_functions.dart';
+import '../../../../utils/popups/loaders.dart';
+import '../../controllers/wishlist_service.dart';
+import '../../screens/product_details/product_detail.dart';
+import '../../screens/wishlist/wishlist.dart';
 
 class EWishList extends StatefulWidget {
   const EWishList({super.key});

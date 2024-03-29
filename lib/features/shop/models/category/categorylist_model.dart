@@ -3,10 +3,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../common/widgets/custom_shapes/containers/rounded_container.dart';
-import '../../../common/widgets/icons/brand_title_text_with_verified_iconn.dart';
-import '../../../utils/constants/enums.dart';
-import '../../../utils/constants/sizes.dart';
+import '../../../../common/widgets/custom_shapes/containers/rounded_container.dart';
+import '../../../../common/widgets/icons/brand_title_text_with_verified_iconn.dart';
+import '../../../../utils/constants/enums.dart';
+import '../../../../utils/constants/sizes.dart';
 import 'category_model.dart';
 
 class ECategoryList extends StatelessWidget {

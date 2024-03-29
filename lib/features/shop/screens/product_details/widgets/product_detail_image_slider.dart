@@ -214,8 +214,8 @@ import '../../../../../sharepreferences.dart';
 import '../../../../../utils/helpers/helper_functions.dart';
 import '../../../../../utils/popups/loaders.dart';
 import '../../../controllers/wishlist_service.dart';
-import '../../../models/product_model.dart';
-import '../../../models/wishlist_item.dart';
+import '../../../models/product/product_model.dart';
+import '../../../models/wishlist/wishlist_item.dart';
 
 class EProductImageSlider extends StatefulWidget {
   const EProductImageSlider({

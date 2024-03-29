@@ -9,7 +9,7 @@ import '../../../../common/widgets/appbar/appbar.dart';
 import '../../../../sharepreferences.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../controllers/rent_checkout_controller.dart';
-import '../../models/rent_cart_insert_model1.dart';
+import '../../models/rent_cart/rent_cart_insert_model1.dart';
 
 class ERentCartItems extends StatefulWidget {
   const ERentCartItems({

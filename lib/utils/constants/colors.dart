@@ -3,7 +3,13 @@ import 'package:flutter/material.dart';
 class EColors {
   // App theme colors
 
-  static const Color primary = Color(0xFF4b68ff);
+
+  // static const Color primary = Color(0xFF9C3913);
+  static const Color primary = Color(0xFFA63632); //BROWN
+  // static const Color primary = Color(0xFF9C2121); //BROWN
+  // static const Color primary = Color(0xFFC34332);
+
+  // static const Color primary = Color(0xFF4b68ff);
   static const Color secondary = Color(0xFFFFE24B);
   static const Color accent = Color(0xFFb0c7ff);
 
@@ -22,7 +28,8 @@ class EColors {
   static Color darkContainer = EColors.white.withOpacity(0.1);
 
   // Button colors
-  static const Color buttonPrimary = Color(0xFF4b68ff);
+  static const Color buttonPrimary = Color(0xFFA63632);
+  // static const Color buttonPrimary = Color(0xFF4b68ff);
   static const Color buttonSecondary = Color(0xFF6C757D);
   static const Color buttonDisabled = Color(0xFFC4C4C4);
 
@@ -31,10 +38,11 @@ class EColors {
   static const Color borderSecondary = Color(0xFFE6E6E6);
 
   // Error and validation colors
-  static const Color error = Color(0xFFD32F2F);
+  static const Color error = Color(0xFFA63632);
   static const Color success = Color(0xFF388E3C);
   static const Color warning = Color(0xFFF57C00);
-  static const Color info = Color(0xFF1976D2);
+  static const Color info = Color(0xFFA63632);
+  // static const Color info = Color(0xFF1976D2);
 
   // Neutral Shades
   static const Color black = Color(0xFF232323);

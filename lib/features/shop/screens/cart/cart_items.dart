@@ -4,12 +4,11 @@ import 'package:ethnic_elegance/common/widgets/texts/product_price_text.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../../common/widgets/appbar/appbar.dart';
 import '../../../../sharepreferences.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../controllers/checkout_controller.dart';
-import '../../models/cart_insert_model1.dart';
+import '../../models/cart/cart_insert_model1.dart';
 
 class ECartItems extends StatefulWidget {
   const ECartItems({

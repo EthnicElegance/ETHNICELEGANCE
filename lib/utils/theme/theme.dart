@@ -1,3 +1,4 @@
+import 'package:ethnic_elegance/utils/constants/colors.dart';
 import 'package:ethnic_elegance/utils/theme/custom_themes/appbar_theme.dart';
 import 'package:ethnic_elegance/utils/theme/custom_themes/bottom_sheet_theme.dart';
 import 'package:ethnic_elegance/utils/theme/custom_themes/checkbox_theme.dart';
@@ -13,12 +14,12 @@ class EAppTheme{
 
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
-    // fontFamily:  ,
+    // fontFamily:  '',
     brightness: Brightness.light,
-    primaryColor: Colors.blue,
+    primaryColor: EColors.primary,
     textTheme: ETextTheme.lightTextTheme,
     chipTheme: EChipTheme.lightChipTheme,
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: EColors.white,
     appBarTheme: EAppBarTheme.lightAppBarTheme,
     checkboxTheme: ECheckboxTheme.lightCheckboxTheme,
     bottomSheetTheme: EBottomSheetTheme.lightBottomSheetTheme,
@@ -31,10 +32,10 @@ class EAppTheme{
       useMaterial3: true,
       // fontFamily: ''
       brightness: Brightness.dark,
-      primaryColor: Colors.blue,
+      primaryColor: EColors.primary,
       textTheme: ETextTheme.darkTextTheme,
       chipTheme: EChipTheme.darkChipTheme,
-      scaffoldBackgroundColor: Colors.black,
+      scaffoldBackgroundColor: EColors.black,
       appBarTheme: EAppBarTheme.darkAppBarTheme,
       checkboxTheme: ECheckboxTheme.darkCheckboxTheme,
       bottomSheetTheme: EBottomSheetTheme.darkBottomSheetTheme,

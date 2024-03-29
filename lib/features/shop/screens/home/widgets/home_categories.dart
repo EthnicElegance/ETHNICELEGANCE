@@ -3,7 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../../common/widgets/image_text_widgets/vertical_image_text.dart';
-import '../../../models/category_model.dart';
+import '../../../models/category/category_model.dart';
 
 class EHomeCategories extends StatelessWidget {
   const EHomeCategories({

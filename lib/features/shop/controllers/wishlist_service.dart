@@ -1,4 +1,4 @@
-import 'package:ethnic_elegance/features/shop/models/wishlist_item.dart';
+import 'package:ethnic_elegance/features/shop/models/wishlist/wishlist_item.dart';
 import 'package:ethnic_elegance/sharepreferences.dart';
 import 'package:firebase_database/firebase_database.dart';
 

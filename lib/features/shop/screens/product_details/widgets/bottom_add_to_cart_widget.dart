@@ -1,4 +1,4 @@
-import 'package:ethnic_elegance/features/shop/models/cart_insert_model.dart';
+import 'package:ethnic_elegance/features/shop/models/cart/cart_insert_model.dart';
 import 'package:ethnic_elegance/utils/constants/colors.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +7,6 @@ import '../../../../../sharepreferences.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/helpers/helper_functions.dart';
 import '../../../../../utils/popups/loaders.dart';
-import '../../../models/product_model.dart';
 import '../../cart/cart.dart';
 
 class CartController extends GetxController {
@@ -36,6 +35,7 @@ class EBottomAddToCart extends StatefulWidget {
 class _EBottomAddToCartState extends State<EBottomAddToCart> {
   final CartController controller = Get.put(CartController());
   String? userid;
+  bool? isRetailCustomer;
 
   @override
   void initState() {
@@ -44,7 +44,27 @@ class _EBottomAddToCartState extends State<EBottomAddToCart> {
       setState(() {
         userid = value;
       });
+      checkUserType();
     });
+  }
+
+  Future<void> checkUserType() async {
+    if (mounted) {
+      final ref = FirebaseDatabase.instance
+          .ref()
+          .child("Project/UserRegister/$userid/UserType");
+      final snapshot = await ref.once();
+
+      if (snapshot.snapshot.value == "Retail Customer") {
+        setState(() {
+          isRetailCustomer = true;
+        });
+      } else {
+        setState(() {
+          isRetailCustomer = false;
+        });
+      }
+    }
   }
 
   @override
@@ -54,10 +74,11 @@ class _EBottomAddToCartState extends State<EBottomAddToCart> {
     final dark = EHelperFunctions.isDarkMode(context);
     return StreamBuilder(
         stream:
-            FirebaseDatabase.instance.ref().child('Project/product').onValue,
+          FirebaseDatabase.instance.ref().child("Project/product/${widget.id}").onValue,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
             Map<dynamic, dynamic> map = snapshot.data.snapshot.value;
+            final data = snapshot.data!.snapshot.value as Map<dynamic, dynamic>;
 
             if (map.isEmpty) {
               return const Center(
@@ -67,28 +88,47 @@ class _EBottomAddToCartState extends State<EBottomAddToCart> {
                 ),
               );
             }
-            List<ProductModel> prodlist = [];
-            prodlist.clear();
-
-            map.forEach((dynamic key, dynamic v) {
-              if (v != null) {
-                prodlist.add(ProductModel(
-                    key.toString(),
-                    v["subcatid"],
-                    v["product_name"],
-                    v["photo1"],
-                    v["photo2"],
-                    v["photo3"],
-                    v["retailer_price"],
-                    v["size"],
-                    v["qty"],
-                    v["product_colour"],
-                    v["fabric"],
-                    v["detail"],
-                    v["DateTime"],
-                    v["availability"]));
-              }
-            });
+            // List<ProductModel> prodlist = [];
+            // prodlist.clear();
+            // if(isRetailCustomer == true){
+            // map.forEach((dynamic key, dynamic v) {
+            //   if (v != null) {
+            //     prodlist.add(ProductModel(
+            //         key.toString(),
+            //         v["subcatid"],
+            //         v["product_name"],
+            //         v["photo1"],
+            //         v["photo2"],
+            //         v["photo3"],
+            //         v["customer_price"],
+            //         v["size"],
+            //         v["qty"],
+            //         v["product_colour"],
+            //         v["fabric"],
+            //         v["detail"],
+            //         v["DateTime"],
+            //         v["availability"]));
+            //   }
+            // });}else if(isRetailCustomer == false){
+            // map.forEach((dynamic key, dynamic v) {
+            //   if (v != null) {
+            //     prodlist.add(ProductModel(
+            //         key.toString(),
+            //         v["subcatid"],
+            //         v["product_name"],
+            //         v["photo1"],
+            //         v["photo2"],
+            //         v["photo3"],
+            //         v["retailer_price"],
+            //         v["size"],
+            //         v["qty"],
+            //         v["product_colour"],
+            //         v["fabric"],
+            //         v["detail"],
+            //         v["DateTime"],
+            //         v["availability"]));
+            //   }
+            // });}
             return Container(
               padding: const EdgeInsets.symmetric(
                   horizontal: ESizes.defaultSpace,
@@ -136,14 +176,25 @@ class _EBottomAddToCartState extends State<EBottomAddToCart> {
                   ElevatedButton(
                     onPressed: () {
                       if (controller.size.value != '') {
-                        CartInsertModel cartObj = CartInsertModel(
-                            widget.id,
-                            controller.counter.value,
-                            controller.size.value,
-                            prodlist[widget.index].price,
-                            "${int.parse(prodlist[widget.index].price) * int.parse(controller.counter.value)}",
-                            userid!);
-                        dbRef.push().set(cartObj.toJson());
+                        if(isRetailCustomer == true) {
+                          CartInsertModel cartObj = CartInsertModel(
+                              widget.id,
+                              controller.counter.value,
+                              controller.size.value,
+                              data['customer_price'],
+                              "${int.parse(data['customer_price']) * 1}",
+                              userid!);
+                          dbRef.push().set(cartObj.toJson());
+                        }else{
+                          CartInsertModel cartObj = CartInsertModel(
+                              widget.id,
+                              controller.counter.value,
+                              controller.size.value,
+                              data['retailer_price'],
+                              "${int.parse(data['retailer_price']) * 1}",
+                              userid!);
+                          dbRef.push().set(cartObj.toJson());
+                        }
                         ELoaders.successSnackBar(
                             title: 'Added to the Cart',
                             message: 'The product has been added to the Cart');

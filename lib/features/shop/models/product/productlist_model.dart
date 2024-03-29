@@ -1,39 +1,39 @@
 import 'dart:async';
 
-import 'package:ethnic_elegance/features/shop/models/product_model.dart';
-import 'package:ethnic_elegance/features/shop/models/wishlist_item.dart';
-import 'package:ethnic_elegance/features/shop/screens/product_details/product_detail1.dart';
+import 'package:ethnic_elegance/features/shop/models/product/product_model.dart';
+import 'package:ethnic_elegance/features/shop/models/wishlist/wishlist_item.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../common/styles/shadows.dart';
-import '../../../common/widgets/custom_shapes/containers/rounded_container.dart';
-import '../../../common/widgets/icons/circular_icon.dart';
-import '../../../common/widgets/texts/product_price_text.dart';
-import '../../../common/widgets/texts/product_title_text.dart';
-import '../../../sharepreferences.dart';
-import '../../../utils/constants/colors.dart';
-import '../../../utils/constants/sizes.dart';
-import '../../../utils/helpers/helper_functions.dart';
-import '../controllers/wishlist_service.dart';
+
+import '../../../../common/styles/shadows.dart';
+import '../../../../common/widgets/custom_shapes/containers/rounded_container.dart';
+import '../../../../common/widgets/icons/circular_icon.dart';
+import '../../../../common/widgets/texts/product_price_text.dart';
+import '../../../../common/widgets/texts/product_title_text.dart';
+import '../../../../sharepreferences.dart';
+import '../../../../utils/constants/colors.dart';
+import '../../../../utils/constants/sizes.dart';
+import '../../../../utils/helpers/helper_functions.dart';
+import '../../../../utils/popups/loaders.dart';
+import '../../controllers/wishlist_service.dart';
+import '../../screens/product_details/product_detail.dart';
 
 
-
-class EProductList1 extends StatefulWidget {
-  const EProductList1 ({super.key,this.limitedProduct = false,this.productCount, this.allProduct = true, this.productSubCat, required this.sortBy});
+class EProductList extends StatefulWidget {
+  const EProductList ({super.key,this.limitedProduct = false,this.productCount, this.allProduct = true, this.productSubCat, required this.sortBy});
 
   final bool limitedProduct;
   final bool allProduct;
   final int? productCount;
   final String? productSubCat;
   final String sortBy;
-
   @override
-  State<EProductList1> createState() => _EProductList1State();
+  State<EProductList> createState() => _EProductListState();
 }
 
-class _EProductList1State extends State<EProductList1> {
+class _EProductListState extends State<EProductList> {
 
   late Query dbRef;
   late Query dbRefUser;
@@ -44,7 +44,7 @@ class _EProductList1State extends State<EProductList1> {
   late List<Map> userName = [];
   Map<dynamic, dynamic>? userData;
 
-  List<Map> wishlistList = [];
+  List<Map> appointment = [];
   List<ProductModel> prodlist = [];
 
   @override
@@ -59,7 +59,7 @@ class _EProductList1State extends State<EProductList1> {
 
   Future<void> getHospitalData() async {
 
-    wishlistList.clear();
+    appointment.clear();
     userMap.clear();
     dbRef = FirebaseDatabase.instance.ref().child('Project/wishlist');
     dbRef
@@ -70,7 +70,7 @@ class _EProductList1State extends State<EProductList1> {
       Map<dynamic, dynamic>? values = event.snapshot.value as Map?;
       if (values != null) {
         values.forEach((key, value) async {
-          wishlistList.add({
+          appointment.add({
             'wishlistkey': key,
             'productId': value['productId'],
             "userId": value["userId"],
@@ -108,7 +108,7 @@ class _EProductList1State extends State<EProductList1> {
                 prodlist.clear();
                 map.forEach((dynamic key,dynamic v) {
                   if (v != null) {
-                    if(v["customer_price"] != '0'){
+                    if(v["retailer_price"] != '0'){
                       prodlist.add(ProductModel(
                           key.toString(),
                           v["subcatid"],
@@ -116,7 +116,7 @@ class _EProductList1State extends State<EProductList1> {
                           v["photo1"],
                           v["photo2"],
                           v["photo3"],
-                          v["customer_price"],
+                          v["retailer_price"],
                           v["size"],
                           v["qty"],
                           v["product_colour"],
@@ -127,9 +127,10 @@ class _EProductList1State extends State<EProductList1> {
                     }
                   }
                 });
-                final productIds = wishlistList.map((item) => item['productId']).toList();
-                final wishlistIds = wishlistList.map((item) => item['wishlistkey']).toList();
+                final productIds = appointment.map((item) => item['productId']).toList();
+                final wishlistIds = appointment.map((item) => item['wishlistkey']).toList();
                 _sortProducts();
+
                 return GridView.builder(
                   itemCount: widget.limitedProduct ?widget.productCount : prodlist.length,
                   shrinkWrap: true,
@@ -150,7 +151,7 @@ class _EProductList1State extends State<EProductList1> {
                       return GestureDetector(
                         onTap: () =>
                             Get.to(() =>
-                                ProductDetailScreen1(id: prodlist[index].key, index: index,)),
+                                ProductDetailScreen(id: prodlist[index].key,index: index,)),
                         child: Container(
                           width: 180,
                           padding: const EdgeInsets.all(1),
@@ -226,11 +227,11 @@ class _EProductList1State extends State<EProductList1> {
                                                 .addToWishlist(WishlistItem(
                                                 productId: prodlist[index].key,
                                                 userId: userid));
-                                            // ELoaders.successSnackBar(
-                                            //     title: 'Added to Wishlist',
-                                            //     message: 'the product ${prodlist[index]
-                                            //         .pname} Added to Wishlist'
-                                            // );
+                                            ELoaders.successSnackBar(
+                                                title: 'Added to Wishlist',
+                                                message: 'the product ${prodlist[index]
+                                                    .pname} Added to Wishlist'
+                                            );
                                           }
                                           else if (icon == Iconsax.heart5) {
                                             setState(() {
@@ -242,11 +243,11 @@ class _EProductList1State extends State<EProductList1> {
                                                 wishlistIds.firstWhere((id) =>
                                                     productIds.contains(
                                                         prodlist[index].key)));
-                                            // ELoaders.successSnackBar(
-                                            //     title: 'Removed from Wishlist',
-                                            //     message: 'the product ${prodlist[index]
-                                            //         .pname} Removed from Wishlist'
-                                            // );
+                                            ELoaders.successSnackBar(
+                                                title: 'Removed from Wishlist',
+                                                message: 'the product ${prodlist[index]
+                                                    .pname} Removed from Wishlist'
+                                            );
                                           }
                                         },
                                       ),

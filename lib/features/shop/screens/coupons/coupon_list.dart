@@ -11,7 +11,7 @@ import 'package:iconsax/iconsax.dart';
 import '../../../../../sharepreferences.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/popups/loaders.dart';
-import '../../models/coupon_model.dart';
+import '../../models/coupon/coupon_model.dart';
 
 class ECouponList extends StatefulWidget {
   const ECouponList({Key? key, required this.showIcon}) : super(key: key);

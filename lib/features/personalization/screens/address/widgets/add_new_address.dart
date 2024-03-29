@@ -32,6 +32,7 @@ class AddNewAddressScreen extends StatelessWidget {
                     TextFormField(
                         controller: controller.contact,
                         validator: (value) => EValidator.validateEmptyText('Contact No', value),
+                        keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                             prefixIcon: Icon(Iconsax.mobile), labelText: 'Contact Number')),
                     const SizedBox(height: ESizes.spaceBtwInputFields),
@@ -49,6 +50,7 @@ class AddNewAddressScreen extends StatelessWidget {
                         Expanded(
                           child: TextFormField(
                               controller: controller.pincode,
+                              keyboardType: TextInputType.number,
                               validator: (value) => EValidator.validateEmptyText('Pin Code', value),
                               decoration: const InputDecoration(
                                   prefixIcon: Icon(Iconsax.code), labelText: 'Pin Code')),

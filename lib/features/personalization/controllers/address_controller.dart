@@ -9,7 +9,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../utils/helpers/network_manager.dart';
 import '../models/address_model.dart';
-import '../screens/address/address.dart';
 
 class AddressController extends GetxController {
   static AddressController get instance => Get.find();
@@ -69,10 +68,12 @@ class AddressController extends GetxController {
       ELoaders.successSnackBar(
           title: 'Congratulations',
           message: 'Your Address is saved');
+      // Get.back();
+      Get.back();
       // Get.to(() => const NavigationMenu());
-      Get.offAll(
-            () => const UserAddressScreen()
-      );
+      // Get.offAll(
+      //       () => Get.back()
+      // );
     } catch (e) {
       ELoaders.errorSnackBar(title: 'Oh snap!', message: e.toString());
     }

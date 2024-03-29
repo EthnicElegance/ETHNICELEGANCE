@@ -52,11 +52,10 @@ class SettingsScreen extends StatelessWidget {
                       title: 'Account Settings', showActionButton: false),
                   const SizedBox(height: ESizes.spaceBtwItems),
                   ESettingsMenuTile(
-                    icon: Iconsax.safe_home,
-                    title: 'My Addresses',
-                    subtitle: 'Set shopping delivery address',
-                    onTap: () => Get.to(() => const UserAddressScreen())
-                  ),
+                      icon: Iconsax.safe_home,
+                      title: 'My Addresses',
+                      subtitle: 'Set shopping delivery address',
+                      onTap: () => Get.to(() => const UserAddressScreen())),
                   ESettingsMenuTile(
                     icon: Iconsax.shopping_cart,
                     title: 'My Cart',
@@ -75,23 +74,29 @@ class SettingsScreen extends StatelessWidget {
                     subtitle: 'List of all discounted coupons',
                     onTap: () => Get.to(() => const CouponScreen()),
                   ),
-
                   ESettingsMenuTile(
                     icon: Iconsax.message_question,
                     title: 'FAQs',
                     subtitle: 'List of all the FAQs',
                     onTap: () => Get.to(() => const FaqScreen()),
                   ),
-                  
                   const SizedBox(height: ESizes.spaceBtwSections),
                   SizedBox(
                     width: double.infinity,
                     child: OutlinedButton(
+                        style: ButtonStyle(
+                            shape: MaterialStateProperty.all<OutlinedBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0))),
+                            side: MaterialStateProperty.all<BorderSide>(
+                                const BorderSide(color: EColors.primary))),
                         onPressed: () async {
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
                           prefs.clear();
                           Get.offAll(() => const LoginScreen());
-                          }, child: const Text('Logout')),
+                        },
+                        child: const Text('Logout')),
                   ),
                   const SizedBox(height: ESizes.spaceBtwSections * 2.5),
                 ],

@@ -25,7 +25,7 @@ class _EBillingAmountSectionState extends State<EBillingAmountSection> {
   double subtotal = 0;
   double subTax = 0;
   double totalPrice = 0;
-  late String couponDis;
+  late String couponDis = "0";
   late double discount = 0;
   String? userId;
   late String getKeys;
@@ -92,8 +92,6 @@ class _EBillingAmountSectionState extends State<EBillingAmountSection> {
             discount == 0 ?
               controller.totalAmount = (subtotal + 50 + subTax).toStringAsFixed(2)
             :controller.totalAmount = (subtotal - discount + 50 + subTax).toStringAsFixed(2);
-
-
           }); // Update the widget after calculating subtotal
         });
       }

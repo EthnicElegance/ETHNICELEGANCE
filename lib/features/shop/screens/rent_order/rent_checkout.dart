@@ -1,5 +1,5 @@
 import 'package:ethnic_elegance/common/widgets/custom_shapes/containers/rounded_container.dart';
-import 'package:ethnic_elegance/features/shop/models/rent_cart_insert_model1.dart';
+import 'package:ethnic_elegance/features/shop/models/rent_cart/rent_cart_insert_model1.dart';
 import 'package:ethnic_elegance/features/shop/screens/rent_order/widgets/billing_address_section1.dart';
 import 'package:ethnic_elegance/features/shop/screens/rent_order/widgets/billing_amount_section1.dart';
 import 'package:ethnic_elegance/features/shop/screens/rent_order/widgets/billing_payment_section1.dart';

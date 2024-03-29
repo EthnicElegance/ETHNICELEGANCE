@@ -1,6 +1,6 @@
 import 'package:ethnic_elegance/common/widgets/products/cart/rent_add_remove_button.dart';
 import 'package:ethnic_elegance/common/widgets/products/cart/rent_cart_item.dart';
-import 'package:ethnic_elegance/features/shop/models/rent_cart_insert_model1.dart';
+import 'package:ethnic_elegance/features/shop/models/rent_cart/rent_cart_insert_model1.dart';
 import 'package:ethnic_elegance/features/shop/screens/home/home.dart';
 import 'package:ethnic_elegance/features/shop/screens/rent_order/rent_checkout.dart';
 import 'package:flutter/material.dart';

@@ -37,7 +37,7 @@ class EProductMetaData extends StatelessWidget{
 
             ///Price
             // Text('\₹250', style: Theme.of(context).textTheme.titleSmall!.apply(decoration: TextDecoration.lineThrough)),
-            const SizedBox(width: ESizes.spaceBtwItems),
+            // const SizedBox(width: ESizes.spaceBtwItems),
             EProductPriceText(price: price, isLarge: true),
           ],
         ),

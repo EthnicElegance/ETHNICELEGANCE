@@ -12,7 +12,8 @@ import '../../../../common/widgets/custom_shapes/containers/primary_header_conta
 import '../../../../common/widgets/custom_shapes/containers/search_container.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../sharepreferences.dart';
-import '../../models/productlist_model.dart';
+import '../../models/product/productlist_model.dart';
+import '../search/search.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -70,24 +71,24 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             ///Header
-            const EPrimaryHeaderContainer(
+            EPrimaryHeaderContainer(
               child: Column(
                 children: [
                   /// AppBar
-                  EHomeAppBar(),
+                  const EHomeAppBar(),
 
-                  SizedBox(
+                  const SizedBox(
                     height: ESizes.spaceBtwSections,
                   ),
 
                   /// Searchbar
-                  ESearchContainer(text: 'Search in Store'),
-                  SizedBox(
+                  ESearchContainer(text: 'Search in Store', onTap: () => Get.to(() => const SearchScreen())),
+                  const SizedBox(
                     height: ESizes.spaceBtwSections,
                   ),
 
                   /// Categories
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.only(left: ESizes.defaultSpace),
                     child: Column(
                       children: [
@@ -107,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: ESizes.spaceBtwSections,
                   ),
                 ],

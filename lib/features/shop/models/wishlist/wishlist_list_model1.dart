@@ -1,22 +1,22 @@
 import 'dart:async';
+import 'package:ethnic_elegance/features/shop/screens/wishlist/wishlist1.dart';
 import 'package:ethnic_elegance/sharepreferences.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../common/styles/shadows.dart';
-import '../../../common/widgets/custom_shapes/containers/rounded_container.dart';
-import '../../../common/widgets/icons/circular_icon.dart';
-import '../../../common/widgets/texts/product_price_text.dart';
-import '../../../common/widgets/texts/product_title_text.dart';
-import '../../../utils/constants/colors.dart';
-import '../../../utils/constants/sizes.dart';
-import '../../../utils/helpers/helper_functions.dart';
-import '../../../utils/popups/loaders.dart';
-import '../controllers/wishlist_service.dart';
-import '../screens/product_details/product_detail.dart';
-import '../screens/wishlist/wishlist.dart';
+import '../../../../common/styles/shadows.dart';
+import '../../../../common/widgets/custom_shapes/containers/rounded_container.dart';
+import '../../../../common/widgets/icons/circular_icon.dart';
+import '../../../../common/widgets/texts/product_price_text.dart';
+import '../../../../common/widgets/texts/product_title_text.dart';
+import '../../../../utils/constants/colors.dart';
+import '../../../../utils/constants/sizes.dart';
+import '../../../../utils/helpers/helper_functions.dart';
+import '../../../../utils/popups/loaders.dart';
+import '../../controllers/wishlist_service.dart';
+import '../../screens/product_details/product_detail.dart';
 
 class EWishList1 extends StatefulWidget {
   const EWishList1({super.key});
@@ -140,24 +140,6 @@ class _EWishList1State extends State<EWishList1> {
                                     ),
                                   ),
 
-                                  ///sale Tag
-                                  // Positioned(
-                                  //   top: 12,
-                                  //   child: ERoundedContainer(
-                                  //     radius: ESizes.sm,
-                                  //     backgroundColor:
-                                  //         EColors.secondary.withOpacity(0.8),
-                                  //     padding: const EdgeInsets.symmetric(
-                                  //         horizontal: ESizes.sm,
-                                  //         vertical: ESizes.xs),
-                                  //     child: Text('25%',
-                                  //         style: Theme.of(context)
-                                  //             .textTheme
-                                  //             .labelLarge!
-                                  //             .apply(color: EColors.black)),
-                                  //   ),
-                                  // ),
-
                                   /// Favourite Icon Button
                                   Positioned(
                                     top: 0,
@@ -175,7 +157,7 @@ class _EWishList1State extends State<EWishList1> {
                                             message: 'the product has been Removed from Wishlist'
                                         );
                                         Get.offAll(
-                                            () => const FavouriteScreen());
+                                            () => const FavouriteScreen1());
                                       },
                                     ),
                                   ),
@@ -224,28 +206,6 @@ class _EWishList1State extends State<EWishList1> {
                                       price: data2['customer_price']),
                                 ),
 
-                                ///Add To Cart
-                                // Container(
-                                //   decoration: const BoxDecoration(
-                                //     color: EColors.dark,
-                                //     borderRadius: BorderRadius.only(
-                                //       topLeft:
-                                //           Radius.circular(ESizes.cardRadiusMd),
-                                //       bottomRight: Radius.circular(
-                                //           ESizes.productImageRadius),
-                                //     ),
-                                //   ),
-                                //   child: const SizedBox(
-                                //     width: ESizes.iconLg * 1.2,
-                                //     height: ESizes.iconLg * 1.2,
-                                //     child: Center(
-                                //       child: Icon(
-                                //         Iconsax.add,
-                                //         color: EColors.white,
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
                               ],
                             ),
                           ],

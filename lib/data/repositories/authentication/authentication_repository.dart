@@ -53,14 +53,10 @@ class AuthenticationRepository extends GetxController {
 
   Future<void> chkUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print("------------prefs.getString('key')----------------");
-    print(prefs.getString('key'));
 
     if(prefs.getString('key') != null)
     {
       getKeys = prefs.getString('key')!;
-      print("------------getKeys----------------");
-      print(getKeys);
       final dbRef = FirebaseDatabase.instance
           .ref()
           .child('Project/UserRegister')

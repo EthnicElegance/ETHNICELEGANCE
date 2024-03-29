@@ -8,8 +8,9 @@ import 'package:ethnic_elegance/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../common/widgets/products/cart/cart_menu_icon.dart';
-import '../../models/categorylist_model.dart';
+import '../../models/category/categorylist_model.dart';
 import '../brand/all_brands.dart';
+import '../search/search.dart';
 
 
 class StoreScreen1 extends StatelessWidget {
@@ -23,8 +24,8 @@ class StoreScreen1 extends StatelessWidget {
         appBar: EAppBar(
           title:
               Text('Category', style: Theme.of(context).textTheme.headlineMedium),
-          actions: const [
-            ECartCounterIcon(iconColor: Colors.black),
+          actions: [
+            ECartCounterIcon(iconColor: EHelperFunctions.isDarkMode(context) ? EColors.white : EColors.black),
           ],
         ),
         bottomNavigationBar: const NavigationMenu1(),
@@ -49,11 +50,11 @@ class StoreScreen1 extends StatelessWidget {
                       children: [
                         /// Search Bar
                         const SizedBox(height: ESizes.spaceBtwItems),
-                        const ESearchContainer(
+                        ESearchContainer(
                             text: 'Search in store',
-                            showBorer: true,
                             showBackground: false,
                             padding: EdgeInsets.zero,
+                            onTap: () => Get.to(() => const SearchScreen()),
                         ),
                         const SizedBox(height: ESizes.spaceBtwItems),
 

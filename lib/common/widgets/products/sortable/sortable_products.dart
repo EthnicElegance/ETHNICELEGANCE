@@ -1,8 +1,8 @@
-import 'package:ethnic_elegance/features/shop/models/productlist_model1.dart';
+import 'package:ethnic_elegance/features/shop/models/product/productlist_model1.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../features/shop/models/productlist_model.dart';
+import '../../../../features/shop/models/product/productlist_model.dart';
 import '../../../../sharepreferences.dart';
 import '../../../../utils/constants/sizes.dart';
 
@@ -54,7 +54,6 @@ class _ESortableProductsState extends State<ESortableProducts> {
       children: [
         ///Dropdown
         DropdownButtonFormField(
-          
           decoration: const InputDecoration(prefixIcon: Icon(Iconsax.sort)),
           onChanged: (value) {
             setState(() {

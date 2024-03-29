@@ -1,6 +1,6 @@
 import 'package:ethnic_elegance/common/widgets/appbar/appbar.dart';
-import 'package:ethnic_elegance/common/widgets/products/cart/rent_cart_menu_icon.dart';
-import 'package:ethnic_elegance/features/shop/models/rentproduct_list_model.dart';
+//import 'package:ethnic_elegance/common/widgets/products/cart/rent_cart_menu_icon.dart';
+import 'package:ethnic_elegance/features/shop/models/rent_product/rentproduct_list_model.dart';
 import 'package:ethnic_elegance/utils/constants/colors.dart';
 import 'package:ethnic_elegance/utils/constants/sizes.dart';
 import 'package:ethnic_elegance/utils/helpers/helper_functions.dart';
@@ -8,6 +8,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import '../../../../common/widgets/appbar/tabbar.dart';
 import '../../../../common/widgets/custom_shapes/containers/rounded_container.dart';
+import '../../../../common/widgets/products/cart/cart_menu_icon.dart';
 import '../../../../navigation_menu1.dart';
 
 class RentalScreen extends StatefulWidget {
@@ -75,8 +76,8 @@ class _RentalScreenState extends State<RentalScreen> {
                     appBar: EAppBar(
                       title: Text('Rent',
                           style: Theme.of(context).textTheme.headlineMedium),
-                      actions: const [
-                        ERentCartCounterIcon(iconColor: Colors.black),
+                      actions: [
+                        ECartCounterIcon(iconColor: EHelperFunctions.isDarkMode(context) ? EColors.white : EColors.black),
                       ],
                     ),
 
@@ -113,7 +114,7 @@ class _RentalScreenState extends State<RentalScreen> {
                                       crossAxisCount: 2,
                                       mainAxisSpacing: ESizes.gridViewSpacing,
                                       crossAxisSpacing: ESizes.gridViewSpacing,
-                                      mainAxisExtent: 100,
+                                      mainAxisExtent: 80,
                                     ),
                                     itemBuilder:
                                         (BuildContext context, int index) {
@@ -149,7 +150,7 @@ class _RentalScreenState extends State<RentalScreen> {
                                                         ),
                                                         Positioned(
                                                           top: 50,
-                                                          left: 55,
+                                                          left: 37,
                                                           child: Container(
                                                             padding:
                                                                 const EdgeInsets
@@ -207,7 +208,7 @@ class _RentalScreenState extends State<RentalScreen> {
                                                         ),
                                                         Positioned(
                                                           top: 50,
-                                                          left: 55,
+                                                          left: 45,
                                                           child: Container(
                                                             padding:
                                                                 const EdgeInsets
@@ -291,8 +292,8 @@ class _RentalScreenState extends State<RentalScreen> {
                     appBar: EAppBar(
                       title: Text('Rent',
                           style: Theme.of(context).textTheme.headlineMedium),
-                      actions: const [
-                        ERentCartCounterIcon(iconColor: Colors.black),
+                      actions: [
+                        ECartCounterIcon(iconColor: EHelperFunctions.isDarkMode(context) ? EColors.white : EColors.black),
                       ],
                     ),
                     bottomNavigationBar: const NavigationMenu1(),
@@ -328,7 +329,7 @@ class _RentalScreenState extends State<RentalScreen> {
                                       crossAxisCount: 2,
                                       mainAxisSpacing: ESizes.gridViewSpacing,
                                       crossAxisSpacing: ESizes.gridViewSpacing,
-                                      mainAxisExtent: 100,
+                                      mainAxisExtent: 80,
                                     ),
                                     itemBuilder:
                                         (BuildContext context, int index) {
@@ -364,7 +365,7 @@ class _RentalScreenState extends State<RentalScreen> {
                                                         ),
                                                         Positioned(
                                                           top: 50,
-                                                          left: 55,
+                                                          left: 37,
                                                           child: Container(
                                                             padding:
                                                                 const EdgeInsets
@@ -422,7 +423,7 @@ class _RentalScreenState extends State<RentalScreen> {
                                                         ),
                                                         Positioned(
                                                           top: 50,
-                                                          left: 55,
+                                                          left: 45,
                                                           child: Container(
                                                             padding:
                                                                 const EdgeInsets

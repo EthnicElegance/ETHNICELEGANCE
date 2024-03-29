@@ -1,6 +1,6 @@
 import 'package:ethnic_elegance/common/widgets/appbar/appbar.dart';
 import 'package:ethnic_elegance/common/widgets/icons/circular_icon.dart';
-import 'package:ethnic_elegance/features/shop/models/wishlist_list_model.dart';
+import 'package:ethnic_elegance/features/shop/models/wishlist/wishlist_list_model.dart';
 import 'package:ethnic_elegance/features/shop/screens/home/home.dart';
 import 'package:ethnic_elegance/navigation_menu.dart';
 import 'package:ethnic_elegance/sharepreferences.dart';

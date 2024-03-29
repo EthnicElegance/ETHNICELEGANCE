@@ -2,7 +2,7 @@ import 'package:ethnic_elegance/features/shop/screens/all_product/all_products.d
 import 'package:ethnic_elegance/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:ethnic_elegance/features/shop/screens/home/widgets/home_categories.dart';
 import 'package:ethnic_elegance/features/shop/screens/home/widgets/promo_slider.dart';
-
+import 'package:ethnic_elegance/features/shop/screens/search/search.dart';
 import 'package:ethnic_elegance/navigation_menu1.dart';
 import 'package:ethnic_elegance/utils/constants/colors.dart';
 import 'package:ethnic_elegance/utils/constants/sizes.dart';
@@ -13,7 +13,7 @@ import '../../../../common/widgets/custom_shapes/containers/primary_header_conta
 import '../../../../common/widgets/custom_shapes/containers/search_container.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../sharepreferences.dart';
-import '../../models/productlist_model1.dart';
+import '../../models/product/productlist_model1.dart';
 
 class HomeScreen1 extends StatefulWidget {
   const HomeScreen1({super.key});
@@ -23,11 +23,11 @@ class HomeScreen1 extends StatefulWidget {
 
 }
 
-
-
 class _HomeScreen1State extends State<HomeScreen1> {
   String? userid;
   List<String> offerImages = [];
+  String searchQuery = ''; // Initialize search query
+
 
   @override
   void initState() {
@@ -72,24 +72,29 @@ class _HomeScreen1State extends State<HomeScreen1> {
         child: Column(
           children: [
             ///Header
-            const EPrimaryHeaderContainer(
+             EPrimaryHeaderContainer(
               child: Column(
                 children: [
                   /// AppBar
-                  EHomeAppBar(),
+                  const EHomeAppBar(),
 
-                  SizedBox(
+                  const SizedBox(
                     height: ESizes.spaceBtwSections,
                   ),
 
                   /// Searchbar
-                  ESearchContainer(text: 'Search in Store'),
-                  SizedBox(
+                  
+                  // ESearchContainer(text: 'Search in Store'/*,onTap: () => Get.to(() => const ESearchScreen()),*/),
+                  ESearchContainer(
+                    text: 'Search in Store',
+                    onTap: () => Get.to(() => const SearchScreen()), // Handle search
+                  ),
+                  const SizedBox(
                     height: ESizes.spaceBtwSections,
                   ),
 
                   /// Categories
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.only(left: ESizes.defaultSpace),
                     child: Column(
                       children: [
@@ -109,7 +114,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
                     ),
                   ),
 
-              SizedBox(height: ESizes.spaceBtwSections,),
+              const SizedBox(height: ESizes.spaceBtwSections,),
 
                 ],
               ),
@@ -122,18 +127,6 @@ class _HomeScreen1State extends State<HomeScreen1> {
               child: Column(
                 children: [
                   ///Product Slider
-                  // FutureBuilder(
-                  //   future: null,
-                  //   builder: (context, snapshot) {
-                  //     return const EPromoSlider(
-                  //       banners: [
-                  //         EImages.onBoardingImage1,
-                  //         EImages.onBoardingImage2,
-                  //         EImages.onBoardingImage3,
-                  //       ],
-                  //     );
-                  //   }
-                  // ),
                   if(offerImages.isNotEmpty)
                     EPromoSlider(banners: offerImages),
                   if(offerImages.isEmpty)

@@ -25,17 +25,18 @@ class EVerticalImageText extends StatelessWidget {
           children: [
             ///Circular Icon
             Container(
-              width: 60,
-              height: 60,
-              padding: const EdgeInsets.all(ESizes.sm),
+              width: 53,
+              height: 65,
+              padding: const EdgeInsets.all(5),
               decoration: BoxDecoration(
                 color: backgroundColor ?? ( dark ? EColors.black : EColors.white),
-                borderRadius: BorderRadius.circular(100),
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Center(
                 child: Image(
                   image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/CategoryImage%2F$image?alt=media"),
-                  fit: BoxFit.contain,
+
+                  fit: BoxFit.cover,
                   // color: EColors.black,
                 ),
               ),

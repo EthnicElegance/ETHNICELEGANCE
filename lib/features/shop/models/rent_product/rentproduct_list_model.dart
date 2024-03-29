@@ -1,16 +1,16 @@
-import 'package:ethnic_elegance/features/shop/models/rentproduct_model.dart';
+import 'package:ethnic_elegance/features/shop/models/rent_product/rentproduct_model.dart';
 import 'package:ethnic_elegance/features/shop/screens/rental_product_details/rental_product_detail.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../common/styles/shadows.dart';
-import '../../../common/widgets/custom_shapes/containers/rounded_container.dart';
-import '../../../common/widgets/texts/product_price_text.dart';
-import '../../../common/widgets/texts/product_title_text.dart';
-import '../../../sharepreferences.dart';
-import '../../../utils/constants/colors.dart';
-import '../../../utils/constants/sizes.dart';
-import '../../../utils/helpers/helper_functions.dart';
+import '../../../../common/styles/shadows.dart';
+import '../../../../common/widgets/custom_shapes/containers/rounded_container.dart';
+import '../../../../common/widgets/texts/product_price_text.dart';
+import '../../../../common/widgets/texts/product_title_text.dart';
+import '../../../../sharepreferences.dart';
+import '../../../../utils/constants/colors.dart';
+import '../../../../utils/constants/sizes.dart';
+import '../../../../utils/helpers/helper_functions.dart';
 
 class ERentProductList extends StatefulWidget {
   const ERentProductList({

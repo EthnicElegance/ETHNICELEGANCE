@@ -1,4 +1,4 @@
-import 'package:ethnic_elegance/features/shop/models/rent_cart_insert_model.dart';
+import 'package:ethnic_elegance/features/shop/models/rent_cart/rent_cart_insert_model.dart';
 import 'package:ethnic_elegance/utils/constants/colors.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +7,7 @@ import '../../../../../sharepreferences.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/helpers/helper_functions.dart';
 import '../../../../../utils/popups/loaders.dart';
-import '../../../models/rentproduct_model.dart';
+import '../../../models/rent_product/rentproduct_model.dart';
 import '../../rent_cart/rent_cart.dart';
 
 class CartController extends GetxController {

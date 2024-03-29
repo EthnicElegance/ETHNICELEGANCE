@@ -10,7 +10,7 @@ import '../../../../common/widgets/products/cart/cart_item.dart';
 import '../../../../common/widgets/texts/product_price_text.dart';
 import '../../../../sharepreferences.dart';
 import '../../../../utils/constants/sizes.dart';
-import '../../models/cart_insert_model1.dart';
+import '../../models/cart/cart_insert_model1.dart';
 import '../checkout/checkout.dart';
 import '../home/home1.dart';
 

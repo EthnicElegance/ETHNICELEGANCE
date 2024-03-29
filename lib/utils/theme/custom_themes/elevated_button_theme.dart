@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../constants/colors.dart';
+
 class EElevatedButtonTheme {
   EElevatedButtonTheme._();
 
@@ -7,10 +9,10 @@ class EElevatedButtonTheme {
     style: ElevatedButton.styleFrom(
       elevation: 0,
       foregroundColor: Colors.white,
-      backgroundColor: Colors.blue,
+      backgroundColor: EColors.buttonPrimary,
       disabledForegroundColor: Colors.grey,
       disabledBackgroundColor: Colors.grey,
-      side: const BorderSide(color: Colors.blue),
+      side: const BorderSide(color: EColors.buttonPrimary),
       padding: const EdgeInsets.symmetric(vertical: 18),
       textStyle: const TextStyle(fontSize: 16,color: Colors.white,fontWeight: FontWeight.w600),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))
@@ -20,10 +22,10 @@ class EElevatedButtonTheme {
       style: ElevatedButton.styleFrom(
           elevation: 0,
           foregroundColor: Colors.white,
-          backgroundColor: Colors.blue,
+          backgroundColor: EColors.buttonPrimary,
           disabledForegroundColor: Colors.grey,
           disabledBackgroundColor: Colors.grey,
-          side: const BorderSide(color: Colors.blue),
+          side: const BorderSide(color: EColors.buttonPrimary),
           padding: const EdgeInsets.symmetric(vertical: 18),
           textStyle: const TextStyle(fontSize: 16,color: Colors.white,fontWeight: FontWeight.w600),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))

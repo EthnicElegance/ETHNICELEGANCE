@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import '../../../../common/widgets/appbar/tabbar.dart';
 import '../../../../common/widgets/products/cart/cart_menu_icon.dart';
 import '../../../../sharepreferences.dart';
-import '../../models/subcat_productlist_model.dart';
-import '../../models/subcat_productlist_model1.dart';
+import '../../models/subcat_product/subcat_productlist_model.dart';
+import '../../models/subcat_product/subcat_productlist_model1.dart';
 
 class ESubCategoryScreen extends StatefulWidget {
   const ESubCategoryScreen({super.key, required this.id});

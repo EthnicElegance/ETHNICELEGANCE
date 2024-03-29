@@ -37,7 +37,9 @@ class _ERentCartCounterIconState extends State<ERentCartCounterIcon> {
 
   void _initializeFirebase() {
     if (userid != null) {
-      print(userid);
+      if (kDebugMode) {
+        print(userid);
+      }
       DatabaseReference cartRef = FirebaseDatabase.instance.ref().child('Project/RentalCart');
       _cartQuery = cartRef.orderByChild('UserId').equalTo(userid); // Apply the query
       _cartQuery.onValue.listen((event) {
