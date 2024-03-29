@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../../../utils/helpers/helper_functions.dart';
+
 
 class ProfileScreen1 extends StatefulWidget {
   const ProfileScreen1({super.key});
@@ -103,17 +105,15 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                         child: Column(
 
                           children: [
-                            const ECircularImage(
-                                image: EImages.user, width: 80, height: 80),
-                            TextButton(onPressed: () {},
-                                child: const Text('Change Profile Picture')),
+                            ECircularImage(
+                                image: EHelperFunctions.isDarkMode(context) ? EImages.darkAppLogo : EImages.lightAppLogo, width: 130, height: 130,padding: 0),
 
                           ],
                         ),
                       ),
 
                       const SizedBox(height: ESizes.spaceBtwItems / 2),
-                      const Divider(),
+                      // const Divider(),
                       const SizedBox(height: ESizes.spaceBtwItems),
                       const ESectionHeading(title: 'Profile Information', showActionButton: false),
                       const SizedBox(height: ESizes.spaceBtwItems),

@@ -32,6 +32,7 @@ class _EUerProfileTitleState extends State<EUerProfileTitle> {
       setState(() {
         userid = value;
       });
+      checkUserType();
     });
   }
   Future<void> checkUserType() async {
@@ -102,7 +103,7 @@ class _EUerProfileTitleState extends State<EUerProfileTitle> {
                     .apply(color: EColors.white)),
 
                 trailing: IconButton(
-                    onPressed: () => isRetailCustomer == true ? Get.to(() => const ProfileScreen()) : Get.to(() => const ProfileScreen1()),
+                    onPressed: () => isRetailCustomer == true ? Get.to(() => const ProfileScreen1()) : Get.to(() => const ProfileScreen()),
                     icon: const Icon(Iconsax.edit, color: EColors.white)),
               ),
             ],
