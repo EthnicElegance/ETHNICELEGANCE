@@ -32,6 +32,7 @@ class _SearchScreenState extends State<SearchScreen>
   bool? isRetailCustomer;
   String? userId;
   List<Map> wishlistList = [];
+  Map<int, Map> userMap = {};
 
   var dbRef;
   TextEditingController searchController = TextEditingController();
@@ -106,12 +107,12 @@ class _SearchScreenState extends State<SearchScreen>
               // Check if the value has a 'Photo' field and it is not empty
               if (value['photo1'] != null &&
                   value['photo1'].toString().isNotEmpty) {
-                // Convert the HospitalName to lowercase for case-insensitive comparison
-                String hospitalNameLowerCase =
+                // Convert the productName to lowercase for case-insensitive comparison
+                String productNameLowerCase =
                     (value['product_name'] as String?)?.toLowerCase() ?? '';
 
-                // Check if the lowercase version of HospitalName contains the lowercase query
-                if (hospitalNameLowerCase.contains(lowercaseQuery)) {
+                // Check if the lowercase version of productName contains the lowercase query
+                if (productNameLowerCase.contains(lowercaseQuery)) {
                   products.add({
                     'product_id': key,
                     'product_name': value['product_name'],
@@ -134,12 +135,12 @@ class _SearchScreenState extends State<SearchScreen>
               // Check if the value has a 'Photo' field and it is not empty
               if (value['photo1'] != null &&
                   value['photo1'].toString().isNotEmpty) {
-                // Convert the HospitalName to lowercase for case-insensitive comparison
-                String hospitalNameLowerCase =
+                // Convert the productName to lowercase for case-insensitive comparison
+                String productNameLowerCase =
                     (value['product_name'] as String?)?.toLowerCase() ?? '';
 
-                // Check if the lowercase version of HospitalName contains the lowercase query
-                if (hospitalNameLowerCase.contains(lowercaseQuery)) {
+                // Check if the lowercase version of productName contains the lowercase query
+                if (productNameLowerCase.contains(lowercaseQuery)) {
                   products.add({
                     'product_id': key,
                     'product_name': value['product_name'],
@@ -166,6 +167,30 @@ class _SearchScreenState extends State<SearchScreen>
       });
     });
   }
+
+  Future<void> getWishlistData() async {
+
+    wishlistList.clear();
+    userMap.clear();
+    dbRef = FirebaseDatabase.instance.ref().child('Project/wishlist');
+    dbRef
+        .orderByChild("userId")
+        .equalTo(userId)
+        .onValue
+        .listen((event) async {
+      Map<dynamic, dynamic>? values = event.snapshot.value as Map?;
+      if (values != null) {
+        values.forEach((key, value) async {
+          wishlistList.add({
+            'wishlistkey': key,
+            'productId': value['productId'],
+            "userId": value["userId"],
+          });
+        });
+      }
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -405,7 +430,7 @@ class _SearchScreenState extends State<SearchScreen>
                               ),
                             );
                       } else {
-                        return const Center(child: Text('No hospitals found'));
+                        return const Center(child: Text('No products found'));
                       }
                     }
                   }),

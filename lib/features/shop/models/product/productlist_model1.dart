@@ -56,7 +56,7 @@ class _EProductList1State extends State<EProductList1> {
     });
   }
 
-  Future<void> getHospitalData() async {
+  Future<void> getWishlistData() async {
 
     wishlistList.clear();
     userMap.clear();
@@ -82,7 +82,7 @@ class _EProductList1State extends State<EProductList1> {
   @override
   Widget build(BuildContext context) {
     final dark = EHelperFunctions.isDarkMode(context);
-    getHospitalData();
+    getWishlistData();
 
     return Padding(
       padding: EdgeInsets.zero,
