@@ -31,6 +31,7 @@ class _EProductImageSlider1State extends State<EProductImageSlider1> {
   String? userid;
   bool isProductInWishlist = false;
   String? wishlistKey;
+  int selectedImageIndex = 0;
 
   @override
   void initState() {
@@ -47,8 +48,10 @@ class _EProductImageSlider1State extends State<EProductImageSlider1> {
     final dark = EHelperFunctions.isDarkMode(context);
     return ECurvedEdgeWidget(
       child: StreamBuilder(
-          stream:
-          FirebaseDatabase.instance.ref().child('Project/RentProduct').onValue,
+          stream: FirebaseDatabase.instance
+              .ref()
+              .child('Project/RentProduct')
+              .onValue,
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.hasData) {
               Map<dynamic, dynamic> map = snapshot.data.snapshot.value;
@@ -66,8 +69,8 @@ class _EProductImageSlider1State extends State<EProductImageSlider1> {
 
               map.forEach((dynamic key, dynamic v) {
                 if (v != null) {
-                    prodlist.add(RentProductModel(
-                        key.toString(),
+                  prodlist.add(RentProductModel(
+                      key.toString(),
                       v["catid"],
                       v["RentProduct_name"],
                       v["photo1"],
@@ -80,17 +83,15 @@ class _EProductImageSlider1State extends State<EProductImageSlider1> {
                       v["fabric"],
                       v["RentProduct_detail"],
                       v["DateTime"],
-                      v["availability"]
-                    ));
-                  }
+                      v["availability"]));
+                }
               });
 
               int imageCount = 2;
 
-              if(widget.image3 == ""){
+              if (widget.image3 == "") {
                 imageCount = 1;
-              }
-              else{
+              } else {
                 imageCount = 2;
               }
               return Container(
@@ -101,15 +102,21 @@ class _EProductImageSlider1State extends State<EProductImageSlider1> {
                     SizedBox(
                       height: 400,
                       child: Padding(
-                          padding:
-                          const EdgeInsets.all(ESizes.productImageRadius * 2),
+                          padding: const EdgeInsets.all(
+                              ESizes.productImageRadius * 2),
                           child: Center(
                               child: Image(
-                                  image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/RentProductImage%2F${widget.image1}?alt=media")))),
+                                  image: NetworkImage(
+                                      selectedImageIndex == 0
+                                          ? "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/RentProductImage%2F${widget.image1}?alt=media"
+                                          : selectedImageIndex == 1
+                                          ? "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/RentProductImage%2F${widget.image2}?alt=media"
+                                          : "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/RentProductImage%2F${widget.image3}?alt=media"
+                                  )))),
                     ),
 
                     ///Image Slider
-                    if(imageCount == 1)
+                    if (imageCount == 1)
                       Positioned(
                         right: 0,
                         bottom: 30,
@@ -117,27 +124,57 @@ class _EProductImageSlider1State extends State<EProductImageSlider1> {
                         child: SizedBox(
                           height: 100,
                           child: ListView.separated(
-                            separatorBuilder: (_, __) =>
-                            const SizedBox(width: ESizes.spaceBtwItems),
-                            itemCount: 1,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            itemBuilder: (_, index) => ERoundedImage(
-                              width: 80,
-                              fit: BoxFit.fill,
-                              backgroundColor:
-                              dark ? EColors.dark : EColors.white,
-                              border: Border.all(color: EColors.primary),
-                              padding: const EdgeInsets.all(0),
-                              isNetworkImage: true,
-                              imageUrl: "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/RentProductImage%2F${widget.image2}?alt=media",
-                            ),
-                          ),
+                              separatorBuilder: (_, __) =>
+                                  const SizedBox(width: ESizes.spaceBtwItems),
+                              itemCount: 2,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              itemBuilder: (_, index) {
+                                if (index == 0) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedImageIndex = 0;
+                                      });
+                                    },
+                                    child: ERoundedImage(
+                                      width: 80,
+                                      fit: BoxFit.fill,
+                                      backgroundColor:
+                                          dark ? EColors.dark : EColors.white,
+                                      border: Border.all(color: EColors.primary),
+                                      padding: const EdgeInsets.all(0),
+                                      isNetworkImage: true,
+                                      imageUrl:
+                                          "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/RentProductImage%2F${widget.image1}?alt=media",
+                                    ),
+                                  );
+                                } else {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedImageIndex = 1;
+                                      });
+                                    },
+                                    child: ERoundedImage(
+                                      width: 80,
+                                      fit: BoxFit.fill,
+                                      backgroundColor:
+                                          dark ? EColors.dark : EColors.white,
+                                      border: Border.all(color: EColors.primary),
+                                      padding: const EdgeInsets.all(0),
+                                      isNetworkImage: true,
+                                      imageUrl:
+                                          "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/RentProductImage%2F${widget.image2}?alt=media",
+                                    ),
+                                  );
+                                }
+                              }),
                         ),
                       ),
 
-                    if(imageCount == 2)
+                    if (imageCount == 2)
                       Positioned(
                         right: 0,
                         bottom: 30,
@@ -147,41 +184,75 @@ class _EProductImageSlider1State extends State<EProductImageSlider1> {
                           // height: 350,
                           child: ListView.separated(
                               separatorBuilder: (_, __) =>
-                              const SizedBox(width: ESizes.spaceBtwItems),
-                              itemCount: 2,
+                                  const SizedBox(width: ESizes.spaceBtwItems),
+                              itemCount: 3,
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
                               physics: const AlwaysScrollableScrollPhysics(),
                               itemBuilder: (_, index) {
                                 if (index == 0) {
-                                  return ERoundedImage(
-                                    width: 80,
-                                    fit: BoxFit.fill,
-                                    backgroundColor:
-                                    dark ? EColors.dark : EColors.white,
-                                    border: Border.all(color: EColors.primary),
-                                    padding: const EdgeInsets.all(0),
-                                    isNetworkImage: true,
-                                    imageUrl: "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/RentProductImage%2F${widget.image2}?alt=media",
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedImageIndex = 0;
+                                      });
+                                    },
+                                    child: ERoundedImage(
+                                      width: 80,
+                                      fit: BoxFit.fill,
+                                      backgroundColor:
+                                          dark ? EColors.dark : EColors.white,
+                                      border: Border.all(color: EColors.primary),
+                                      padding: const EdgeInsets.all(0),
+                                      isNetworkImage: true,
+                                      imageUrl:
+                                          "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/RentProductImage%2F${widget.image1}?alt=media",
+                                    ),
+                                  );
+                                }else if (index == 1) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedImageIndex = 1;
+                                      });
+                                    },
+                                    child: ERoundedImage(
+                                      width: 80,
+                                      fit: BoxFit.fill,
+                                      backgroundColor:
+                                          dark ? EColors.dark : EColors.white,
+                                      border: Border.all(color: EColors.primary),
+                                      padding: const EdgeInsets.all(0),
+                                      isNetworkImage: true,
+                                      imageUrl:
+                                          "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/RentProductImage%2F${widget.image2}?alt=media",
+                                    ),
+                                  );
+                                } else {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedImageIndex = 2;
+                                      });
+                                    },
+                                    child: ERoundedImage(
+                                      // width: 280,
+                                      width: 80,
+                                      fit: BoxFit.fill,
+                                      backgroundColor:
+                                          dark ? EColors.dark : EColors.white,
+                                      border: Border.all(color: EColors.primary),
+                                      padding: const EdgeInsets.all(0),
+                                      isNetworkImage: true,
+                                      imageUrl:
+                                          "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/RentProductImage%2F${widget.image3}?alt=media",
+                                    ),
                                   );
                                 }
-                                else{
-                                  return ERoundedImage(
-                                    // width: 280,
-                                    width: 80,
-                                    fit: BoxFit.fill,
-                                    backgroundColor:
-                                    dark ? EColors.dark : EColors.white,
-                                    border: Border.all(color: EColors.primary),
-                                    padding: const EdgeInsets.all(0),
-                                    isNetworkImage: true,
-                                    imageUrl: "https://firebasestorage.googleapis.com/v0/b/ethnicelegance-71357.appspot.com/o/RentProductImage%2F${widget.image3}?alt=media",
-                                  );
-                                }
-                              }
-                          ),
+                              }),
                         ),
                       ),
+
                     ///AppBar Icons
                     const EAppBar(
                       showBackArrow: true,
