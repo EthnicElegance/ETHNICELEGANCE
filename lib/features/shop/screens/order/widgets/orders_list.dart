@@ -1,9 +1,11 @@
 import 'package:ethnic_elegance/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:ethnic_elegance/features/shop/models/order/order_view_model.dart';
+import 'package:ethnic_elegance/features/shop/screens/order_details/order_details.dart';
 import 'package:ethnic_elegance/utils/constants/sizes.dart';
 import 'package:ethnic_elegance/utils/helpers/helper_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../../sharepreferences.dart';
@@ -114,40 +116,14 @@ class _EOrderListItemsState extends State<EOrderListItems> {
                             ),
                           ),
                           IconButton(
-                              onPressed: () {},
+                              onPressed: () => Get.to(() => OrderDetailScreen(orderId: orderList[index].key, orderStatus: orderList[index].status,)),
                               icon: const Icon(Iconsax.arrow_right_34,
-                                  size: ESizes.iconSm))
+                                  size: ESizes.iconSm)),
                         ],
                       ),
                       const SizedBox(height: ESizes.spaceBtwItems),
                       Row(
                         children: [
-                          // Expanded(
-                          //   child: Row(
-                          //     children: [
-                          //       const Icon(Iconsax.tag),
-                          //       const SizedBox(width: ESizes.spaceBtwItems / 2),
-                          //       Expanded(
-                          //         child: Column(
-                          //           mainAxisSize: MainAxisSize.min,
-                          //           crossAxisAlignment:
-                          //               CrossAxisAlignment.start,
-                          //           children: [
-                          //             Text('Order',
-                          //                 style: Theme.of(context)
-                          //                     .textTheme
-                          //                     .labelMedium),
-                          //             Text('#${orderList[index].key}',
-                          //                 maxLines: 1,
-                          //                 style: Theme.of(context)
-                          //                     .textTheme
-                          //                     .titleMedium),
-                          //           ],
-                          //         ),
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
                           Expanded(
                             child: Row(
                               children: [

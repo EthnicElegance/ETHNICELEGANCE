@@ -16,6 +16,7 @@ import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../shop/screens/coupons/coupons.dart';
 import '../address/address.dart';
+import '../contact_us/contact_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -79,6 +80,12 @@ class SettingsScreen extends StatelessWidget {
                     title: 'FAQs',
                     subtitle: 'List of all the FAQs',
                     onTap: () => Get.to(() => const FaqScreen()),
+                  ),
+                  ESettingsMenuTile(
+                    icon: Iconsax.call,
+                    title: 'Contact Us',
+                    subtitle: 'You can contact us from here',
+                    onTap: () => Get.to(() => const ContactScreen()),
                   ),
                   const SizedBox(height: ESizes.spaceBtwSections),
                   SizedBox(

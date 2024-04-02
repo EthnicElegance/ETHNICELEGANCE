@@ -15,7 +15,7 @@ import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/constants/text_strings.dart';
 import '../../../../../utils/popups/loaders.dart';
 import '../../../controllers/checkout_controller.dart';
-import '../../../models/order/order_detail_insert_model.dart';
+import '../../../models/order_detail/order_detail_insert_model.dart';
 import '../../../models/order/order_insert_model.dart';
 import '../../home/home.dart';
 

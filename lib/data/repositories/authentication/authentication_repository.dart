@@ -44,7 +44,6 @@ class AuthenticationRepository extends GetxController {
     // }
     /// local storage
 
-
     deviceStorage.writeIfNull('isFirstTime', true);
     deviceStorage.read('isFirstTime') != true
         ? chkUser()

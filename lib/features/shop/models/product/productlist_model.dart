@@ -44,7 +44,7 @@ class _EProductListState extends State<EProductList> {
   late List<Map> userName = [];
   Map<dynamic, dynamic>? userData;
 
-  List<Map> WishList = [];
+  List<Map> wishList = [];
   List<ProductModel> prodlist = [];
 
   @override
@@ -59,7 +59,7 @@ class _EProductListState extends State<EProductList> {
 
   Future<void> getProductData() async {
 
-    WishList.clear();
+    wishList.clear();
     userMap.clear();
     dbRef = FirebaseDatabase.instance.ref().child('Project/wishlist');
     dbRef
@@ -70,7 +70,7 @@ class _EProductListState extends State<EProductList> {
       Map<dynamic, dynamic>? values = event.snapshot.value as Map?;
       if (values != null) {
         values.forEach((key, value) async {
-          WishList.add({
+          wishList.add({
             'wishlistkey': key,
             'productId': value['productId'],
             "userId": value["userId"],
@@ -127,8 +127,8 @@ class _EProductListState extends State<EProductList> {
                     }
                   }
                 });
-                final productIds = WishList.map((item) => item['productId']).toList();
-                final wishlistIds = WishList.map((item) => item['wishlistkey']).toList();
+                final productIds = wishList.map((item) => item['productId']).toList();
+                final wishlistIds = wishList.map((item) => item['wishlistkey']).toList();
                 _sortProducts();
 
                 return GridView.builder(

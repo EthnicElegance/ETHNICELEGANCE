@@ -88,7 +88,7 @@ class SignupController extends GetxController {
 
       ELoaders.successSnackBar(
           title: 'Congratulations',
-          message: 'Your account has been created! Verify email to continue');
+          message: 'Your account has been created!');
       // Get.to(() => const NavigationMenu());
       Get.to(
             () =>

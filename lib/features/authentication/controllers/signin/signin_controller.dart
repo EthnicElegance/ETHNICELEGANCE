@@ -97,7 +97,7 @@ class SigninController extends GetxController {
 
     ELoaders.successSnackBar(
         title: 'Congratulations',
-        message: 'Your account has been created! Verify email to continue');
+        message: 'Your account has been created!');
 
     Get.offAll(() => const HomeScreen());
   }
@@ -105,7 +105,7 @@ class SigninController extends GetxController {
 
     ELoaders.successSnackBar(
         title: 'Congratulations',
-        message: 'Your account has been created! Verify email to continue');
+        message: 'Your account has been created!');
 
     Get.offAll(() => const HomeScreen1());
   }
