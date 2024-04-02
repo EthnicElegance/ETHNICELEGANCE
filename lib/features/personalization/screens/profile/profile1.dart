@@ -13,7 +13,6 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../../utils/helpers/helper_functions.dart';
 
-
 class ProfileScreen1 extends StatefulWidget {
   const ProfileScreen1({super.key});
 
