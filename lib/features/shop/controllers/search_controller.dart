@@ -8,7 +8,7 @@ class SearchController1 extends GetxController {
 
 
   final searchText = TextEditingController();
-  late final text;
+  late final String text;
 
 
   GlobalKey<FormState> couponKey = GlobalKey<FormState>();

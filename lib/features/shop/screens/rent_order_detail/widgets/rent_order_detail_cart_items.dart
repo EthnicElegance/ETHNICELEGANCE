@@ -64,8 +64,6 @@ class _RentOrderDetailERentCartItemsState extends State<RentOrderDetailERentCart
               snapshot.data!.snapshot.value as Map<dynamic, dynamic>;
           List<RentOrderDetailViewModel> rentOrderDetailList = [];
           List<String> cartIds = [];
-          print("--------------------cartData-------------------");
-          print(cartData);
           cartData.forEach((key, value) {
             if (value != null) {
               rentOrderDetailList.add(RentOrderDetailViewModel(

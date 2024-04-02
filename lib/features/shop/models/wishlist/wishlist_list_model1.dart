@@ -56,7 +56,7 @@ class _EWishList1State extends State<EWishList1> {
     dbRef.orderByChild("userId").equalTo(userid).onValue.listen((event) async {
       Map<dynamic, dynamic>? values = event.snapshot.value as Map?;
       if (values != null) {
-        var productId;
+        String productId;
         values.forEach((key, value) async {
           productId = value["productId"];
           wishList.add({

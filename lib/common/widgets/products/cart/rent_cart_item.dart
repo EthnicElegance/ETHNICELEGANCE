@@ -51,7 +51,7 @@ class _ERentCartItemState extends State<ERentCartItem> {
     dbRef.orderByChild("UserId").equalTo(userid).onValue.listen((event) async {
       Map<dynamic, dynamic>? values = event.snapshot.value as Map?;
       if (values != null) {
-        var productId;
+        String productId;
         values.forEach((key, value) async {
           productId = value["RentProductId"];
           wishList.add({

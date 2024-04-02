@@ -51,8 +51,6 @@ class _RentOrderDetailERentCartItemState extends State<RentOrderDetailERentCartI
     dbRef = FirebaseDatabase.instance.ref().child('Project/RentOrderDetail');
     dbRef.orderByChild('OrderId').equalTo(widget.orderId).onValue.listen((event) async {
       Map<dynamic, dynamic>? values = event.snapshot.value as Map?;
-      print("--------------------values-------------------");
-      print(values);
       if (values != null) {
         String productId;
         values.forEach((key, value) async {

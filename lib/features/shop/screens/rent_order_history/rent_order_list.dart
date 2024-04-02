@@ -75,18 +75,12 @@ class _ERentOrderListItemsState extends State<ERentOrderListItems> {
                 ));
               }
             });
-            print(
-                "----------------------orderList.length-----------------------");
-            print(orderList.length);
             return ListView.separated(
                 shrinkWrap: true,
                 itemCount: orderList.length,
                 separatorBuilder: (_, __) =>
                     const SizedBox(height: ESizes.spaceBtwItems),
                 itemBuilder: (_, index) {
-                  print(
-                      "----------------------orderList[index].key-----------------------");
-                  print(orderList[index].key);
                   return ERoundedContainer(
                       showBorder: true,
                       padding: const EdgeInsets.all(ESizes.md),
