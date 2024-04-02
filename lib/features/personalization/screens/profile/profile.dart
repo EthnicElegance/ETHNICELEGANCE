@@ -158,6 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       for (var entry in snapshot.data!.entries)
                         if(entry.key == 'Email')
                           TextFormField(
+                            enabled: false,
                             initialValue: _email,
                             onChanged: (value) {
                               setState(() {
@@ -172,6 +173,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       for (var entry in snapshot.data!.entries)
                         if(entry.key == 'ContactNo')
                           TextFormField(
+                            enabled: false,
                             initialValue: _phoneNumber,
                             onChanged: (value) {
                               setState(() {

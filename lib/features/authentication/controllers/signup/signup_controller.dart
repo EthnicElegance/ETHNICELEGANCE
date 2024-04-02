@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:ethnic_elegance/features/authentication/screens/login/login.dart';
+import 'package:ethnic_elegance/features/authentication/screens/password_configuration/email_verification.dart';
 import 'package:flutter/material.dart';
 import 'package:ethnic_elegance/utils/constants/image_strings.dart';
 import 'package:ethnic_elegance/utils/popups/full_screen_loader.dart';
@@ -27,12 +28,92 @@ class SignupController extends GetxController {
   final password = TextEditingController();
   final cpassword = TextEditingController();
   String usertype = '' ;
+  final controllerOTP = TextEditingController();
 
+  GlobalKey<FormState> emailVerificationFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
 
   DatabaseReference dbRef =
-      FirebaseDatabase.instance.ref().child('Project/UserRegister');
+  FirebaseDatabase.instance.ref().child('Project/UserRegister');
 
+  //verify
+  void verified(BuildContext context, myAuth, selectedRadio) async {
+    try {
+      //Start loading
+      EFullScreenLoader.openLoadingDialog(
+          'We are processing your information', EImages.acerlogo);
+
+      //check internet connectivity
+      final isConnected = await NetworkManager.instance.isConnected();
+
+      if (!isConnected) {
+        //remove loader
+        EFullScreenLoader.stopLoading();
+        return;
+      }
+
+      //Form validation
+      if (!emailVerificationFormKey.currentState!.validate()) {
+        //remove loader
+        EFullScreenLoader.stopLoading();
+        return;
+      }
+
+      EFullScreenLoader.stopLoading();
+
+      if (await myAuth.verifyOTP(otp: controllerOTP.text) == true) {
+        signup(selectedRadio);
+      } else {
+        ELoaders.errorSnackBar(
+            title: 'Oh snap!', message: "Wrong OTP");
+      }
+
+    } catch (e) {
+      ELoaders.errorSnackBar(title: 'Oh snap!', message: e.toString());
+    }
+  }
+//Signup
+  void verify(selectedRadio) async {
+    try {
+      //Start loading
+      EFullScreenLoader.openLoadingDialog(
+          'We are processing your information', EImages.acerlogo);
+
+      //check internet connectivity
+      final isConnected = await NetworkManager.instance.isConnected();
+
+
+      if (!isConnected) {
+        //remove loader
+        EFullScreenLoader.stopLoading();
+        return;
+      }
+
+      //Form validation
+      if (!signupFormKey.currentState!.validate()) {
+        //remove loader
+        EFullScreenLoader.stopLoading();
+        return;
+      }
+
+      //privacy policy
+      if (!privacyPolicy.value) {
+        ELoaders.warningSnackBar(
+            title: 'Accept Privacy Policy',
+            message:
+            'In order to create account , you must have to accept the privacy policy and terms of use');
+        EFullScreenLoader.stopLoading();
+        return;
+      }
+
+      EFullScreenLoader.stopLoading();
+
+      Get.to(() => EmailVerification(selectedRadio: selectedRadio));
+
+    } catch (e) {
+      ELoaders.errorSnackBar(title: 'Oh snap!', message: e.toString());
+    }
+  }
   //Signup
   void signup(selectedRadio) async {
     try {

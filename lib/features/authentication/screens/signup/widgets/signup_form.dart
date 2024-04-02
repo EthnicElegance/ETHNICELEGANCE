@@ -154,7 +154,7 @@ class ESignupFormState extends State<ESignupForm> {
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: () => controller.signup(selectedRadio),
+            onPressed: () => controller.verify(selectedRadio),
             child: const Text("Create Account"), ),)
       ],
     ));
