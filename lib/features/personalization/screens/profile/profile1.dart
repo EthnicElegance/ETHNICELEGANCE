@@ -10,7 +10,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../../../utils/helpers/helper_functions.dart';
 
 class ProfileScreen1 extends StatefulWidget {

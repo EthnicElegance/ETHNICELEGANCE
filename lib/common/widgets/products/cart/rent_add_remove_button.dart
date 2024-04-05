@@ -120,10 +120,7 @@ class _ERentProductQuantityWithAddRemoveButtonState
                 .then((_) => {
               Navigator.pop(context),
               Get.to(() => const RentCartScreen())
-            })
-                .catchError((error) => ELoaders.errorSnackBar(
-                title: 'Failed to remove',
-                message: 'Failed to remove item: $error'));
+            });
             }else if(!widget.plusMinusIcon) {
               FirebaseDatabase.instance
                 .ref()

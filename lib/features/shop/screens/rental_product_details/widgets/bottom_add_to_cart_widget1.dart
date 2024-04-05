@@ -7,7 +7,6 @@ import '../../../../../sharepreferences.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/helpers/helper_functions.dart';
 import '../../../../../utils/popups/loaders.dart';
-import '../../../models/rent_product/rentproduct_model.dart';
 import '../../rent_cart/rent_cart.dart';
 
 class CartController extends GetxController {
@@ -54,10 +53,11 @@ class _EBottomAddToCart1State extends State<EBottomAddToCart1> {
     final dark = EHelperFunctions.isDarkMode(context);
     return StreamBuilder(
         stream:
-            FirebaseDatabase.instance.ref().child('Project/RentProduct').onValue,
+            FirebaseDatabase.instance.ref().child('Project/RentProduct/${widget.id}').onValue,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
             Map<dynamic, dynamic> map = snapshot.data.snapshot.value;
+            final data = snapshot.data!.snapshot.value as Map<dynamic, dynamic>;
 
             if (map.isEmpty) {
               return const Center(
@@ -67,29 +67,29 @@ class _EBottomAddToCart1State extends State<EBottomAddToCart1> {
                 ),
               );
             }
-            List<RentProductModel> prodlist = [];
-            prodlist.clear();
-
-            map.forEach((dynamic key, dynamic v) {
-              if (v != null) {
-                prodlist.add(RentProductModel(
-                    key.toString(),
-                    v["catid"],
-                    v["RentProduct_name"],
-                    v["photo1"],
-                    v["photo2"],
-                    v["photo3"],
-                    v["price"],
-                    v["size"],
-                    v["qty"],
-                    v["RentProduct_colour"],
-                    v["fabric"],
-                    v["RentProduct_detail"],
-                    v["DateTime"],
-                    v["availability"]
-                ));
-              }
-            });
+            // List<RentProductModel> prodlist = [];
+            // prodlist.clear();
+            //
+            // map.forEach((dynamic key, dynamic v) {
+            //   if (v != null) {
+            //     prodlist.add(RentProductModel(
+            //         key.toString(),
+            //         v["catid"],
+            //         v["RentProduct_name"],
+            //         v["photo1"],
+            //         v["photo2"],
+            //         v["photo3"],
+            //         v["price"],
+            //         v["size"],
+            //         v["qty"],
+            //         v["RentProduct_colour"],
+            //         v["fabric"],
+            //         v["RentProduct_detail"],
+            //         v["DateTime"],
+            //         v["availability"]
+            //     ));
+            //   }
+            // });
 
             return Container(
               padding: const EdgeInsets.symmetric(
@@ -112,9 +112,9 @@ class _EBottomAddToCart1State extends State<EBottomAddToCart1> {
                             widget.id,
                             controller.counter.value,
                             controller.size.value,
-                            prodlist[widget.index].rprice,
-                            "${double.parse(prodlist[widget.index].rprice) * 3}",
-                            "${double.parse(prodlist[widget.index].rprice) * int.parse(controller.counter.value)}",
+                            data["price"],
+                            "${double.parse(data["price"]) * 3}",
+                            "${double.parse(data["price"]) * int.parse(controller.counter.value)}",
                             userid!);
                         dbRef.push().set(cartObj.toJson());
                         ELoaders.successSnackBar(
