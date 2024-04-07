@@ -65,9 +65,6 @@ class AddressController extends GetxController {
 
       EFullScreenLoader.stopLoading();
 
-      ELoaders.successSnackBar(
-          title: 'Congratulations',
-          message: 'Your Address is saved');
       Navigator.pop(context);
       // Get.to(() => const NavigationMenu());
       // Get.offAll(
