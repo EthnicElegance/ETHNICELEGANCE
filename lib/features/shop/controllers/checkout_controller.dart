@@ -9,6 +9,10 @@ class CheckoutController extends GetxController {
   late List<String> cartId;
   late String getKeys;
   late String orderDate;
+  late String subAmount;
+  late String couponDiscount;
+  late String shippingFee;
+  late String taxFee;
   late String totalAmount;
   late String userAddress;
 

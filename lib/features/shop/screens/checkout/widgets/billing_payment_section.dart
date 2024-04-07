@@ -87,6 +87,10 @@ class _EBillingPaymentSectionState extends State<EBillingPaymentSection> {
     List<String> cartId = controller.cartId;
     String orderDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
     String shippingDate = DateFormat('yyyy-MM-dd').format(DateTime.now().add(const Duration(days: 4)));
+    String subAmount = controller.subAmount;
+    String couponDiscount = controller.couponDiscount;
+    String shippingFee = controller.shippingFee;
+    String taxFee = controller.taxFee;
     String totalAmount = controller.totalAmount;
     String userAddress = controller.userAddress;
 
@@ -97,6 +101,10 @@ class _EBillingPaymentSectionState extends State<EBillingPaymentSection> {
         getKeys,
         orderDate,
         shippingDate,
+        subAmount,
+        couponDiscount,
+        shippingFee,
+        taxFee,
         totalAmount,
         userAddress,
         "Pending",

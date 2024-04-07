@@ -67,29 +67,6 @@ class _EBottomAddToCart1State extends State<EBottomAddToCart1> {
                 ),
               );
             }
-            // List<RentProductModel> prodlist = [];
-            // prodlist.clear();
-            //
-            // map.forEach((dynamic key, dynamic v) {
-            //   if (v != null) {
-            //     prodlist.add(RentProductModel(
-            //         key.toString(),
-            //         v["catid"],
-            //         v["RentProduct_name"],
-            //         v["photo1"],
-            //         v["photo2"],
-            //         v["photo3"],
-            //         v["price"],
-            //         v["size"],
-            //         v["qty"],
-            //         v["RentProduct_colour"],
-            //         v["fabric"],
-            //         v["RentProduct_detail"],
-            //         v["DateTime"],
-            //         v["availability"]
-            //     ));
-            //   }
-            // });
 
             return Container(
               padding: const EdgeInsets.symmetric(

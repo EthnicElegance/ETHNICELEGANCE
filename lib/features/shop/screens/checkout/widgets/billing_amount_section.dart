@@ -71,6 +71,10 @@ class _EBillingAmountSectionState extends State<EBillingAmountSection> {
       subTax = subtotal * 0.18;
       controller.totalAmount =
           (subtotal - discount + shippingFee + subTax).toStringAsFixed(2);
+      controller.subAmount = "$subtotal";
+      controller.taxFee = "$subTax";
+      controller.couponDiscount = "$discount";
+      controller.shippingFee = "$shippingFee";
     });
   }
 
@@ -92,6 +96,9 @@ class _EBillingAmountSectionState extends State<EBillingAmountSection> {
             discount == 0 ?
               controller.totalAmount = (subtotal + 50 + subTax).toStringAsFixed(2)
             :controller.totalAmount = (subtotal - discount + 50 + subTax).toStringAsFixed(2);
+            controller.subAmount = "$subtotal";
+            controller.taxFee = "$subTax";
+            controller.couponDiscount = "$discount";
           }); // Update the widget after calculating subtotal
         });
       }
@@ -113,6 +120,7 @@ class _EBillingAmountSectionState extends State<EBillingAmountSection> {
             Text('₹${subtotal.toStringAsFixed(2)}', style: Theme.of(context).textTheme.bodyMedium),
           ],
         ),
+        const SizedBox(height: ESizes.spaceBtwItems / 2),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
